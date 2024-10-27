@@ -4,99 +4,1363 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fotios Mpouris - Creative Developer</title>
-    
-    <!-- CSS Styles -->
-    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <style>
+        
+        :root {
+            --primary: #2A2A2A;
+            --secondary: #007BFF;
+            --accent: #FF4081;
+            --background: #f8f9fa;
+            --card: #ffffff;
+        }
+
+        /* STEP 3: Add these styles to your CSS section, right after your existing :root variables */
+
+/* Section Border Glow */
+.section-border-glow {
+    position: absolute;
+    top: -1px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 0, 0, 0.5),
+        rgba(255, 128, 0, 0.5),
+        rgba(255, 0, 0, 0.5),
+        transparent
+    );
+    filter: blur(2px);
+    animation: borderGlow 3s infinite alternate;
+}
+
+/* Profile Container and Stats */
+.profile-container {
+    position: relative;
+    display: inline-block;
+}
+
+.profile-stats-overlay {
+    position: absolute;
+    top: 0;
+    left: 120%;
+    width: 300px;
+    background: rgba(0, 30, 60, 0.95);
+    border: 1px solid rgba(0, 183, 255, 0.3);
+    border-radius: 8px;
+    padding: 1rem;
+    opacity: 0;
+    transform: translateX(20px);
+    transition: all 0.3s ease;
+    z-index: 10;
+}
+
+/* Glowing About Me Text */
+.glow-text {
+    color: transparent !important;
+    -webkit-text-stroke: 1px rgba(0, 183, 255, 0.5);
+    text-shadow: 
+        0 0 10px rgba(0, 183, 255, 0.5),
+        0 0 20px rgba(0, 183, 255, 0.3);
+    animation: titlePulse 3s infinite alternate;
+}
+
+/* STEP 4: Add these animation keyframes at the end of your CSS */
+@keyframes borderGlow {
+    0% { opacity: 0.3; }
+    100% { opacity: 1; }
+}
+
+@keyframes titlePulse {
+    0% {
+        text-shadow: 
+            0 0 10px rgba(0, 183, 255, 0.3),
+            0 0 20px rgba(0, 183, 255, 0.2);
+    }
+    100% {
+        text-shadow: 
+            0 0 15px rgba(0, 183, 255, 0.5),
+            0 0 30px rgba(0, 183, 255, 0.3);
+    }
+}
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Particle Effects */
+        .particles-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .energy-wave {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+    background: radial-gradient(circle at center, 
+        rgba(0,123,255,0.25) 0%, 
+        rgba(0,123,255,0.15) 30%, 
+        transparent 70%);
+    animation: ripple 6s infinite;
+    width: 200px;
+    height: 200px;
+}
+
+       
+
+        @keyframes ripple {
+            0% {
+                transform: scale(0);
+                opacity: 0.5;
+            }
+            100% {
+                transform: scale(3);
+                opacity: 0;
+            }
+        }
+
+        
+
+        
+        @keyframes paperShimmer {
+    0% {
+        background-position: 0 0, 0 0;
+    }
+    100% {
+        background-position: 0 100px, 0 0;
+    }
+}
+
+        /* New Data Stream Effect */
+/* Matrix-like Data Stream Effect */
+.data-stream {
+    position: absolute;
+    width: 40px;  /* made wider */
+    height: 100%;
+    color: rgba(0, 183, 255, 0.25);  /* made more visible */
+    font-family: 'Courier New', monospace;
+    font-size: 16px;  /* made larger */
+    line-height: 16px;
+    overflow: hidden;
+    opacity: 0;
+    animation: streamFlow 12s ease-out;  /* made slower */
+    pointer-events: none;
+    mix-blend-mode: screen;
+    text-shadow: 0 0 10px rgba(0, 183, 255, 0.3);  /* added glow */
+}
+
+.data-stream::before {
+    content: '守\A ら\A れ\A た\A 0\A 1\A ア\A プ\A リ\A ケ\A ー\A シ\A ョ\A ン\A \}\A \{\A #\A $\A @\A 9\A 8\A 7';
+    position: absolute;
+    white-space: pre;
+    animation: matrixRain 8s linear infinite;  /* made slower */
+    text-shadow: 0 0 12px rgba(0, 183, 255, 0.6);  /* enhanced glow */
+}
+
+        @keyframes streamFlow {
+    0% {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+    5% {  /* faster fade in */
+        opacity: 1;
+    }
+    95% {  /* longer visible time */
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+}
+
+@keyframes matrixRain {
+    0% {
+        transform: translateY(-100%);
+    }
+    100% {
+        transform: translateY(100%);
+    }
+}
+
+@keyframes streamFlow {
+    0% {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+    20% {
+        opacity: 1;
+    }
+    80% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+}
+
+@keyframes dissipate {
+    0% {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+    90% {
+        opacity: 1;
+        transform: scale(1.5);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(2);
+    }
+}
+
+        .container {
+    max-width: 1000px;  /* reduced from 1200px */
+    margin: 0 auto;
+    padding: 2rem;
+    position: relative;
+    z-index: 1;
+}
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: linear-gradient(135deg, #0a192f 0%, #1a1a1a 50%, #20232a 100%);
+            color: white;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(0,123,255,0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 50%, rgba(0,123,255,0.1) 0%, transparent 50%);
+            animation: glowPulse 8s ease-in-out infinite;
+        }
+
+        .github-icon {
+            width: 120px;
+            height: 120px;
+            margin-bottom: 2rem;
+            animation: float 6s ease-in-out infinite;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            filter: brightness(0) invert(1);
+        }
+
+        .github-icon:hover {
+            transform: scale(1.1);
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .title {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            color: var(--secondary);
+            margin-bottom: 2rem;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        /* Skills Section */
+        .skills-container {
+            margin-top: 2rem;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1.5rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .skill-icon {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 0.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transform: scale(0.5);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .skill-icon:hover {
+            transform: scale(1.1) !important;
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .skill-icon img {
+            width: 40px;
+            height: 40px;
+            object-fit: contain;
+        }
+
+        /* Dark Theme Section */
+        .dark-theme-section {
+    background: linear-gradient(135deg, #2f0000 0%, #600 25%, #800 75%, #400 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+       .dark-theme-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        radial-gradient(circle at 20% 20%, rgba(255, 0, 0, 0.25), transparent 40%),
+        radial-gradient(circle at 80% 80%, rgba(255, 0, 0, 0.25), transparent 40%);
+    animation: glow 6s infinite ease-in-out;
+}
+        
+        @keyframes glow {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+        /* Enhanced About Card */
+.about-card {
+    max-width: 900px !important;
+    margin: 0 auto !important;
+    transform-style: preserve-3d;
+}
+
+/* Enhanced Grid */
+.tech-grid {
+    opacity: 0.4;
+    background-size: 40px 40px !important;
+    animation: gridPulse 4s infinite ease-in-out, gridMove 15s infinite linear;
+    pointer-events: none;
+}
+
+        /* New Animations */
+@keyframes bubbleGlow {
+    0% { opacity: 0.7; transform: scale(1); }
+    100% { opacity: 1; transform: scale(1.1); }
+}
+
+@keyframes borderGlow {
+    0%, 100% { opacity: 0.5; filter: blur(3px); }
+    50% { opacity: 1; filter: blur(1px); }
+}
+
+@keyframes gridPulse {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 0.6; }
+}
+
+@keyframes gridMove {
+    0% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-10px) scale(1.02); }
+    100% { transform: translateY(0) scale(1); }
+}
+
+        /* About Section */
+        /* About Section */
+.about-card {
+    position: relative;
+    padding: 2rem !important; /* reduced from 3rem */
+    background: linear-gradient(
+        135deg,
+        rgba(15, 25, 40, 0.95) 0%,
+        rgba(20, 30, 50, 0.97) 50%,
+        rgba(15, 25, 40, 0.95) 100%
+    ) !important;
+    border: 1px solid rgba(0, 123, 255, 0.1) !important;
+    overflow: hidden;
+}  !important;
+    border: none !important;
+    box-shadow: 
+        0 0 40px rgba(0, 0, 0, 0.4),
+        0 0 80px rgba(255, 0, 0, 0.2),
+        inset 0 0 40px rgba(0, 123, 255, 0.08) !important;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+    animation: cardPulse 4s infinite ease-in-out;
+    margin: 0 2rem; /* added to create space on sides */
+}
+
+/* Metallic Frame Effect */
+.about-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(0, 183, 255, 0.4),  /* Brighter blue */
+        rgba(0, 255, 255, 0.6),  /* Brighter cyan */
+        rgba(0, 183, 255, 0.4),  /* Brighter blue */
+        transparent
+    );
+    animation: borderFlow 8s linear infinite;
+    z-index: 1;
+    filter: blur(8px);  /* Add blur for more glow */
+    box-shadow: 
+        0 0 20px rgba(0, 183, 255, 0.3),
+        0 0 40px rgba(0, 255, 255, 0.2);  /* Additional glow effect */
+}
+
+
+.about-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -50%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(0, 123, 255, 0.2),
+        transparent
+    );
+    animation: aboutGlow 4s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 2;
+}
+
+/* Tech Grid Background */
+.tech-grid {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+        linear-gradient(rgba(0, 123, 255, 0.15) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 123, 255, 0.15) 1px, transparent 1px);
+    background-size: 30px 30px; /* increased from 20px */
+    opacity: 0.2; /* increased from 0.1 */
+    animation: gridMove 15s infinite ease-in-out;
+}
+/* Modern Profile Image Container */
+.about-header {
+    display: flex;
+    align-items: center;
+    gap: 3rem;
+    margin-bottom: 4rem;
+    padding: 0 1rem;
+    position: relative;
+    z-index: 2;
+}
+
+.about-profile-img {
+    width: 180px;
+    height: 180px;
+    border-radius: 10px;
+    object-fit: cover;
+    box-shadow: 
+        0 10px 25px rgba(0, 0, 0, 0.3),
+        0 0 0 1px rgba(0, 123, 255, 0.3);
+    transform: rotate(-3deg);
+    transition: all 0.5s ease;
+    position: relative;
+}
+
+.about-profile-img:hover {
+    transform: rotate(0deg) scale(1.02);
+    box-shadow: 
+        0 15px 35px rgba(0, 0, 0, 0.4),
+        0 0 0 2px rgba(0, 123, 255, 0.5),
+        0 0 30px rgba(0, 123, 255, 0.3);
+}
+
+.about-profile-img {
+    isolation: isolate;  /* Add this property to existing class */
+}
+
+.about-profile-img::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    background: linear-gradient(
+        125deg,
+        transparent 0%,
+        rgba(0, 123, 255, 0.3) 40%,
+        rgba(0, 255, 255, 0.6) 60%,
+        transparent 100%
+    );
+    animation: holoGlow 8s linear infinite;
+    z-index: 1;
+    opacity: 0.5;
+}
+
+.about-profile-img::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+        90deg,
+        transparent,
+        rgba(0, 123, 255, 0.1) 1px,
+        transparent 2px
+    );
+    animation: scanlines 8s linear infinite;
+    mix-blend-mode: overlay;
+}
+
+/* ADD these new text effect styles */
+.about-content p {
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.about-content p:hover {
+    text-shadow: 0 0 8px rgba(0, 123, 255, 0.8);
+    letter-spacing: 0.2px;
+}
+
+/* ADD these new card border effect styles */
+
+        
+/* Matrix containment fix */
+.matrix-background {
+    mask-image: linear-gradient(
+        to bottom,
+        transparent,
+        black 10%,
+        black 90%,
+        transparent
+    );
+    -webkit-mask-image: linear-gradient(
+        to bottom,
+        transparent,
+        black 10%,
+        black 90%,
+        transparent
+    );
+}
+
+/* Enhanced Header Text */
+.about-header-text h3 {
+    font-size: 2.8rem;
+    margin-bottom: 0;
+    background: linear-gradient(90deg, 
+        rgba(0, 123, 255, 1), 
+        rgba(0, 180, 255, 1));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+    text-shadow: 0 0 20px rgba(0, 123, 255, 0.3);
+}
+
+/* Content Area Styling */
+.about-content {
+    position: relative;
+    z-index: 2;
+    background: rgba(20, 35, 60, 0.4);
+      border: 1px solid rgba(0, 123, 255, 0.1);
+    padding: 1.5rem; /* reduced from 2rem */
+    border-radius: 15px;
+    box-shadow: 
+        inset 0 0 40px rgba(0, 123, 255, 0.08),
+        0 0 30px rgba(0, 0, 0, 0.15);
+    margin-top: 1rem; /* added to reduce vertical space */
+}
+.about-content p {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1.15rem;
+    line-height: 2;
+    text-align: justify;
+    padding: 0;
+    margin-bottom: 2.5rem;
+    position: relative;
+    z-index: 2;
+}
+
+.about-content p:first-of-type {
+    font-size: 1.25rem;
+    color: rgba(255, 255, 255, 0.95);
+    font-weight: 500;
+}
+        /* Section Styling */
+        .section {
+            padding: 4rem 0;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        /* Card Styling */
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3),
+                       0 0 20px rgba(255, 0, 0, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4),
+                       0 0 30px rgba(255, 0, 0, 0.3);
+        }
+
+        h3 {
+            color: var(--secondary);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+
+        /* Projects Section */
+        .projects {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .project-card {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 1.5rem;
+            text-decoration: none;
+            color: var(--primary);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2),
+                       0 0 10px rgba(255, 0, 0, 0.1);
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3),
+                       0 0 20px rgba(255, 0, 0, 0.2);
+        }
+
+        /* Social Links */
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .social-link {
+            color: #c00;
+            font-size: 1.2rem;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .social-link:hover {
+            color: #f00;
+        }
+
+        /* Animations for About Section */
+@keyframes aboutGlow {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(300%);
+    }
+}
+    50% { 
+        box-shadow: 
+            0 0 60px rgba(0, 0, 0, 0.5),
+            0 0 100px rgba(255, 0, 0, 0.3),
+            inset 0 0 60px rgba(0, 123, 255, 0.12);
+    }
+}
+
+@keyframes borderGlow {
+    0%, 100% { 
+        border-color: rgba(0, 123, 255, 0.4);
+        box-shadow: 
+            0 0 20px rgba(0, 123, 255, 0.3),
+            inset 0 0 20px rgba(0, 123, 255, 0.3);
+    }
+    50% { 
+        border-color: rgba(0, 123, 255, 0.8);
+        box-shadow: 
+            0 0 30px rgba(0, 123, 255, 0.5),
+            inset 0 0 30px rgba(0, 123, 255, 0.5);
+    }
+}
+
+@keyframes gridMove {
+    0% { transform: translateY(0) translateX(0); }
+    50% { transform: translateY(10px) translateX(5px); }
+    100% { transform: translateY(0) translateX(0); }
+}
+
+@keyframes shimmer {
+    0% { transform: translateX(-100%) rotate(45deg); }
+    100% { transform: translateX(200%) rotate(45deg); }
+}
+
+        .matrix-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: hidden;
+    z-index: 1;
+}
+
+       .matrix-column {
+    position: absolute;
+    top: -100%;
+    width: 30px;
+    height: 300%;
+    color: rgba(0, 183, 255, 0.25);
+    font-family: 'Courier New', monospace;
+    font-size: 16px;
+    line-height: 16px;
+    white-space: pre;
+    /* Add these new properties */
+    background: linear-gradient(
+        0deg,
+        transparent,
+        rgba(255, 60, 0, 0.2) 50%,
+        transparent
+    );
+    background-size: 100% 200%;
+    animation: 
+        matrixRain 20s linear infinite,
+        fireFlow 8s infinite linear;
+    mix-blend-mode: screen;
+}
+
+@keyframes fireFlow {
+    0% { background-position: 0 0; }
+    100% { background-position: 0 200%; }
+}
+        
+@keyframes matrixRain {
+    from {
+        transform: translateY(0);
+    }
+    to {
+        transform: translateY(50%);
+    }
+}
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero {
+                height: auto;
+                min-height: 100vh;
+                padding: 4rem 1rem;
+            }
+
+            .title {
+                font-size: 2.5rem;
+            }
+
+            .subtitle {
+                font-size: 1.2rem;
+            }
+
+            .container {
+                padding: 1rem;
+            }
+
+           .about-header {
+    display: flex;
+    align-items: center;
+    gap: 2rem; /* reduced from 3rem */
+    margin-bottom: 2rem; /* reduced from 4rem */
+    padding: 0 1rem;
+    position: relative;
+    z-index: 2;
+}
+
+            .about-profile-img {
+                width: 150px;
+                height: 150px;
+            }
+
+            .about-card {
+                padding: 2rem !important;
+            }
+
+          .about-content {
+    position: relative;
+    z-index: 2;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 1.5rem;
+    border-radius: 15px;
+    box-shadow: 
+        inset 0 0 40px rgba(0, 123, 255, 0.08),
+        0 0 30px rgba(0, 0, 0, 0.15);
+    margin-top: 1rem;
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background-image: 
+        repeating-linear-gradient(
+            0deg,
+            rgba(0, 123, 255, 0.03) 0px,
+            rgba(0, 123, 255, 0.03) 1px,
+            transparent 1px,
+            transparent 2px
+        ),
+        linear-gradient(
+            to right,
+            rgba(255, 255, 255, 0.05),
+            rgba(0, 123, 255, 0.05)
+        );
+    animation: paperShimmer 10s infinite linear;
+}
+
+    @keyframes holoGlow {
+    0% { 
+        opacity: 0.3;
+        transform: translateX(-100%) rotate(35deg);
+    }
+    100% { 
+        opacity: 0.7;
+        transform: translateX(200%) rotate(35deg);
+    }
+}
+
+@keyframes scanlines {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(100%); }
+}
+
+@keyframes borderFlow {
+    0% { 
+        transform: translateX(-100%);
+        opacity: 0.8;  /* Start slightly faded */
+    }
+    50% {
+        opacity: 1;    /* Full opacity in middle */
+    }
+    100% { 
+        transform: translateX(100%);
+        opacity: 0.8;  /* End slightly faded */
+    }
+}
+        
+    </style>
 </head>
-<body>
-    <!-- Matrix Canvas -->
-    <canvas id="matrix-canvas"></canvas>
-    
-    <!-- Hero Section -->
+
+    <body>
     <section class="hero">
-        <div class="particles-container" id="particles-container"></div>
+        <div class="particles-container" id="particles-container">
+           </div>
         <div class="container">
-            <a href="https://github.com/FotiosMpouris" target="_blank" rel="noopener noreferrer">
-                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/github/github-original-wordmark.svg" 
-                     alt="GitHub" class="github-icon">
+            <a href="https://github.com/FotiosMpouris" target="_blank">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/github/github-original-wordmark.svg" alt="GitHub" class="github-icon">
             </a>
             <h1 class="title">Fotios Mpouris</h1>
             <h2 class="subtitle">2D & 3D Artist / Animator / Developer</h2>
-            
-            <!-- Skills Container -->
             <div class="skills-container">
-                <!-- Example Skill Icon -->
-                <a href="https://developer.android.com" target="_blank" rel="noopener noreferrer" class="skill-icon">
-                    <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/android/android-original-wordmark.svg" alt="Android">
+                <a href="https://developer.android.com" target="_blank" class="skill-icon">
+                    <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/android/android-original-wordmark.svg" alt="android">
                 </a>
-                <!-- Add more skill icons as needed -->
+                <a href="https://www.blender.org/" target="_blank" class="skill-icon">
+                    <img src="https://download.blender.org/branding/community/blender_community_badge_white.svg" alt="blender">
+                </a>
+                <a href="https://www.w3schools.com/cs/" target="_blank" class="skill-icon">
+                    <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/csharp/csharp-original.svg" alt="csharp">
+                </a>
+                <a href="https://dotnet.microsoft.com/" target="_blank" class="skill-icon">
+                    <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/dot-net/dot-net-original-wordmark.svg" alt="dotnet">
+                </a>
+                <a href="https://cloud.google.com" target="_blank" class="skill-icon">
+                    <img src="https://www.vectorlogo.zone/logos/google_cloud/google_cloud-icon.svg" alt="gcp">
+                </a>
+                <a href="https://www.w3.org/html/" target="_blank" class="skill-icon">
+                    <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/html5/html5-original-wordmark.svg" alt="html5">
+                </a>
+                <a href="https://www.adobe.com/in/products/illustrator.html" target="_blank" class="skill-icon">
+                    <img src="https://www.vectorlogo.zone/logos/adobe_illustrator/adobe_illustrator-icon.svg" alt="illustrator">
+                </a>
+                <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank" class="skill-icon">
+                    <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/javascript/javascript-original.svg" alt="javascript">
+                </a>
+                <a href="https://nodejs.org" target="_blank" class="skill-icon">
+                    <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/nodejs/nodejs-original-wordmark.svg" alt="nodejs">
+                </a>
+                <a href="https://www.photoshop.com/en" target="_blank" class="skill-icon">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/photoshop/photoshop-original.svg" alt="photoshop">
+                </a>
+                <a href="https://www.python.org" target="_blank" class="skill-icon">
+                    <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg" alt="python">
+                </a>
+                <a href="https://unity.com/" target="_blank" class="skill-icon">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/unity/unity-original.svg" alt="unity">
+                </a>
+                <a href="https://zapier.com" target="_blank" class="skill-icon">
+                    <img src="https://www.vectorlogo.zone/logos/zapier/zapier-icon.svg" alt="zapier">
+                </a>
+                <a href="https://www.adobe.com/products/premiere.html" target="_blank" class="skill-icon">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/premierepro/premierepro-original.svg" alt="premiere pro">
+                </a>
+                <a href="https://www.adobe.com/products/aftereffects.html" target="_blank" class="skill-icon">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/aftereffects/aftereffects-original.svg" alt="after effects">
+                </a>
             </div>
         </div>
     </section>
 
-    <!-- Dark Theme Section -->
     <div class="dark-theme-section">
         <div class="section-border-glow"></div>
         <div class="particles-container" id="particles-container-bottom">
             <div class="power-surge"></div>
         </div>
-        
         <div class="container">
-            <!-- About Section -->
             <section class="section">
                 <div class="card about-card">
+                     <div class="matrix-background"></div>  
                     <div class="tech-grid"></div>
                     <div class="about-header">
-                        <div class="profile-container">
-                            <img src="assets/fotiosProfile.png" alt="Fotios Mpouris" class="about-profile-img" loading="lazy">
-                            <div class="profile-stats-overlay"></div>
-                        </div>
-                        <div class="about-header-text">
-                            <h3 class="glow-text">About Me</h3>
-                        </div>
-                    </div>
-                    <div class="about-content">
-                        <p>I'm a tech-savvy multimedia specialist...</p>
-                        <!-- Add more paragraphs as needed -->
+    <div class="profile-container">
+        <img src="assets/fotiosProfile.png" alt="Fotios Mpouris" class="about-profile-img">
+        <div class="profile-stats-overlay"></div>
+    </div>
+    <div class="about-header-text">
+        <h3 class="glow-text">About Me</h3>
+    </div>
+</div>
+                    
+
+    <div class="about-content">
+                        <p>
+                            I'm a tech-savvy multimedia specialist with a unique blend of skills in digital design, software development, and AI-assisted platforms. Proficient in Python, C#, Unity, and Adobe Creative Suite, I have a strong background in creating immersive digital experiences, animation, and video production. My expertise spans developing interactive applications, managing creative projects, and utilizing AI and generative art platforms to enhance user experiences and push creative boundaries.
+                        </p>
+                        <p>
+                            More recently, I've been exploring the intersection of AI and application development, working with tools like Streamlit Cloud, Google Cloud Console, Python, GitHub, and large language models (LLMs). These technologies allow me to design intelligent, automated solutions that streamline processes and enhance user engagement. By leveraging AI-assisted applications, I'm focused on creating innovative, agent-centric systems that reflect the future of technology.
+                        </p>
+                        <p>
+                            Throughout my career, I've used cutting-edge tools to develop interactive features for mobile gaming and geo-positioning apps, collaborating with technical teams to prototype and bring functional products to life. My proficiency in Adobe tools like Photoshop, After Effects, Premiere Pro, and Audition has enabled me to produce high-quality multimedia content, from video editing to motion graphics and animation.
+                        </p>
+                        <p>
+                            I've also managed digital platforms and multimedia content creation for various organizations, overseeing Google Workspace operations and creating social media assets to improve outreach. These hands-on experiences have given me a well-rounded understanding of how technology and creativity intersect to streamline workflows, enhance communication, and deliver captivating user experiences.
+                        </p>
+                        <p>
+                            Always eager to explore new frontiers in creative development, I'm committed to using AI and emerging technologies to innovate and produce impactful digital media. Whether it's developing dynamic applications or crafting custom solutions, I'm dedicated to merging technology and design in today's rapidly evolving digital landscape.
+                        </p>
                     </div>
                 </div>
             </section>
 
-            <!-- Projects Section -->
             <section class="section">
                 <div class="card">
                     <h3>Featured Projects</h3>
                     <div class="projects">
-                        <!-- Example Project Card -->
-                        <a href="https://github.com/FotiosMpouris/ImpossibleShark2" target="_blank" rel="noopener noreferrer" class="project-card">
+                        <a href="https://github.com/FotiosMpouris/ImpossibleShark2" class="project-card">
                             <h4>Impossible Shark</h4>
                             <p>Game Development</p>
                         </a>
-                        <!-- Add more project cards as needed -->
+                        <a href="https://github.com/FotiosMpouris/Hardie-Siding-Agent-Testing-Working_Copy/blob/main/README.md" class="project-card">
+                            <h4>Siding Project Assistant</h4>
+                            <p>AI Development</p>
+                        </a>
+                        <a href="https://github.com/FotiosMpouris/Oriana/blob/main/README.md" class="project-card">
+                            <h4>Oriana</h4>
+                            <p>AI Assistant</p>
+                        </a>
+                        <a href="https://github.com/FotiosMpouris/ReggieResume2/blob/main/README.md" class="project-card">
+                            <h4>AI Resume Tailor</h4>
+                            <p>AI Tool</p>
+                        </a>
                     </div>
                 </div>
             </section>
 
-            <!-- Connect Section -->
             <section class="section">
                 <div class="card">
                     <h3>Connect</h3>
                     <div class="social-links">
                         <a href="mailto:fotiosmpouris@gmail.com" class="social-link">Email</a>
-                        <a href="https://linkedin.com/in/fotiosmpouris" target="_blank" rel="noopener noreferrer" class="social-link">LinkedIn</a>
-                        <a href="https://www.behance.net/fotiosmpouris" target="_blank" rel="noopener noreferrer" class="social-link">Behance</a>
+                        <a href="https://linkedin.com/in/fotiosmpouris" class="social-link">LinkedIn</a>
+                        <a href="https://www.behance.net/fotiosmpouris" class="social-link">Behance</a>
                     </div>
                 </div>
             </section>
         </div>
     </div>
 
-    <!-- Essential Scripts -->
-    <!-- Load GSAP Libraries Before Custom Scripts -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script>
+        // Initialize GSAP ScrollTrigger
+        gsap.registerPlugin(ScrollTrigger);
+
+    // Add data stream effect
+function createDataStream() {
+    const container = document.querySelector('.about-card');
     
-    <!-- JavaScript -->
-    <script src="scripts.js"></script>
+    // Create multiple streams at once
+    const numStreams = Math.floor(Math.random() * 3) + 1; // 1 to 3 streams at once
+    
+    for(let i = 0; i < numStreams; i++) {
+        const stream = document.createElement('div');
+        stream.className = 'data-stream';
+        
+        // More evenly distributed across the width
+        stream.style.left = `${(i * 30) + Math.random() * 20}%`;
+        
+        container.appendChild(stream);
+        
+        // Remove after animation
+        setTimeout(() => stream.remove(), 12000);  // matched to new animation time
+    }
+}
+// Create streams periodically
+// Create streams more frequently
+setInterval(() => {
+    if (Math.random() < 0.4) { // 40% chance each interval
+        createDataStream();
+    }
+}, 2000); // Check every 2 seconds // Check every second // Check every 2 seconds
+
+ 
+        // Add this after the createChemicalBubble function
+document.querySelector('.dark-theme-section').addEventListener('mousemove', (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    
+    if (Math.random() < 0.2) {
+        createChemicalBubble(x, y, e.currentTarget);
+    }
+});
+        
+        // Create particles function
+        function createParticle(container) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            
+            // Random size between 2 and 6 pixels
+            const size = Math.random() * 4 + 2;
+            particle.style.width = `${size}px`;
+            particle.style.height = `${size}px`;
+            
+            // Random starting position
+            particle.style.left = `${Math.random() * 100}%`;
+            particle.style.top = `${Math.random() * 100}%`;
+            
+            container.appendChild(particle);
+            
+            // Animate particle
+            gsap.to(particle, {
+                y: -500,
+                x: Math.random() * 100 - 50,
+                opacity: 0,
+                duration: Math.random() * 3 + 2,
+                ease: "power1.out",
+                onComplete: () => {
+                    particle.remove();
+                }
+            });
+        }
+
+        // Create energy wave function
+       function createEnergyWave(x, y, container) {
+    const wave = document.createElement('div');
+    wave.className = 'energy-wave';
+    wave.style.left = `${x - 100}px`;
+    wave.style.top = `${y - 100}px`;
+    container.appendChild(wave);
+    
+    setTimeout(() => wave.remove(), 6000);
+}
+
+        // Initialize particles
+        const particlesContainers = document.querySelectorAll('.particles-container');
+        particlesContainers.forEach(container => {
+            setInterval(() => createParticle(container), 200);
+        });
+
+        // Mouse interaction
+        document.addEventListener('mousemove', (e) => {
+    particlesContainers.forEach(container => {
+        const rect = container.getBoundingClientRect();
+        if (e.clientY >= rect.top && e.clientY <= rect.bottom) {
+            if (Math.random() < 0.2) {
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                createEnergyWave(x, y, container);
+            }
+        }
+    });
+});
+
+        function createMatrixBackground() {
+    const container = document.querySelector('.matrix-background');
+    const containerWidth = container.offsetWidth;
+    const columnWidth = 30;
+    const numberOfColumns = Math.ceil(containerWidth / columnWidth);
+    
+    // Matrix characters pool
+    const chars = '守らリケーシタアプョン01\{\}#$@987';
+    
+    // Create columns
+    for(let i = 0; i < numberOfColumns; i++) {
+        const column = document.createElement('div');
+        column.className = 'matrix-column';
+        
+        // Create random string of characters
+       let columnChars = '';
+for(let j = 0; j < 100; j++) {  // increased from 50 to 100
+    columnChars += chars[Math.floor(Math.random() * chars.length)] + '\n';
+}
+        // let columnChars = '';
+        // for(let j = 0; j < 50; j++) {
+        //     columnChars += chars[Math.floor(Math.random() * chars.length)] + '\n';
+        // }
+        
+        column.textContent = columnChars;
+        column.style.left = `${i * columnWidth}px`;
+        
+        // Random animation delay for each column
+        column.style.animationDelay = `${-Math.random() * 20}s`;
+        
+        container.appendChild(column);
+    }
+}
+
+        // ADD these new functions after your existing GSAP initialization
+
+// Matrix Effect Control
+function updateMatrixColumns() {
+    const container = document.querySelector('.matrix-background');
+    const columns = container.querySelectorAll('.matrix-column');
+    
+    columns.forEach(column => {
+        const rect = column.getBoundingClientRect();
+        const containerRect = container.getBoundingClientRect();
+        
+        if (rect.bottom < containerRect.top || rect.top > containerRect.bottom) {
+            column.style.animationPlayState = 'paused';
+        } else {
+            column.style.animationPlayState = 'running';
+        }
+    });
+}
+
+// Interactive Text Effect
+function addInteractiveTextEffects() {
+    const paragraphs = document.querySelectorAll('.about-content p');
+    
+    paragraphs.forEach(p => {
+        p.addEventListener('mouseover', () => {
+            p.style.transform = 'scale(1.01)';
+            p.style.backgroundColor = 'rgba(0, 123, 255, 0.05)';
+        });
+        
+        p.addEventListener('mouseout', () => {
+            p.style.transform = 'scale(1)';
+            p.style.backgroundColor = 'transparent';
+        });
+    });
+}
+
+// Holographic Profile Effect
+function enhanceProfileHologram() {
+    const profile = document.querySelector('.about-profile-img');
+    
+    profile.addEventListener('mousemove', (e) => {
+        const rect = profile.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        
+        const rotateX = (y / rect.height - 0.5) * 20;
+        const rotateY = (x / rect.width - 0.5) * 20;
+        
+        profile.style.transform = `
+            perspective(1000px)
+            rotateX(${rotateX}deg)
+            rotateY(${rotateY}deg)
+            scale(1.05)
+        `;
+    });
+    
+    profile.addEventListener('mouseleave', () => {
+        profile.style.transform = 'rotate(-3deg)';
+    });
+}
+
+        // STEP 5: Add this code to your JavaScript section, right before the existing DOMContentLoaded event
+
+function initializeProfileStats() {
+    const statsData = [
+        "Multimedia Specialist: Level 7",
+        "AI Development: Level 6",
+        "Creative Suite Mastery: 92%",
+        "Project Management: Level 8",
+        "Innovation Index: 94%"
+    ];
+    
+    const overlay = document.querySelector('.profile-stats-overlay');
+    
+    // Create stat elements
+    statsData.forEach((stat, index) => {
+        const statItem = document.createElement('div');
+        statItem.className = 'stat-item';
+        statItem.dataset.stat = stat;
+        overlay.appendChild(statItem);
+    });
+}
+
+function typeStatEffect(element, text) {
+    let index = 0;
+    element.textContent = '';
+    
+    const typeInterval = setInterval(() => {
+        if (index < text.length) {
+            element.textContent += text[index];
+            index++;
+        } else {
+            clearInterval(typeInterval);
+        }
+    }, 30);
+}
+
+// STEP 6: Add this to your existing DOMContentLoaded event
+document.addEventListener('DOMContentLoaded', () => {
+    // Your existing initialization code here...
+    
+    // Add this new initialization
+    initializeProfileStats();
+    
+    // Add hover event for profile image
+    const profileImg = document.querySelector('.about-profile-img');
+    const statsOverlay = document.querySelector('.profile-stats-overlay');
+    
+    profileImg.addEventListener('mouseenter', () => {
+        statsOverlay.style.opacity = '1';
+        statsOverlay.style.transform = 'translateX(0)';
+        
+        const statItems = statsOverlay.querySelectorAll('.stat-item');
+        statItems.forEach((item, index) => {
+            setTimeout(() => {
+                typeStatEffect(item, item.dataset.stat);
+            }, index * 500);
+        });
+    });
+    
+    profileImg.addEventListener('mouseleave', () => {
+        statsOverlay.style.opacity = '0';
+        statsOverlay.style.transform = 'translateX(20px)';
+    });
+});
+        // Initial animations
+        document.addEventListener('DOMContentLoaded', () => {
+    // Title and subtitle animations
+    gsap.to('.title', {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        delay: 0.5
+    });
+
+    gsap.to('.subtitle', {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        delay: 0.8
+    });
+
+    // Skill icons animation
+    const skillIcons = document.querySelectorAll('.skill-icon');
+    skillIcons.forEach((icon, index) => {
+        gsap.to(icon, {
+            opacity: 1,
+            scale: 1,
+            duration: 0.5,
+            delay: 1.2 + (index * 0.1),
+            ease: "back.out(1.7)"
+        });
+    });
+
+    // Section animations
+    const sections = document.querySelectorAll('.section');
+    sections.forEach((section, index) => {
+        gsap.to(section, {
+            scrollTrigger: {
+                trigger: section,
+                start: "top 80%",
+                toggleActions: "play none none none"
+            },
+            opacity: 1,
+            y: 0,
+            duration: 1,
+            delay: 0.2 * index
+        });
+    });
+
+    // Create Matrix Background
+    createMatrixBackground();
+    
+    // Recreate on window resize
+    window.addEventListener('resize', () => {
+        const container = document.querySelector('.matrix-background');
+        container.innerHTML = '';
+        createMatrixBackground();
+    });
+
+    // New function calls for about section enhancements
+    addInteractiveTextEffects();
+    enhanceProfileHologram();
+    setInterval(updateMatrixColumns, 1000);
+});
+        
+    </script>
 </body>
 </html>
+
+
+
+
+
+
