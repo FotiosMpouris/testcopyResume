@@ -163,6 +163,27 @@
     animation: gridFade 10s infinite ease-in-out;
     pointer-events: none;
 }
+        /* Add after .dark-theme-section styles */
+.dark-theme-section::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+        linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+    background-size: 40px 40px;
+    animation: gridPulse 4s infinite ease-in-out;
+    pointer-events: none;
+    z-index: 1;
+}
+
+@keyframes gridPulse {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 0.6; }
+}
 
 @keyframes gridFade {
     0%, 100% { opacity: 0; }
@@ -306,6 +327,7 @@
         .about-card {
             max-width: 900px !important;
             margin: 0 auto !important;
+            margin-bottom: 4rem !important; 
             padding: 2rem !important;
             background: linear-gradient(
                 135deg,
@@ -321,6 +343,7 @@
                 inset 0 0 40px rgba(0, 123, 255, 0.08) !important;
             backdrop-filter: blur(10px);
             transform-style: preserve-3d;
+            
         }
 
         .section {
@@ -384,6 +407,45 @@
                 0 0 0 2px rgba(0, 123, 255, 0.5),
                 0 0 30px rgba(0, 123, 255, 0.3);
         }
+
+        .profile-stats-overlay {
+    position: absolute;
+    top: 0;
+    left: 120%;
+    width: 300px;
+    background: rgba(0, 30, 60, 0.95);
+    border: 1px solid rgba(0, 183, 255, 0.3);
+    border-radius: 8px;
+    padding: 1.5rem;
+    opacity: 0;
+    transform: translateX(20px);
+    transition: all 0.3s ease;
+    z-index: 10;
+    backdrop-filter: blur(5px);
+    box-shadow: 
+        0 0 20px rgba(0, 183, 255, 0.2),
+        inset 0 0 15px rgba(0, 183, 255, 0.2);
+}
+
+.stat-item {
+    color: rgba(0, 255, 255, 0.9);
+    text-shadow: 
+        0 0 5px rgba(0, 183, 255, 0.8),
+        0 0 10px rgba(0, 183, 255, 0.5);
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    margin-bottom: 12px;
+    font-family: 'Courier New', monospace;
+    position: relative;
+    padding-left: 20px;
+}
+
+.stat-item::before {
+    content: '>';
+    position: absolute;
+    left: 0;
+    color: rgba(0, 255, 255, 0.7);
+}
 
         /* Updated Glowing About Me Text */
         .glow-text {
@@ -901,6 +963,50 @@
                 }
             }, 30);
         }
+     function initializeProfileStats() {
+        const statsData = [
+            "TECH LEVEL: 87%",
+            "CREATIVITY INDEX: 92%",
+            "AI PROFICIENCY: 85%",
+            "PROJECT SUCCESS RATE: 94%",
+            "INNOVATION SCORE: 89%"
+        ];
+        
+        const profileImg = document.querySelector('.about-profile-img');
+        const statsOverlay = document.querySelector('.profile-stats-overlay');
+        
+        function typeStats() {
+            const statItems = statsOverlay.querySelectorAll('.stat-item');
+            statItems.forEach(item => item.remove());
+            
+            statsData.forEach((stat, index) => {
+                const statItem = document.createElement('div');
+                statItem.className = 'stat-item';
+                statsOverlay.appendChild(statItem);
+                
+                let charIndex = 0;
+                const typeInterval = setInterval(() => {
+                    if (charIndex < stat.length) {
+                        statItem.textContent = stat.slice(0, charIndex + 1);
+                        charIndex++;
+                    } else {
+                        clearInterval(typeInterval);
+                    }
+                }, 30);
+            });
+        }
+        
+        profileImg.addEventListener('mouseenter', () => {
+            statsOverlay.style.opacity = '1';
+            statsOverlay.style.transform = 'translateX(0)';
+            typeStats();
+        });
+        
+        profileImg.addEventListener('mouseleave', () => {
+            statsOverlay.style.opacity = '0';
+            statsOverlay.style.transform = 'translateX(20px)';
+        });
+    }
 
 // Initialize Everything
         document.addEventListener('DOMContentLoaded', () => {
