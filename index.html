@@ -149,6 +149,25 @@
                 radial-gradient(circle at 80% 80%, rgba(255, 0, 0, 0.25), transparent 40%);
             animation: glow 6s infinite ease-in-out;
         }
+        .fade-grid {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+        linear-gradient(rgba(255, 60, 0, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 60, 0, 0.1) 1px, transparent 1px);
+    background-size: 50px 50px;
+    opacity: 0;
+    animation: gridFade 10s infinite ease-in-out;
+    pointer-events: none;
+}
+
+@keyframes gridFade {
+    0%, 100% { opacity: 0; }
+    50% { opacity: 0.3; }
+}
     </style>
 
     <style>
@@ -304,6 +323,19 @@
             transform-style: preserve-3d;
         }
 
+        .section {
+            padding: 6rem 0;  /* Increased from 4rem */
+            margin-bottom: 4rem;  /* Added for consistent spacing */
+        }
+
+        .dark-theme-section {
+            padding: 4rem 0;  /* Added padding */
+        }
+
+        .about-card {
+            margin-bottom: 6rem !important;  /* Added spacing after about section */
+        }
+
         /* Tech Grid Background */
         .tech-grid {
             position: absolute;
@@ -380,18 +412,16 @@
             transition: all 0.3s ease;
             z-index: 10;
             backdrop-filter: blur(5px);
+            
         }
 
         .stat-item {
-            color: #ffffff;
-            text-shadow: 
-                0 0 5px rgba(0, 183, 255, 0.8),
-                0 0 10px rgba(0, 183, 255, 0.5);
-            font-weight: 500;
-            letter-spacing: 0.5px;
-            margin-bottom: 12px;
-            font-family: 'Courier New', monospace;
-        }
+    color: #ffffff;  /* Brighter text */
+    text-shadow: 0 0 8px rgba(0, 183, 255, 0.8);  /* Added glow */
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    margin-bottom: 12px;
+}
 
         /* Content Area */
         .about-content {
@@ -423,6 +453,16 @@
             color: rgba(255, 255, 255, 0.95);
             font-weight: 500;
         }
+        .about-content p {
+    transition: all 0.3s ease;
+}
+
+.about-content p:hover {
+    transform: scale(1.01);
+    background: rgba(0, 123, 255, 0.05);
+    padding: 1rem;
+    border-radius: 8px;
+}
     </style>
 
     <style>
@@ -651,11 +691,8 @@
                 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank" class="skill-icon">
                     <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/javascript/javascript-original.svg" alt="javascript">
                 </a>
-            </div>
-        </div>
-    </section>
-
-        <a href="https://nodejs.org" target="_blank" class="skill-icon">
+           
+            <a href="https://nodejs.org" target="_blank" class="skill-icon">
                     <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/nodejs/nodejs-original-wordmark.svg" alt="nodejs">
                 </a>
                 <a href="https://www.photoshop.com/en" target="_blank" class="skill-icon">
@@ -681,6 +718,7 @@
     </section>
 
         <div class="dark-theme-section">
+                <div class="fade-grid"></div>
         <div class="section-border-glow"></div>
         <div class="particles-container" id="particles-container-bottom">
             <div class="power-surge"></div>
