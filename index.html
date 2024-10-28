@@ -484,7 +484,61 @@
     letter-spacing: 0.5px;
     margin-bottom: 12px;
 }
+/* Add after .about-profile-img styles */
+.crew-stats-display {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 280px;
+    background: rgba(0, 20, 40, 0.95);
+    border: 1px solid rgba(0, 183, 255, 0.4);
+    border-radius: 8px;
+    padding: 1.5rem;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+    z-index: 20;
+    backdrop-filter: blur(5px);
+    box-shadow: 
+        0 0 20px rgba(0, 183, 255, 0.2),
+        inset 0 0 15px rgba(0, 183, 255, 0.1);
+}
 
+.crew-stats-header {
+    color: rgba(0, 255, 255, 0.9);
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(0, 183, 255, 0.3);
+}
+
+.crew-stat-item {
+    color: rgba(0, 255, 255, 0.9);
+    font-family: 'Courier New', monospace;
+    font-size: 13px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.crew-stat-label {
+    color: rgba(0, 183, 255, 0.8);
+}
+
+.crew-stat-value {
+    color: #fff;
+    text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+}
+
+.access-code {
+    color: rgba(0, 255, 255, 0.6);
+    font-size: 11px;
+    margin-top: 15px;
+    padding-top: 10px;
+    border-top: 1px solid rgba(0, 183, 255, 0.3);
+    font-family: 'Courier New', monospace;
+}
         /* Content Area */
         .about-content {
             position: relative;
@@ -793,6 +847,8 @@
                     <div class="about-header">
                         <div class="profile-container">
                             <img src="assets/fotiosProfile.png" alt="Fotios Mpouris" class="about-profile-img">
+                            <div class="crew-stats-display">
+                            <img src="assets/fotiosProfile.png" alt="Fotios Mpouris" class="about-profile-img">
                             <div class="profile-stats-overlay"></div>
                         </div>
                         <div class="about-header-text">
@@ -927,7 +983,61 @@
             
             setTimeout(() => wave.remove(), 6000);
         }
+        function initializeCrewStats() {
+    const crewStats = {
+        header: "CREW MEMBER PROFILE: MPOURIS, F.",
+        stats: [
+            { label: "Role", value: "Creative Tech Specialist" },
+            { label: "Service ID", value: "CTD-2374-MP" },
+            { label: "Tech Proficiency", value: "94.3%" },
+            { label: "Creative Index", value: "97.2%" },
+            { label: "Innovation Rating", value: "91.8%" },
+            { label: "Project Success", value: "93.5%" },
+            { label: "Team Synergy", value: "89.7%" }
+        ],
+        accessCode: "ACCESS LEVEL: ALPHA-7 // CLEARANCE: VERIFIED"
+    };
 
+    const profileImg = document.querySelector('.about-profile-img');
+    const statsDisplay = document.querySelector('.crew-stats-display');
+    
+    function populateStats() {
+        statsDisplay.innerHTML = `
+            <div class="crew-stats-header">${crewStats.header}</div>
+            ${crewStats.stats.map(stat => `
+                <div class="crew-stat-item">
+                    <span class="crew-stat-label">${stat.label}:</span>
+                    <span class="crew-stat-value">${stat.value}</span>
+                </div>
+            `).join('')}
+            <div class="access-code">${crewStats.accessCode}</div>
+        `;
+        
+        // Animate each stat item
+        const items = statsDisplay.querySelectorAll('.crew-stat-item');
+        items.forEach((item, index) => {
+            setTimeout(() => {
+                item.style.opacity = '0';
+                item.style.display = 'flex';
+                setTimeout(() => {
+                    item.style.transition = 'opacity 0.3s ease';
+                    item.style.opacity = '1';
+                }, 50);
+            }, index * 100);
+        });
+    }
+
+    profileImg.addEventListener('mouseenter', () => {
+        statsDisplay.style.opacity = '1';
+        statsDisplay.style.transform = 'translateY(0)';
+        populateStats();
+    });
+
+    profileImg.addEventListener('mouseleave', () => {
+        statsDisplay.style.opacity = '0';
+        statsDisplay.style.transform = 'translateY(-10px)';
+    });
+}
         // Initialize Profile Stats
         function initializeProfileStats() {
             const statsData = [
@@ -1058,6 +1168,7 @@
             
             // Initialize Profile Stats
             initializeProfileStats();
+            initializeCrewStats(); 
 
     // Profile Image Hover Effects
             const profileImg = document.querySelector('.about-profile-img');
