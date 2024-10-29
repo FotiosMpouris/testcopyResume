@@ -489,9 +489,8 @@
             position: absolute;
             top: 50%; /* Center vertically relative to the profile image */
             left: 100%; /* Position to the right of the profile image */
-            transform: translate(-300px, -50%);
+            transform: translate(-300px, calc(-50% + 50px)); /* Moved left by 300px and down by 50px */
             width: 280px; /* Slightly narrower for better fit */
-            height: 200px; /* Fixed height for scrolling */
             background: rgba(0, 123, 255, 0.3); /* Light Transparent Blue */
             border: 1px solid rgba(0, 183, 255, 0.5); /* Updated Border Color */
             border-radius: 8px;
@@ -501,23 +500,14 @@
             z-index: 4;
             backdrop-filter: blur(5px);
             pointer-events: none; /* Prevents accidental clicks */
-            overflow: hidden; /* Hide overflowing stats */
         }
 
         .profile-stats-overlay:hover {
             opacity: 1;
-            transform: translate(-300px, -50%); /* Maintain the left and down shift on hover */
+            transform: translate(-300px, calc(-50% + 50px)); /* Maintain the left and down shift on hover */
             pointer-events: auto;
         }
 
-        /* Container for Scrolling Stats */
-        .stats-scroller {
-            display: flex;
-            flex-direction: column;
-            animation: scrollUp 20s linear infinite;
-        }
-
-        /* Profile Stat Item */
         .stat-item {
             color: #ffffff;
             text-shadow: 
@@ -527,19 +517,9 @@
             letter-spacing: 0.5px;
             margin-bottom: 12px;
             font-family: 'Courier New', monospace;
-            opacity: 1;
-            transform: translateY(0);
+            opacity: 0;
+            transform: translateX(-10px);
             transition: opacity 0.5s ease, transform 0.5s ease;
-        }
-
-        /* Scrolling Animation */
-        @keyframes scrollUp {
-            0% {
-                transform: translateY(0);
-            }
-            100% {
-                transform: translateY(-50%);
-            }
         }
 
         /* Content Area */
@@ -895,10 +875,9 @@
             .profile-stats-overlay {
                 left: 50%;
                 top: 110%; /* Adjusted to align closer */
-                transform: translate(-50%, 0); /* Center horizontally */
+                transform: translate(-300px, calc(-50% + 50px)); /* Maintain left and down shift */
                 width: 90%;
                 max-width: 300px;
-                height: 200px; /* Fixed height */
             }
 
             .about-content {
@@ -1096,34 +1075,11 @@
                             <img src="assets/fotiosProfile.png" alt="Fotios Mpouris" class="about-profile-img">
 
                             <div class="profile-stats-overlay">
-                                <div class="stats-scroller">
-                                    <!-- 25 Stat Items -->
-                                    <div class="stat-item">Multimedia Specialist: Level 7</div>
-                                    <div class="stat-item">AI Development: Level 6</div>
-                                    <div class="stat-item">Creative Suite Mastery: 92%</div>
-                                    <div class="stat-item">Project Management: Level 8</div>
-                                    <div class="stat-item">Innovation Index: 94%</div>
-                                    <div class="stat-item">UI/UX Design: Expert</div>
-                                    <div class="stat-item">Data Analysis: Proficient</div>
-                                    <div class="stat-item">Game Design: Advanced</div>
-                                    <div class="stat-item">Animation Skills: 85%</div>
-                                    <div class="stat-item">Python Programming: Level 7</div>
-                                    <div class="stat-item">C# Development: Level 6</div>
-                                    <div class="stat-item">Unity Engine: Expert</div>
-                                    <div class="stat-item">Blender Modeling: Advanced</div>
-                                    <div class="stat-item">JavaScript: Proficient</div>
-                                    <div class="stat-item">Node.js: Intermediate</div>
-                                    <div class="stat-item">Adobe Premiere Pro: Expert</div>
-                                    <div class="stat-item">After Effects: Advanced</div>
-                                    <div class="stat-item">Photoshop: Mastery</div>
-                                    <div class="stat-item">Google Cloud: Proficient</div>
-                                    <div class="stat-item">DotNet Framework: Intermediate</div>
-                                    <div class="stat-item">Zapier Automation: Expert</div>
-                                    <div class="stat-item">Android Development: Level 5</div>
-                                    <div class="stat-item">AI Integration: Level 7</div>
-                                    <div class="stat-item">Project Coordination: Level 8</div>
-                                    <div class="stat-item">Innovation Strategies: Level 9</div>
-                                </div>
+                                <div class="stat-item" data-stat="Multimedia Specialist: Level 7">Multimedia Specialist: Level 7</div>
+                                <div class="stat-item" data-stat="AI Development: Level 6">AI Development: Level 6</div>
+                                <div class="stat-item" data-stat="Creative Suite Mastery: 92%">Creative Suite Mastery: 92%</div>
+                                <div class="stat-item" data-stat="Project Management: Level 8">Project Management: Level 8</div>
+                                <div class="stat-item" data-stat="Innovation Index: 94%">Innovation Index: 94%</div>
                             </div>
                         </div>
                         <!-- Removed the .about-header-text div as per user request -->
@@ -1244,8 +1200,8 @@
                     }
 
                     column.textContent = columnChars;
-                    column.style.left = `${i * columnWidth}px`;
-                    column.style.animationDelay = `${-Math.random() * 20}s`;
+                    column.style.left = ${i * columnWidth}px;
+                    column.style.animationDelay = ${-Math.random() * 20}s;
 
                     container.appendChild(column);
                 }
@@ -1273,8 +1229,8 @@
                 }
                 
                 column.textContent = columnChars;
-                column.style.left = `${i * columnWidth}px`;
-                column.style.animationDelay = `${-Math.random() * 20}s`;
+                column.style.left = ${i * columnWidth}px;
+                column.style.animationDelay = ${-Math.random() * 20}s;
                 
                 // Randomly add glow effect
                 if (Math.random() < 0.3) {
@@ -1292,38 +1248,34 @@
                 "AI Development: Level 6",
                 "Creative Suite Mastery: 92%",
                 "Project Management: Level 8",
-                "Innovation Index: 94%",
-                "UI/UX Design: Expert",
-                "Data Analysis: Proficient",
-                "Game Design: Advanced",
-                "Animation Skills: 85%",
-                "Python Programming: Level 7",
-                "C# Development: Level 6",
-                "Unity Engine: Expert",
-                "Blender Modeling: Advanced",
-                "JavaScript: Proficient",
-                "Node.js: Intermediate",
-                "Adobe Premiere Pro: Expert",
-                "After Effects: Advanced",
-                "Photoshop: Mastery",
-                "Google Cloud: Proficient",
-                "DotNet Framework: Intermediate",
-                "Zapier Automation: Expert",
-                "Android Development: Level 5",
-                "AI Integration: Level 7",
-                "Project Coordination: Level 8",
-                "Innovation Strategies: Level 9"
+                "Innovation Index: 94%"
             ];
             
-            const overlay = document.querySelector('.profile-stats-overlay .stats-scroller');
+            const overlay = document.querySelector('.profile-stats-overlay');
             overlay.innerHTML = ''; // Clear existing stats
             
-            statsData.forEach(stat => {
+            statsData.forEach((stat, index) => {
                 const statItem = document.createElement('div');
                 statItem.className = 'stat-item';
-                statItem.textContent = stat;
+                statItem.dataset.stat = stat;
                 overlay.appendChild(statItem);
             });
+        }
+
+        function typeStatEffect(element, text) {
+            let index = 0;
+            element.textContent = '';
+            element.style.opacity = '1';
+            element.style.transform = 'translateX(0)';
+
+            const typeInterval = setInterval(() => {
+                if (index < text.length) {
+                    element.textContent += text[index];
+                    index++;
+                } else {
+                    clearInterval(typeInterval);
+                }
+            }, 30);
         }
 
         // Particle Effects
@@ -1332,11 +1284,11 @@
             particle.className = 'particle';
             
             const size = Math.random() * 4 + 2;
-            particle.style.width = `${size}px`;
-            particle.style.height = `${size}px`;
+            particle.style.width = ${size}px;
+            particle.style.height = ${size}px;
             
-            particle.style.left = `${Math.random() * 100}%`;
-            particle.style.top = `${Math.random() * 100}%`;
+            particle.style.left = ${Math.random() * 100}%;
+            particle.style.top = ${Math.random() * 100}%;
             
             container.appendChild(particle);
             
@@ -1353,8 +1305,8 @@
         function createEnergyWave(x, y, container) {
             const wave = document.createElement('div');
             wave.className = 'energy-wave';
-            wave.style.left = `${x - 100}px`;
-            wave.style.top = `${y - 100}px`;
+            wave.style.left = ${x - 100}px;
+            wave.style.top = ${y - 100}px;
             container.appendChild(wave);
             
             setTimeout(() => wave.remove(), 6000);
@@ -1407,7 +1359,7 @@
                 const textElement = currentItem.querySelector('.typing-text');
 
                 // Retrieve the data for current infographic
-                const { title, text } = infographicData[currentInfographic % infographicData.length];
+                const { title, text } = infographicData[currentInfographic];
 
                 // Start typing title and text simultaneously
                 await Promise.all([
@@ -1441,22 +1393,6 @@
             });
         }
 
-        // Initialize Scrolling Stats Animation
-        function startScrollingStats() {
-            const scroller = document.querySelector('.profile-stats-overlay .stats-scroller');
-            const statsHeight = scroller.scrollHeight / 2; // Since we'll duplicate the stats for seamless scrolling
-
-            // Duplicate the stats for seamless loop
-            scroller.innerHTML += scroller.innerHTML;
-
-            gsap.to(scroller, {
-                y: -statsHeight,
-                ease: "none",
-                duration: 30, // Adjust the duration as needed for speed
-                repeat: -1
-            });
-        }
-
         // Initialize Everything
         document.addEventListener('DOMContentLoaded', () => {
             // Initialize Matrix
@@ -1480,7 +1416,6 @@
 
             // Initialize Profile Stats
             initializeProfileStats();
-            startScrollingStats();
 
             // Profile Image Interactions
             const profileImg = document.querySelector('.about-profile-img');
@@ -1489,12 +1424,20 @@
             // Hover interactions directly on the profile image
             profileImg.addEventListener('mouseenter', () => {
                 statsOverlay.style.opacity = '1';
-                statsOverlay.style.transform = 'translate(-300px, -50%)'; /* Maintain left and down shift */
+                statsOverlay.style.transform = 'translate(-300px, calc(-50% + 50px))'; /* Maintain left and down shift */
+                
+                const statItems = statsOverlay.querySelectorAll('.stat-item');
+                statItems.forEach((item, index) => {
+                    setTimeout(() => {
+                        typeStatEffect(item, item.dataset.stat);
+                        gsap.to(item, { opacity: 1, y: 0, duration: 0.5, delay: 0 });
+                    }, index * 300); // Adjust delay as needed
+                });
             });
             
             profileImg.addEventListener('mouseleave', () => {
                 statsOverlay.style.opacity = '0';
-                statsOverlay.style.transform = 'translate(-300px, -50%)'; /* Maintain left and down shift */
+                statsOverlay.style.transform = 'translate(-300px, calc(-50% + 50px))'; /* Maintain left and down shift */
             });
 
             // GSAP Animations
@@ -1572,6 +1515,3 @@
     </script>
 </body>
 </html>
-
-
-
