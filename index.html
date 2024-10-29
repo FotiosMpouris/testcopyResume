@@ -15,13 +15,11 @@
             --primary-dark: #0a192f;
             --primary-light: #20232a;
             --accent-blue: #007BFF;
-            --accent-red: #FF0000; /* Consistent red */
             --accent-glow: rgba(0, 183, 255, 0.5);
             --text-primary: #ffffff;
             --text-secondary: rgba(255, 255, 255, 0.7);
             --matrix-color: rgba(0, 183, 255, 0.25);
             --transition-standard: all 0.3s ease;
-            --infographic-bg: rgba(0, 123, 255, 0.3); /* Semi-transparent Blue */
         }
 
         /* Reset and Base Styles */
@@ -232,71 +230,31 @@
             object-fit: contain;
         }
 
-        /* Lower Hero Section Enhancements */
-        .lower-hero {
-            position: relative;
-            height: 0vh; /* Set to 0 to remove red space */
-            background: transparent; /* Remove red background */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            color: var(--text-primary);
-        }
-
-        .lower-hero::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: url('https://www.svgrepo.com/show/331541/circuit.svg') repeat;
-            background-size: 50px 50px;
-            opacity: 0.05;
-            animation: subtleScroll 60s linear infinite;
-        }
-
-        /* Subtle Scrolling Code Effects */
-        .lower-hero .scrolling-code {
-            position: absolute;
-            top: 10%;
-            left: 5%;
-            width: 90%;
-            height: 80%;
-            overflow: hidden;
-            pointer-events: none;
-        }
-
-        .lower-hero .scrolling-code::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 200%;
-            height: 100%;
-            background: linear-gradient(
-                to bottom,
-                transparent,
-                rgba(255, 255, 255, 0.05),
-                transparent
-            );
-            background-size: 100% 20px;
-            animation: codeScroll 10s linear infinite;
-        }
-
-        @keyframes subtleScroll {
-            from { background-position: 0 0; }
-            to { background-position: 100px 100px; }
-        }
-
-        @keyframes codeScroll {
-            from { transform: translateY(0); }
-            to { transform: translateY(-100%); }
-        }
-
         /* Dark Theme Section */
         .dark-theme-section {
             background: linear-gradient(135deg, #2f0000 0%, #600 25%, #800 75%, #400 100%);
             position: relative;
             overflow: hidden;
+        }
+
+        /* Section Border Glow */
+        .section-border-glow {
+            position: absolute;
+            top: -2px;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 0, 0, 0.5),
+                rgba(255, 128, 0, 0.5),
+                rgba(255, 0, 0, 0.5),
+                transparent
+            );
+            filter: blur(2px);
+            animation: borderGlow 3s infinite alternate;
+            z-index: 5;
         }
 
         /* About Card Styling */
@@ -322,23 +280,30 @@
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
-        /* Glowing Blue Border Around About Card */
-        .about-card::before {
-            content: '';
+        /* Matrix Background in About Card */
+        .matrix-background {
             position: absolute;
-            top: -10px;
-            left: -10px;
-            right: -10px;
-            bottom: -10px;
-            border: 2px solid transparent;
-            border-radius: 15px;
-            box-shadow: 0 0 20px rgba(0, 183, 255, 0.5), 0 0 40px rgba(0, 183, 255, 0.5);
-            animation: glowPulse 4s infinite alternate;
-            pointer-events: none;
-            z-index: -1;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            overflow: hidden;
+            z-index: 1;
+            mask-image: linear-gradient(
+                to bottom,
+                transparent,
+                black 10%,
+                black 90%,
+                transparent
+            );
+            -webkit-mask-image: linear-gradient(
+                to bottom,
+                transparent,
+                black 10%,
+                black 90%,
+                transparent
+            );
         }
-
-        /* Removed Matrix Background in About Card */
 
         /* Tech Grid Background */
         .tech-grid {
@@ -359,7 +324,7 @@
         /* Profile Section */
         .about-header {
             display: flex;
-            align-items: flex-start;
+            align-items: center;
             gap: 3rem;
             margin-bottom: 4rem;
             padding: 0 1rem;
@@ -370,7 +335,6 @@
         .profile-container {
             position: relative;
             display: inline-block;
-            flex: 2; /* Adjusted to allow space for infographic */
         }
 
         /* Profile Image */
@@ -386,7 +350,6 @@
             transition: all 0.5s ease;
             position: relative;
             isolation: isolate;
-            margin-top: 0; /* Remove extra space above */
         }
 
         /* Profile Image Hover Effects */
@@ -431,11 +394,11 @@
         /* Profile Stats Overlay */
         .profile-stats-overlay {
             position: absolute;
-            top: 0;
-            left: 100%;
+            top: -10px;
+            left: 120%;
             width: 300px;
-            background: rgba(0, 123, 255, 0.3); /* Light Transparent Blue */
-            border: 1px solid rgba(0, 183, 255, 0.5); /* Updated Border Color */
+            background: rgba(0, 30, 60, 0.95);
+            border: 1px solid rgba(0, 183, 255, 0.3);
             border-radius: 8px;
             padding: 1.5rem;
             opacity: 0;
@@ -443,13 +406,6 @@
             transition: all 0.3s ease;
             z-index: 10;
             backdrop-filter: blur(5px);
-            pointer-events: none; /* Prevents accidental clicks */
-        }
-
-        .profile-stats-overlay:hover {
-            opacity: 1;
-            transform: translateX(0);
-            pointer-events: auto;
         }
 
         .stat-item {
@@ -470,7 +426,6 @@
         .about-header-text {
             position: relative;
             display: inline-block;
-            flex: 1; /* Adjusted to allow space for infographic */
         }
 
         .glow-text {
@@ -480,7 +435,7 @@
             text-shadow: 
                 0 0 10px rgba(0, 183, 255, 0.5),
                 0 0 20px rgba(0, 183, 255, 0.3);
-            animation: titlePulse 3s infinite alternate, fadeOutHeading 12s forwards;
+            animation: titlePulse 3s infinite alternate;
             transition: all 0.3s ease;
             position: relative;
         }
@@ -609,80 +564,6 @@
             }
         }
 
-        @keyframes fadeOutHeading {
-            0% { opacity: 1; }
-            80% { opacity: 1; }
-            100% { opacity: 0; }
-        }
-
-        /* Infographics Cycling Animation */
-        .infographic {
-            position: relative;
-            width: 300px;
-            height: 200px;
-            overflow: hidden;
-        }
-
-        .infographic-item {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            padding: 1rem;
-            box-sizing: border-box;
-            background: var(--infographic-bg); /* Semi-transparent Blue */
-            border-radius: 10px;
-            display: none; /* Hide all by default */
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            opacity: 0;
-            transition: opacity 0.5s ease-in-out;
-        }
-
-        .infographic-item.active {
-            display: flex;
-            opacity: 1;
-        }
-
-        .infographic-item h4 {
-            margin-bottom: 0.5rem;
-            color: #fff;
-            text-shadow: 0 0 10px rgba(0, 183, 255, 0.5);
-            text-align: center;
-            width: 100%;
-            font-size: 1.5rem;
-            position: relative;
-            /* Removed animation: shiftUp 4s forwards; */
-            border: none; /* Ensure no border */
-        }
-
-        .infographic-item p {
-            color: rgba(255, 255, 255, 0.8);
-            text-align: center;
-            font-size: 1rem;
-            width: 100%;
-            position: relative;
-            max-height: 120px; /* Ensures text stays within box */
-            overflow: hidden;
-        }
-
-        /* Typing Effect */
-        .typing-text {
-            position: relative;
-            /* Removed border-right */
-            white-space: normal;
-            word-wrap: break-word;
-            overflow: hidden;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        /* Removed ::after pseudo-element to eliminate caret */
-        /* If you still want to keep the caret without it expanding, use a separate approach */
-        /* For complete removal, no ::after is defined */
-
         /* Section Styling */
         .section {
             padding: 4rem 0;
@@ -792,7 +673,6 @@
             font-size: 1.4rem;
             margin-bottom: 0.5rem;
             text-shadow: 0 0 10px rgba(0, 123, 255, 0.3);
-            border: none; /* Ensure no border */
         }
 
         .project-card p {
@@ -882,12 +762,6 @@
             .about-content {
                 padding: 1rem;
             }
-
-            /* Adjust infographic positioning */
-            .infographic {
-                width: 100%;
-                height: 150px;
-            }
         }
 
         @media (max-width: 768px) {
@@ -964,26 +838,6 @@
                 background: rgba(255, 60, 0, 0.15);
             }
         }
-
-        /* Additional Enhancements */
-
-        /* Animated SVGs */
-        .animated-svg {
-            width: 100%;
-            height: auto;
-            margin-top: 2rem;
-            animation: svgMove 10s linear infinite;
-        }
-
-        @keyframes svgMove {
-            0% { transform: translateX(0); }
-            50% { transform: translateX(20px); }
-            100% { transform: translateX(0); }
-        }
-
-        /* Infographics Typing and Cycling */
-        /* Removed redundant keyframes */
-        
     </style>
 </head>
 
@@ -993,123 +847,82 @@
         <div class="particles-container" id="particles-container"></div>
         <div class="matrix-background"></div>
         <div class="container">
-            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/github/github-original-wordmark.svg" 
-                 alt="GitHub" class="github-icon">
+            <a href="https://github.com/FotiosMpouris" target="_blank">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/github/github-original-wordmark.svg" 
+                     alt="GitHub" class="github-icon">
+            </a>
             <h1 class="title">Fotios Mpouris</h1>
             <h2 class="subtitle">2D & 3D Artist / Animator / Developer</h2>
             
             <!-- Skills Container -->
             <div class="skills-container">
-                <div class="skill-icon">
+                <a href="https://developer.android.com" target="_blank" class="skill-icon">
                     <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/android/android-original-wordmark.svg" alt="android">
-                </div>
-                <div class="skill-icon">
+                </a>
+                <a href="https://www.blender.org/" target="_blank" class="skill-icon">
                     <img src="https://download.blender.org/branding/community/blender_community_badge_white.svg" alt="blender">
-                </div>
-                <div class="skill-icon">
+                </a>
+                <a href="https://www.w3schools.com/cs/" target="_blank" class="skill-icon">
                     <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/csharp/csharp-original.svg" alt="csharp">
-                </div>
-                <div class="skill-icon">
+                </a>
+                <a href="https://dotnet.microsoft.com/" target="_blank" class="skill-icon">
                     <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/dot-net/dot-net-original-wordmark.svg" alt="dotnet">
-                </div>
-                <div class="skill-icon">
+                </a>
+                <a href="https://cloud.google.com" target="_blank" class="skill-icon">
                     <img src="https://www.vectorlogo.zone/logos/google_cloud/google_cloud-icon.svg" alt="gcp">
-                </div>
-                <div class="skill-icon">
+                </a>
+                <a href="https://www.w3.org/html/" target="_blank" class="skill-icon">
                     <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/html5/html5-original-wordmark.svg" alt="html5">
-                </div>
-                <div class="skill-icon">
+                </a>
+                <a href="https://www.adobe.com/in/products/illustrator.html" target="_blank" class="skill-icon">
                     <img src="https://www.vectorlogo.zone/logos/adobe_illustrator/adobe_illustrator-icon.svg" alt="illustrator">
-                </div>
-                <div class="skill-icon">
+                </a>
+                <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank" class="skill-icon">
                     <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/javascript/javascript-original.svg" alt="javascript">
-                </div>
-                <div class="skill-icon">
+                </a>
+                <a href="https://nodejs.org" target="_blank" class="skill-icon">
                     <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/nodejs/nodejs-original-wordmark.svg" alt="nodejs">
-                </div>
-                <div class="skill-icon">
+                </a>
+                <a href="https://www.photoshop.com/en" target="_blank" class="skill-icon">
                     <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/photoshop/photoshop-original.svg" alt="photoshop">
-                </div>
-                <div class="skill-icon">
+                </a>
+                <a href="https://www.python.org" target="_blank" class="skill-icon">
                     <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg" alt="python">
-                </div>
-                <div class="skill-icon">
+                </a>
+                <a href="https://unity.com/" target="_blank" class="skill-icon">
                     <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/unity/unity-original.svg" alt="unity">
-                </div>
-                <div class="skill-icon">
+                </a>
+                <a href="https://zapier.com" target="_blank" class="skill-icon">
                     <img src="https://www.vectorlogo.zone/logos/zapier/zapier-icon.svg" alt="zapier">
-                </div>
-                <div class="skill-icon">
+                </a>
+                <a href="https://www.adobe.com/products/premiere.html" target="_blank" class="skill-icon">
                     <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/premierepro/premierepro-original.svg" alt="premiere pro">
-                </div>
-                <div class="skill-icon">
+                </a>
+                <a href="https://www.adobe.com/products/aftereffects.html" target="_blank" class="skill-icon">
                     <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/aftereffects/aftereffects-original.svg" alt="after effects">
-                </div>
+                </a>
             </div>
         </div>
     </section>
 
-    <!-- Lower Hero Section Enhancements -->
-    <section class="lower-hero">
-        <div class="particles-container"></div>
-        <div class="scrolling-code"></div>
-        <!-- No additional content needed as per your preference -->
-    </section>
-
     <!-- Dark Theme Section -->
     <div class="dark-theme-section">
+        <div class="section-border-glow"></div>
         <div class="particles-container" id="particles-container-bottom"></div>
         
         <div class="container">
             <!-- About Section -->
             <section class="section">
                 <div class="card about-card">
-                    <!-- Removed the matrix-background div to eliminate Matrix effect in About section -->
+                    <div class="matrix-background"></div>
                     <div class="tech-grid"></div>
                     <div class="about-header">
                         <div class="profile-container">
                             <img src="assets/fotiosProfile.png" alt="Fotios Mpouris" class="about-profile-img">
-                            
-                            <!-- Option 2: Invisible Overlay to Expand Hover Area -->
-                            <div class="hover-area"></div> <!-- Added Invisible Hover Area -->
-
-                            <div class="profile-stats-overlay">
-                                <div class="stat-item">Multimedia Specialist: Level 7</div>
-                                <div class="stat-item">AI Development: Level 6</div>
-                                <div class="stat-item">Creative Suite Mastery: 92%</div>
-                                <div class="stat-item">Project Management: Level 8</div>
-                                <div class="stat-item">Innovation Index: 94%</div>
-                            </div>
+                            <div class="profile-stats-overlay"></div>
                         </div>
                         <div class="about-header-text">
                             <h3 class="glow-text">About Me</h3>
-                        </div>
-                        <!-- Infographics Container -->
-                        <div class="infographic">
-                            <div class="infographic-item">
-                                <h4></h4>
-                                <p class="typing-text"></p>
-                            </div>
-                            <div class="infographic-item">
-                                <h4></h4>
-                                <p class="typing-text"></p>
-                            </div>
-                            <div class="infographic-item">
-                                <h4></h4>
-                                <p class="typing-text"></p>
-                            </div>
-                            <div class="infographic-item">
-                                <h4></h4>
-                                <p class="typing-text"></p>
-                            </div>
-                            <div class="infographic-item">
-                                <h4></h4>
-                                <p class="typing-text"></p>
-                            </div>
-                            <div class="infographic-item">
-                                <h4></h4>
-                                <p class="typing-text"></p>
-                            </div>
                         </div>
                     </div>
                     <div class="about-content">
@@ -1137,23 +950,32 @@
                 <div class="card">
                     <h3>Featured Projects</h3>
                     <div class="projects">
-                        <div class="project-card">
+                        <a href="https://github.com/FotiosMpouris/ImpossibleShark2" class="project-card">
                             <h4>Impossible Shark</h4>
                             <p>Game Development</p>
-                        </div>
-                        <div class="project-card">
+                        </a>
+                        <a href="https://github.com/FotiosMpouris/Hardie-Siding-Agent-Testing-Working_Copy/blob/main/README.md" class="project-card">
                             <h4>Siding Project Assistant</h4>
                             <p>AI Development</p>
-                        </div>
-                        <div class="project-card">
+                        </a>
+                        <a href="https://github.com/FotiosMpouris/Oriana/blob/main/README.md" class="project-card">
                             <h4>Oriana</h4>
                             <p>AI Assistant</p>
-                        </div>
-                        <div class="project-card">
+                        </a>
+                        <a href="https://github.com/FotiosMpouris/ReggieResume2/blob/main/README.md" class="project-card">
                             <h4>AI Resume Tailor</h4>
                             <p>AI Tool</p>
-                        </div>
-                        <!-- Removed Placeholder Projects -->
+                        </a>
+                        <!-- Reintroduced Missing Projects -->
+                        <a href="https://github.com/FotiosMpouris/NewProject1" class="project-card">
+                            <h4>New Project 1</h4>
+                            <p>Description of New Project 1</p>
+                        </a>
+                        <a href="https://github.com/FotiosMpouris/NewProject2" class="project-card">
+                            <h4>New Project 2</h4>
+                            <p>Description of New Project 2</p>
+                        </a>
+                        <!-- Add more projects as needed -->
                     </div>
                 </div>
             </section>
@@ -1163,9 +985,9 @@
                 <div class="card">
                     <h3>Connect</h3>
                     <div class="social-links">
-                        <a href="mailto:your.email@example.com" class="social-link">Email</a>
-                        <a href="https://www.linkedin.com/in/yourprofile" class="social-link" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-                        <a href="https://www.behance.net/yourprofile" class="social-link" target="_blank" rel="noopener noreferrer">Behance</a>
+                        <a href="mailto:fotiosmpouris@gmail.com" class="social-link">Email</a>
+                        <a href="https://linkedin.com/in/fotiosmpouris" class="social-link">LinkedIn</a>
+                        <a href="https://www.behance.net/fotiosmpouris" class="social-link">Behance</a>
                     </div>
                 </div>
             </section>
@@ -1178,33 +1000,31 @@
 
         // Matrix Effect Functions
         function createMatrixBackground() {
-            const containers = document.querySelectorAll('.matrix-background');
-            containers.forEach(container => {
-                const containerWidth = container.offsetWidth;
-                const columnWidth = 30; // Increased width for fewer columns
-                const numberOfColumns = Math.ceil(containerWidth / columnWidth);
+            const container = document.querySelector('.matrix-background');
+            const containerWidth = container.offsetWidth;
+            const columnWidth = 30; // Increased width for fewer columns
+            const numberOfColumns = Math.ceil(containerWidth / columnWidth);
 
-                const chars = '守らリケーシタアプョン01{}#$@987';
+            const chars = '守らリケーシタアプョン01\{\}#$@987';
 
-                container.innerHTML = ''; // Clear existing columns
+            container.innerHTML = ''; // Clear existing columns
 
-                for(let i = 0; i < numberOfColumns; i++) {
-                    const column = document.createElement('div');
-                    column.className = 'matrix-column';
-                    
-                    // Create random string of characters
-                    let columnChars = '';
-                    for(let j = 0; j < 100; j++) { // Increased from 50 to 100
-                        columnChars += chars[Math.floor(Math.random() * chars.length)] + '\n';
-                    }
-
-                    column.textContent = columnChars;
-                    column.style.left = `${i * columnWidth}px`;
-                    column.style.animationDelay = `${-Math.random() * 20}s`;
-
-                    container.appendChild(column);
+            for(let i = 0; i < numberOfColumns; i++) {
+                const column = document.createElement('div');
+                column.className = 'matrix-column';
+                
+                // Create random string of characters
+                let columnChars = '';
+                for(let j = 0; j < 100; j++) { // Increased from 50 to 100
+                    columnChars += chars[Math.floor(Math.random() * chars.length)] + '\n';
                 }
-            });
+
+                column.textContent = columnChars;
+                column.style.left = `${i * columnWidth}px`;
+                column.style.animationDelay = `${-Math.random() * 20}s`;
+
+                container.appendChild(column);
+            }
         }
 
         // Profile Stats Functions
@@ -1278,94 +1098,13 @@
             setTimeout(() => wave.remove(), 6000);
         }
 
-        // Typing and Cycling for Infographics
-        const infographicData = [
-            { title: "AI Development", text: "Leveraging machine learning algorithms to create intelligent systems." },
-            { title: "Game Design", text: "Designing immersive game environments and interactive experiences." },
-            { title: "Multimedia Production", text: "Creating high-quality animations and motion graphics." },
-            { title: "Project Management", text: "Coordinating cross-functional teams to deliver projects on time." },
-            { title: "Data Analysis", text: "Analyzing complex datasets to derive actionable insights." },
-            { title: "UI/UX Design", text: "Creating intuitive user interfaces and enhancing user experiences." }
-        ];
-
-        let currentInfographic = 0;
-        const infographicItems = document.querySelectorAll('.infographic-item');
-
-        // Helper function to delay execution
-        function delay(ms) {
-            return new Promise(resolve => setTimeout(resolve, ms));
-        }
-
-        // Function to type text into an element
-        function typeText(element, text, speed = 50) {
-            return new Promise((resolve) => {
-                let index = 0;
-                element.textContent = '';
-                element.style.opacity = '1';
-                
-                const typingInterval = setInterval(() => {
-                    if (index < text.length) {
-                        element.textContent += text[index];
-                        index++;
-                    } else {
-                        clearInterval(typingInterval);
-                        resolve();
-                    }
-                }, speed);
-            });
-        }
-
-        // Function to cycle through infographics
-        async function cycleInfographics() {
-            while(true) {
-                const currentItem = infographicItems[currentInfographic];
-                currentItem.classList.add('active');
-
-                const titleElement = currentItem.querySelector('h4');
-                const textElement = currentItem.querySelector('.typing-text');
-
-                // Retrieve the data for current infographic
-                const { title, text } = infographicData[currentInfographic];
-
-                // Start typing title and text simultaneously
-                await Promise.all([
-                    typeText(titleElement, title),
-                    typeText(textElement, text)
-                ]);
-
-                // Wait for half a second
-                await delay(500);
-
-                // Fade out the infographic
-                currentItem.classList.remove('active');
-
-                // Clear the texts
-                titleElement.textContent = '';
-                textElement.textContent = '';
-
-                // Move to next infographic
-                currentInfographic = (currentInfographic + 1) % infographicItems.length;
-
-                // Small delay before showing next infographic
-                await delay(300);
-            }
-        }
-
-        // Initialize Particles
-        function startParticles() {
-            const particlesContainers = document.querySelectorAll('.particles-container');
-            particlesContainers.forEach(container => {
-                setInterval(() => createParticle(container), 200);
-            });
-        }
-
         // Initialize Everything
         document.addEventListener('DOMContentLoaded', () => {
             // Initialize Matrix
             createMatrixBackground();
             setInterval(() => {
-                const columns = document.querySelectorAll('.matrix-column');
-                columns.forEach(column => {
+                const chars = document.querySelectorAll('.matrix-column');
+                chars.forEach(column => {
                     if (Math.random() < 0.01) { // 1% chance per column to glow a character
                         const randomCharIndex = Math.floor(Math.random() * 100);
                         const char = column.childNodes[randomCharIndex];
@@ -1383,27 +1122,22 @@
             // Profile Image Interactions
             const profileImg = document.querySelector('.about-profile-img');
             const statsOverlay = document.querySelector('.profile-stats-overlay');
-            const hoverArea = document.querySelector('.hover-area'); // Select the invisible hover area
-
-            // Combine hover events for both profile image and hover area
-            [profileImg, hoverArea].forEach(element => {
-                element.addEventListener('mouseenter', () => {
-                    statsOverlay.style.opacity = '1';
-                    statsOverlay.style.transform = 'translateX(0)';
-                    
-                    const statItems = statsOverlay.querySelectorAll('.stat-item');
-                    statItems.forEach((item, index) => {
-                        setTimeout(() => {
-                            typeStatEffect(item, item.dataset.stat);
-                            gsap.to(item, { opacity: 1, y: 0, duration: 0.5, delay: 0 });
-                        }, index * 300); // Reduced delay for quicker appearance
-                    });
-                });
+            
+            profileImg.addEventListener('mouseenter', () => {
+                statsOverlay.style.opacity = '1';
+                statsOverlay.style.transform = 'translateX(0)';
                 
-                element.addEventListener('mouseleave', () => {
-                    statsOverlay.style.opacity = '0';
-                    statsOverlay.style.transform = 'translateX(20px)';
+                const statItems = statsOverlay.querySelectorAll('.stat-item');
+                statItems.forEach((item, index) => {
+                    setTimeout(() => {
+                        typeStatEffect(item, item.dataset.stat);
+                    }, index * 500);
                 });
+            });
+            
+            profileImg.addEventListener('mouseleave', () => {
+                statsOverlay.style.opacity = '0';
+                statsOverlay.style.transform = 'translateX(20px)';
             });
 
             // GSAP Animations
@@ -1450,10 +1184,10 @@
             });
 
             // Initialize Particles
-            startParticles();
-
-            // Start Infographics Cycling
-            cycleInfographics();
+            const particlesContainers = document.querySelectorAll('.particles-container');
+            particlesContainers.forEach(container => {
+                setInterval(() => createParticle(container), 200);
+            });
 
             // Window Resize Handler
             window.addEventListener('resize', () => {
@@ -1462,7 +1196,6 @@
 
             // Mouse Movement Handler
             document.addEventListener('mousemove', (e) => {
-                const particlesContainers = document.querySelectorAll('.particles-container');
                 particlesContainers.forEach(container => {
                     const rect = container.getBoundingClientRect();
                     if (e.clientY >= rect.top && e.clientY <= rect.bottom) {
