@@ -106,9 +106,8 @@
             color: var(--matrix-color);
             font-family: 'Courier New', monospace;
             font-size: 16px;
-            line-height: 24px; /* Fixed line height */
-            white-space: pre-wrap; /* Allow wrapping */
-            word-wrap: break-word;
+            line-height: 16px;
+            white-space: pre;
             background: linear-gradient(
                 0deg,
                 transparent,
@@ -125,8 +124,7 @@
         .matrix-column::before {
             content: '守\A ら\A れ\A た\A 0\A 1\A ア\A プ\A リ\A ケ\A ー\A シ\A ョ\A ン\A \}\A \{\A #\A $\A @\A 9\A 8\A 7';
             position: absolute;
-            white-space: pre-wrap;
-            word-wrap: break-word;
+            white-space: pre;
             animation: matrixRain 8s linear infinite;
             text-shadow: 0 0 12px var(--matrix-glow);
         }
@@ -163,9 +161,8 @@
             color: var(--matrix-color);
             font-family: 'Courier New', monospace;
             font-size: 16px;
-            line-height: 24px; /* Fixed line height */
-            white-space: pre-wrap; /* Allow wrapping */
-            word-wrap: break-word;
+            line-height: 16px;
+            white-space: pre;
             animation: animeRain 20s linear infinite;
             mix-blend-mode: screen;
             text-shadow: 0 0 8px var(--matrix-glow);
@@ -517,39 +514,32 @@
         .stats-scroller {
             display: flex;
             flex-direction: column;
-            position: relative; /* Changed from absolute to relative */
-            width: 100%;
-            transform: translateY(0); /* Initialize position */
+            animation: scrollUp 20s linear infinite;
         }
 
         /* Profile Stat Item */
         .stat-item {
-            height: 24px; /* Fixed height */
-            line-height: 24px; /* Match the height */
             color: #ffffff;
             text-shadow: 
                 0 0 5px rgba(0, 183, 255, 0.8),
                 0 0 10px rgba(0, 183, 255, 0.5);
             font-weight: 500;
             letter-spacing: 0.5px;
-            margin-top: 8px; /* Reduced Space between stats */
+            margin-bottom: 12px;
             font-family: 'Courier New', monospace;
             opacity: 1;
             transform: translateY(0);
-            transition: opacity 0.3s ease, transform 0.3s ease;
-            white-space: normal; /* Allow text wrapping */
-            word-wrap: break-word;
-            overflow: hidden; /* Prevent overflow */
-            background: rgba(0, 0, 0, 0.2); /* Subtle background for readability */
-            border-radius: 4px;
-            padding: 2px 4px;
-            animation: fadeIn 0.5s ease-in-out;
+            transition: opacity 0.5s ease, transform 0.5s ease;
         }
 
-        /* Fade-in Animation for Stat Items */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+        /* Scrolling Animation */
+        @keyframes scrollUp {
+            0% {
+                transform: translateY(0);
+            }
+            100% {
+                transform: translateY(-50%);
+            }
         }
 
         /* Content Area */
@@ -721,7 +711,7 @@
         /* Typing Effect */
         .typing-text {
             position: relative;
-            white-space: normal; /* Allow text wrapping */
+            white-space: normal;
             word-wrap: break-word;
             overflow: hidden;
             opacity: 0;
@@ -1107,7 +1097,32 @@
 
                             <div class="profile-stats-overlay">
                                 <div class="stats-scroller">
-                                    <!-- Stat Items will be dynamically inserted here -->
+                                    <!-- 25 Stat Items -->
+                                    <div class="stat-item">Multimedia Specialist: Level 7</div>
+                                    <div class="stat-item">AI Development: Level 6</div>
+                                    <div class="stat-item">Creative Suite Mastery: 92%</div>
+                                    <div class="stat-item">Project Management: Level 8</div>
+                                    <div class="stat-item">Innovation Index: 94%</div>
+                                    <div class="stat-item">UI/UX Design: Expert</div>
+                                    <div class="stat-item">Data Analysis: Proficient</div>
+                                    <div class="stat-item">Game Design: Advanced</div>
+                                    <div class="stat-item">Animation Skills: 85%</div>
+                                    <div class="stat-item">Python Programming: Level 7</div>
+                                    <div class="stat-item">C# Development: Level 6</div>
+                                    <div class="stat-item">Unity Engine: Expert</div>
+                                    <div class="stat-item">Blender Modeling: Advanced</div>
+                                    <div class="stat-item">JavaScript: Proficient</div>
+                                    <div class="stat-item">Node.js: Intermediate</div>
+                                    <div class="stat-item">Adobe Premiere Pro: Expert</div>
+                                    <div class="stat-item">After Effects: Advanced</div>
+                                    <div class="stat-item">Photoshop: Mastery</div>
+                                    <div class="stat-item">Google Cloud: Proficient</div>
+                                    <div class="stat-item">DotNet Framework: Intermediate</div>
+                                    <div class="stat-item">Zapier Automation: Expert</div>
+                                    <div class="stat-item">Android Development: Level 5</div>
+                                    <div class="stat-item">AI Integration: Level 7</div>
+                                    <div class="stat-item">Project Coordination: Level 8</div>
+                                    <div class="stat-item">Innovation Strategies: Level 9</div>
                                 </div>
                             </div>
                         </div>
@@ -1273,114 +1288,41 @@
         // Profile Stats Functions
         function initializeProfileStats() {
             const statsData = [
-                "Captain's Intellect: 95%",
-                "Engine Efficiency: 88%",
-                "Crew Morale: 100%",
-                "Shield Strength: 75%",
-                "Navigation Accuracy: 92%",
-                "Weapon Systems: Operational",
-                "Life Support Stability: 98%",
-                "Quantum Drive Status: Online",
-                "Communications Clarity: Excellent",
-                "Medical Supplies: Fully Stocked",
-                "Hull Integrity: 89%",
-                "Energy Reserves: 80%",
-                "Stealth Mode: Active",
-                "Sensor Range: 110%",
-                "Fuel Consumption: Optimal",
-                "AI Integration: Seamless",
-                "Drone Deployment: Ready",
-                "Backup Systems: Redundant",
-                "Cargo Capacity: 95%",
-                "Maintenance Level: High",
-                "Hull Temperature: Stable",
-                "Crew Health Index: 100%",
-                "Shield Recharge Rate: Fast",
-                "AI Assistance: Enabled",
-                "Mission Success Rate: 99%"
+                "Multimedia Specialist: Level 7",
+                "AI Development: Level 6",
+                "Creative Suite Mastery: 92%",
+                "Project Management: Level 8",
+                "Innovation Index: 94%",
+                "UI/UX Design: Expert",
+                "Data Analysis: Proficient",
+                "Game Design: Advanced",
+                "Animation Skills: 85%",
+                "Python Programming: Level 7",
+                "C# Development: Level 6",
+                "Unity Engine: Expert",
+                "Blender Modeling: Advanced",
+                "JavaScript: Proficient",
+                "Node.js: Intermediate",
+                "Adobe Premiere Pro: Expert",
+                "After Effects: Advanced",
+                "Photoshop: Mastery",
+                "Google Cloud: Proficient",
+                "DotNet Framework: Intermediate",
+                "Zapier Automation: Expert",
+                "Android Development: Level 5",
+                "AI Integration: Level 7",
+                "Project Coordination: Level 8",
+                "Innovation Strategies: Level 9"
             ];
             
-            const scroller = document.querySelector('.profile-stats-overlay .stats-scroller');
-            scroller.innerHTML = ''; // Clear existing stats
-
-            const containerHeight = document.querySelector('.profile-stats-overlay').clientHeight;
-            const statItemHeight = 32; // height (24px) + margin-top (8px) = 32px
-            const initialCount = Math.ceil(containerHeight / statItemHeight);
-
-            let currentStatIndex = 0;
-            const statQueue = [];
-
-            // Function to type text into an element
-            function typeText(element, text, speed = 20) { // Further increased typing speed
-                return new Promise(resolve => {
-                    let index = 0;
-                    const typingInterval = setInterval(() => {
-                        if (index < text.length) {
-                            element.textContent += text[index];
-                            index++;
-                        } else {
-                            clearInterval(typingInterval);
-                            resolve();
-                        }
-                    }, speed);
-                });
-            }
-
-            // Function to delay execution
-            function delay(ms) {
-                return new Promise(resolve => setTimeout(resolve, ms));
-            }
-
-            // Pre-fill the scroller with initialCount stat items
-            async function preFillStats() {
-                for(let i = 0; i < initialCount; i++) {
-                    const stat = statsData[currentStatIndex];
-                    const statItem = document.createElement('div');
-                    statItem.className = 'stat-item';
-                    scroller.appendChild(statItem);
-                    await typeText(statItem, stat);
-                    statQueue.push(statItem);
-                    currentStatIndex = (currentStatIndex + 1) % statsData.length;
-                }
-            }
-
-            // Function to type and scroll stats
-            async function typeAndScrollStats() {
-                while(true) {
-                    const stat = statsData[currentStatIndex];
-                    const statItem = document.createElement('div');
-                    statItem.className = 'stat-item';
-                    scroller.appendChild(statItem);
-                    await typeText(statItem, stat);
-                    
-                    // Animate scrolling up by one stat item's height
-                    gsap.to(scroller, {
-                        y: `-=${statItemHeight}px`,
-                        duration: 0.5, // Increased scroll speed
-                        ease: "power1.out",
-                        onComplete: () => {
-                            // Remove the first stat item
-                            const firstItem = statQueue.shift();
-                            scroller.removeChild(firstItem);
-                            // Reset the scroller's y position
-                            gsap.set(scroller, { y: 0 });
-                        }
-                    });
-
-                    // Push the new stat item to the queue
-                    statQueue.push(statItem);
-
-                    // Move to next stat
-                    currentStatIndex = (currentStatIndex + 1) % statsData.length;
-
-                    // Minimal delay before typing the next stat
-                    await delay(200); // Reduced delay for faster cycling
-                }
-            }
-
-            // Initialize the stats
-            preFillStats().then(() => {
-                typeAndScrollStats();
+            const overlay = document.querySelector('.profile-stats-overlay .stats-scroller');
+            overlay.innerHTML = ''; // Clear existing stats
+            
+            statsData.forEach(stat => {
+                const statItem = document.createElement('div');
+                statItem.className = 'stat-item';
+                statItem.textContent = stat;
+                overlay.appendChild(statItem);
             });
         }
 
@@ -1432,12 +1374,12 @@
         const infographicItems = document.querySelectorAll('.infographic-item');
 
         // Helper function to delay execution
-        function delayInfographic(ms) {
+        function delay(ms) {
             return new Promise(resolve => setTimeout(resolve, ms));
         }
 
         // Function to type text into an element
-        function typeTextInfographic(element, text, speed = 20) { // Increased typing speed
+        function typeText(element, text, speed = 50) {
             return new Promise((resolve) => {
                 let index = 0;
                 element.textContent = '';
@@ -1469,12 +1411,12 @@
 
                 // Start typing title and text simultaneously
                 await Promise.all([
-                    typeTextInfographic(titleElement, title),
-                    typeTextInfographic(textElement, text)
+                    typeText(titleElement, title),
+                    typeText(textElement, text)
                 ]);
 
-                // Wait for a short duration before fading out
-                await delayInfographic(800); // Increased display duration
+                // Wait for half a second
+                await delay(500);
 
                 // Fade out the infographic
                 currentItem.classList.remove('active');
@@ -1487,7 +1429,7 @@
                 currentInfographic = (currentInfographic + 1) % infographicItems.length;
 
                 // Small delay before showing next infographic
-                await delayInfographic(300);
+                await delay(300);
             }
         }
 
@@ -1496,6 +1438,22 @@
             const particlesContainers = document.querySelectorAll('.particles-container');
             particlesContainers.forEach(container => {
                 setInterval(() => createParticle(container), 200);
+            });
+        }
+
+        // Initialize Scrolling Stats Animation
+        function startScrollingStats() {
+            const scroller = document.querySelector('.profile-stats-overlay .stats-scroller');
+            const statsHeight = scroller.scrollHeight / 2; // Since we'll duplicate the stats for seamless scrolling
+
+            // Duplicate the stats for seamless loop
+            scroller.innerHTML += scroller.innerHTML;
+
+            gsap.to(scroller, {
+                y: -statsHeight,
+                ease: "none",
+                duration: 30, // Adjust the duration as needed for speed
+                repeat: -1
             });
         }
 
@@ -1522,26 +1480,21 @@
 
             // Initialize Profile Stats
             initializeProfileStats();
+            startScrollingStats();
 
             // Profile Image Interactions
             const profileImg = document.querySelector('.about-profile-img');
             const statsOverlay = document.querySelector('.profile-stats-overlay');
 
-            // Hover interactions directly on the profile image using GSAP for smooth transitions
+            // Hover interactions directly on the profile image
             profileImg.addEventListener('mouseenter', () => {
-                gsap.to(statsOverlay, {
-                    opacity: 1,
-                    duration: 0.3,
-                    ease: "power1.out"
-                });
+                statsOverlay.style.opacity = '1';
+                statsOverlay.style.transform = 'translate(-300px, -50%)'; /* Maintain left and down shift */
             });
             
             profileImg.addEventListener('mouseleave', () => {
-                gsap.to(statsOverlay, {
-                    opacity: 0,
-                    duration: 0.3,
-                    ease: "power1.out"
-                });
+                statsOverlay.style.opacity = '0';
+                statsOverlay.style.transform = 'translate(-300px, -50%)'; /* Maintain left and down shift */
             });
 
             // GSAP Animations
@@ -1566,7 +1519,7 @@
                     opacity: 1,
                     scale: 1,
                     duration: 0.5,
-                    delay: 1.2 + (index * 0.05), // Slightly faster stagger
+                    delay: 1.2 + (index * 0.1),
                     ease: "back.out(1.7)"
                 });
             });
@@ -1619,3 +1572,6 @@
     </script>
 </body>
 </html>
+
+
+
