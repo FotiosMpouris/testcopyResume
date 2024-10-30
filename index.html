@@ -23,6 +23,10 @@
             --matrix-glow: rgba(0, 183, 255, 0.6); /* Added for anime effect */
             --transition-standard: all 0.3s ease;
             --infographic-bg: rgba(0, 123, 255, 0.3); /* Semi-transparent Blue */
+            --code-white: #ffffff;
+            --code-red: #ff0000;
+            --code-blue: #0000ff;
+            --faint-text: rgba(255, 255, 255, 0.4); /* For "mouse hover" text */
         }
 
         /* Reset and Base Styles */
@@ -352,7 +356,8 @@
 
         /* Dark Theme Section */
         .dark-theme-section {
-            background: linear-gradient(135deg, #2f0000 0%, #600 25%, #800 75%, #400 100%);
+            /* Updated background to dark gray and black instead of red */
+            background: linear-gradient(135deg, #1a1a1a 0%, #2b2b2b 50%, #1a1a1a 100%);
             position: relative;
             overflow: hidden;
         }
@@ -369,11 +374,13 @@
                 rgba(20, 30, 50, 0.97) 50%,
                 rgba(15, 25, 40, 0.95) 100%
             ) !important;
-            border: 1px solid rgba(0, 123, 255, 0.1) !important;
+            border: 2px solid transparent !important; /* Changed from 1px to 2px and made transparent for gradient border */
             box-shadow: 
                 0 0 40px rgba(0, 0, 0, 0.4),
                 0 0 80px rgba(255, 0, 0, 0.2),
-                inset 0 0 40px rgba(0, 123, 255, 0.08) !important;
+                inset 0 0 40px rgba(0, 123, 255, 0.08),
+                0 0 20px rgba(0, 183, 255, 0.5),
+                0 0 40px rgba(0, 183, 255, 0.5) !important; /* Added additional neon shadows */
             overflow: hidden;
             backdrop-filter: blur(10px);
             transform-style: preserve-3d;
@@ -381,7 +388,7 @@
             z-index: 2; /* Ensure it is above the anime-background */
         }
 
-        /* Glowing Blue Border Around About Card */
+        /* Glowing Cyberpunk Border Around About Card */
         .about-card::before {
             content: '';
             position: absolute;
@@ -391,10 +398,18 @@
             bottom: -10px;
             border: 2px solid transparent;
             border-radius: 15px;
+            background: linear-gradient(45deg, #0ff, #f0f, #0ff, #f0f); /* Neon gradient */
+            background-size: 400% 400%;
+            animation: gradientAnimation 10s ease infinite; /* Animated gradient */
             box-shadow: 0 0 20px rgba(0, 183, 255, 0.5), 0 0 40px rgba(0, 183, 255, 0.5);
-            animation: glowPulse 4s infinite alternate;
-            pointer-events: none;
             z-index: -1;
+        }
+
+        /* Gradient Animation Keyframes */
+        @keyframes gradientAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         /* Tech Grid Background */
@@ -429,6 +444,7 @@
             position: relative;
             display: inline-block;
             flex: 2; /* Adjusted to allow space for infographic */
+            text-align: center; /* Center the "mouse hover" text */
         }
 
         /* Profile Image */
@@ -447,6 +463,7 @@
             margin-top: 0; /* Remove extra space above */
             z-index: 3;
             cursor: pointer; /* Indicate interactivity */
+            left: -175px; /* Shift left by 175px */
         }
 
         /* Profile Image Hover Effects */
@@ -1020,7 +1037,56 @@
 
         /* Infographics Typing and Cycling */
         /* Removed redundant keyframes */
-        
+
+        /* Added Styles for Random Japanese Characters */
+        .random-char {
+            position: absolute;
+            font-size: 1.2rem;
+            opacity: 0;
+            pointer-events: none;
+            user-select: none;
+            animation: fadeInOut 2s forwards;
+        }
+
+        .random-char.white {
+            color: var(--code-white);
+        }
+
+        .random-char.red {
+            color: var(--code-red);
+        }
+
+        .random-char.blue {
+            color: var(--code-blue);
+        }
+
+        @keyframes fadeInOut {
+            0% { opacity: 0; transform: translateY(0); }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { opacity: 0; transform: translateY(-20px); }
+        }
+
+        /* Added Styles for Invisible Profile Trigger */
+        #profile-trigger {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 300px; /* Adjust height as needed */
+            /* Make it invisible */
+            background: transparent;
+            pointer-events: none;
+            z-index: 5; /* Ensure it's above other elements */
+        }
+
+        /* Added Styles for "mouse hover" Text */
+        .hover-text {
+            margin-top: 0.5rem;
+            font-size: 0.8rem;
+            color: var(--faint-text);
+            user-select: none;
+        }
     </style>
 </head>
 
@@ -1093,6 +1159,7 @@
     <section class="lower-hero">
         <div class="particles-container"></div>
         <div class="scrolling-code"></div>
+        <!-- Removed #profile-trigger div -->
         <!-- No additional content needed as per your preference -->
     </section>
 
@@ -1109,6 +1176,9 @@
                     <div class="about-header">
                         <div class="profile-container">
                             <img src="assets/fotiosProfile.png" alt="Fotios Mpouris" class="about-profile-img">
+
+                            <!-- "mouse hover" Text -->
+                            <p class="hover-text">mouse hover</p>
 
                             <div class="profile-stats-overlay">
                                 <div class="stats-cycler">
@@ -1287,6 +1357,8 @@
         }
 
         // Profile Stats Functions
+        let isCyclingStats = false; // Flag to prevent multiple cycles
+
         function initializeProfileStats() {
             const statsData = [
                 "Proficient in creating visually stunning graphics with a 95% client satisfaction rate, ensuring projects are delivered on time and exceed expectations.",
@@ -1299,10 +1371,9 @@
             const paragraphs = cycler.querySelectorAll('.stat-paragraph');
             let currentStatIndex = 0;
             const totalStats = statsData.length;
-            let isCycling = false; // Flag to prevent multiple cycles
 
             // Function to type text into an element
-            function typeText(element, text, speed = 20) { // Increased typing speed
+            function typeText(element, text, speed = 10) { // Reduced typing speed from 20ms to 10ms
                 return new Promise(resolve => {
                     let index = 0;
                     const typingInterval = setInterval(() => {
@@ -1324,8 +1395,8 @@
 
             // Function to cycle through stats
             async function cycleStats() {
-                if (isCycling) return; // Prevent multiple cycles
-                isCycling = true;
+                if (isCyclingStats) return; // Prevent multiple cycles
+                isCyclingStats = true;
 
                 while(true) {
                     const currentParagraph = paragraphs[currentStatIndex];
@@ -1426,7 +1497,7 @@
         }
 
         // Function to type text into an element
-        function typeTextInfographic(element, text, speed = 20) { // Increased typing speed
+        function typeTextInfographic(element, text, speed = 10) { // Reduced typing speed from 20ms to 10ms
             return new Promise((resolve) => {
                 let index = 0;
                 element.textContent = '';
@@ -1486,6 +1557,45 @@
             particlesContainers.forEach(container => {
                 setInterval(() => createParticle(container), 200);
             });
+        }
+
+        // Function to generate random Japanese characters with alternating colors
+        function generateRandomJapaneseChar() {
+            const chars = ['守', 'ら', 'れ', 'た', 'ア', 'プ', 'リ', 'ケ', 'ー', 'シ', 'ョ', 'ン', 'ア', 'ク', 'プ'];
+            return chars[Math.floor(Math.random() * chars.length)];
+        }
+
+        // Function to display multiple random Japanese characters with random color
+        function displayRandomJapaneseChars(count = 2) {
+            const darkSection = document.querySelector('.dark-theme-section');
+            const chars = ['守', 'ら', 'れ', 'た', 'ア', 'プ', 'リ', 'ケ', 'ー', 'シ', 'ョ', 'ン', 'ア', 'ク', 'プ'];
+
+            for(let i = 0; i < count; i++) {
+                const char = chars[Math.floor(Math.random() * chars.length)];
+                const randomCharElem = document.createElement('span');
+                randomCharElem.className = 'random-char';
+
+                // Randomly assign one of the three colors
+                const colors = ['white', 'red', 'blue'];
+                const randomColor = colors[Math.floor(Math.random() * colors.length)];
+                randomCharElem.classList.add(randomColor);
+
+                randomCharElem.textContent = char;
+
+                // Random position within the dark-theme-section
+                const x = Math.random() * 100;
+                const y = Math.random() * 100;
+
+                randomCharElem.style.left = `${x}%`;
+                randomCharElem.style.top = `${y}%`;
+
+                darkSection.appendChild(randomCharElem);
+
+                // Remove the character after animation completes
+                randomCharElem.addEventListener('animationend', () => {
+                    randomCharElem.remove();
+                });
+            }
         }
 
         // Initialize Everything
@@ -1583,10 +1693,18 @@
                     }
                 });
             });
+
+            /* --- Removed Code for Profile Stats Trigger via Scroll --- */
+            /* 
+                Previously, there was a ScrollTrigger that activated the profile stats overlay
+                when scrolling into the lower section. Since you want to revert to only hover
+                triggering, this code has been removed.
+            */
+
+            /* --- Added Code for Random Japanese Characters in Dark Theme Section --- */
+            // Generate Japanese characters at random intervals
+            setInterval(() => displayRandomJapaneseChars(2), 300); // Generate 2 characters every 300ms
         });
     </script>
 </body>
 </html>
-
-
-
