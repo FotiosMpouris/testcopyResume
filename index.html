@@ -377,10 +377,9 @@
             border: 2px solid transparent !important; /* Changed from 1px to 2px and made transparent for gradient border */
             box-shadow: 
                 0 0 40px rgba(0, 0, 0, 0.4),
-                0 0 80px rgba(255, 0, 0, 0.2),
                 inset 0 0 40px rgba(0, 123, 255, 0.08),
                 0 0 20px rgba(0, 183, 255, 0.5),
-                0 0 40px rgba(0, 183, 255, 0.5) !important; /* Added additional neon shadows */
+                0 0 40px rgba(0, 183, 255, 0.5) !important; /* Removed pink shadow and kept blue shadows */
             overflow: hidden;
             backdrop-filter: blur(10px);
             transform-style: preserve-3d;
@@ -398,7 +397,7 @@
             bottom: -10px;
             border: 2px solid transparent;
             border-radius: 15px;
-            background: linear-gradient(45deg, #0ff, #f0f, #0ff, #f0f); /* Neon gradient */
+            background: linear-gradient(45deg, #0ff, #00f, #0ff, #00f); /* Changed to blue gradient */
             background-size: 400% 400%;
             animation: gradientAnimation 10s ease infinite; /* Animated gradient */
             box-shadow: 0 0 20px rgba(0, 183, 255, 0.5), 0 0 40px rgba(0, 183, 255, 0.5);
@@ -463,7 +462,7 @@
             margin-top: 0; /* Remove extra space above */
             z-index: 3;
             cursor: pointer; /* Indicate interactivity */
-            left: -175px; /* Shift left by 175px */
+            left: -150px; /* Shift left by 150px (175px - 25px) */
         }
 
         /* Profile Image Hover Effects */
@@ -505,11 +504,34 @@
             mix-blend-mode: overlay;
         }
 
+        /* Hover Button on Profile Image */
+        .profile-hover-button {
+            position: absolute;
+            bottom: 10px;
+            left: calc(50% - 100px); /* Moved left by another 50px */
+            background: rgba(255, 255, 255, 0.2); /* Very transparent white */
+            border: none;
+            color: #000; /* Changed text color for visibility */
+            padding: 8px 16px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            opacity: 1;
+            transition: transform 0.3s ease;
+            z-index: 5; /* Increased z-index to ensure visibility */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Optional: Add slight hover effect */
+        .profile-hover-button:hover {
+            transform: translateY(-3px);
+        }
+
         /* Profile Stats Overlay */
         .profile-stats-overlay {
             position: absolute;
             top: 50%; /* Center vertically relative to the profile image */
-            left: 100%; /* Position to the right of the profile image */
+            left: calc(100% + 35px); /* Moved 35px to the right */
             transform: translate(-300px, -50%);
             width: 280px; /* Slightly narrower for better fit */
             height: 200px; /* Fixed height for cycling */
@@ -1080,12 +1102,28 @@
             z-index: 5; /* Ensure it's above other elements */
         }
 
-        /* Added Styles for "mouse hover" Text */
-        .hover-text {
-            margin-top: 0.5rem;
-            font-size: 0.8rem;
-            color: var(--faint-text);
-            user-select: none;
+        /* New Button Styling */
+        /* Removed hover opacity and transform to keep the button always visible */
+        .profile-hover-button {
+            position: absolute;
+            bottom: 10px;
+            left: calc(50% - 100px); /* Moved left by another 50px */
+            background: rgba(255, 255, 255, 0.2); /* Very transparent white */
+            border: none;
+            color: #000; /* Changed text color for visibility */
+            padding: 8px 16px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            opacity: 1;
+            transition: transform 0.3s ease;
+            z-index: 5; /* Increased z-index to ensure visibility */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Optional: Add slight hover effect */
+        .profile-hover-button:hover {
+            transform: translateY(-3px);
         }
     </style>
 </head>
@@ -1159,8 +1197,7 @@
     <section class="lower-hero">
         <div class="particles-container"></div>
         <div class="scrolling-code"></div>
-        <!-- Removed #profile-trigger div -->
-        <!-- No additional content needed as per your preference -->
+        <!-- Removed #profile-trigger div and "mouse hover" text -->
     </section>
 
     <!-- Dark Theme Section -->
@@ -1177,8 +1214,8 @@
                         <div class="profile-container">
                             <img src="assets/fotiosProfile.png" alt="Fotios Mpouris" class="about-profile-img">
 
-                            <!-- "mouse hover" Text -->
-                            <p class="hover-text">mouse hover</p>
+                            <!-- Added Hover Button -->
+                            <button class="profile-hover-button">Stats</button>
 
                             <div class="profile-stats-overlay">
                                 <div class="stats-cycler">
@@ -1422,26 +1459,33 @@
                 }
             }
 
-            // Attach event listeners to start cycling on hover
+            // Attach event listeners to start cycling on hover for both profile image and stats button
             const profileImg = document.querySelector('.about-profile-img');
+            const statsButton = document.querySelector('.profile-hover-button');
             const statsOverlay = document.querySelector('.profile-stats-overlay');
 
-            profileImg.addEventListener('mouseenter', () => {
+            function showStats() {
                 gsap.to(statsOverlay, {
                     opacity: 1,
                     duration: 0.3,
                     ease: "power1.out"
                 });
                 cycleStats(); // Start cycling on first hover
-            });
-            
-            profileImg.addEventListener('mouseleave', () => {
+            }
+
+            function hideStats() {
                 gsap.to(statsOverlay, {
                     opacity: 0,
                     duration: 0.3,
                     ease: "power1.out"
                 });
-            });
+            }
+
+            profileImg.addEventListener('mouseenter', showStats);
+            profileImg.addEventListener('mouseleave', hideStats);
+
+            statsButton.addEventListener('mouseenter', showStats);
+            statsButton.addEventListener('mouseleave', hideStats);
         }
 
         // Particle Effects
@@ -1708,3 +1752,6 @@
     </script>
 </body>
 </html>
+
+
+
