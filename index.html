@@ -10,38 +10,25 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     
     <style>
-        /* Core Variables - Enhanced with new theme variables */
+        /* Core Variables */
         :root {
-            /* Original Variables */
             --primary-dark: #0a192f;
             --primary-light: #20232a;
             --accent-blue: #00aaff;
             --accent-light-blue: #00d4ff;
             --accent-dark-blue: #007BFF;
-            --accent-red: #FF0000;
+            --accent-red: #FF0000; /* Consistent red */
             --accent-glow: rgba(0, 212, 255, 0.5);
             --text-primary: #ffffff;
             --text-secondary: rgba(255, 255, 255, 0.7);
             --matrix-color: rgba(0, 183, 255, 0.25);
-            --matrix-glow: rgba(0, 183, 255, 0.6);
+            --matrix-glow: rgba(0, 183, 255, 0.6); /* Added for anime effect */
             --transition-standard: all 0.3s ease;
-            --infographic-bg: rgba(0, 123, 255, 0.3);
+            --infographic-bg: rgba(0, 123, 255, 0.3); /* Semi-transparent Blue */
             --code-white: #ffffff;
             --code-red: #ff0000;
             --code-blue: #0000ff;
-            --faint-text: rgba(255, 255, 255, 0.4);
-
-            /* New Theme Variables */
-            --hologram-blue: rgba(0, 183, 255, 0.15);
-            --hologram-glow: rgba(0, 183, 255, 0.4);
-            --interface-grid: rgba(0, 123, 255, 0.1);
-            --scanner-line: rgba(0, 212, 255, 0.2);
-            --cyber-border: rgba(0, 183, 255, 0.3);
-            --cyber-shadow: 0 0 20px rgba(0, 183, 255, 0.2);
-            --interface-bg: rgba(10, 25, 47, 0.85);
-            --cyber-highlight: rgba(0, 183, 255, 0.1);
-            --cyber-text-glow: 0 0 10px rgba(0, 183, 255, 0.5);
-            --matrix-scanline: rgba(0, 212, 255, 0.1);
+            --faint-text: rgba(255, 255, 255, 0.4); /* For "mouse hover" text */
         }
 
         /* Reset and Base Styles */
@@ -91,6 +78,118 @@
             animation: ripple 6s infinite;
             width: 200px;
             height: 200px;
+        }
+
+        /* Matrix Effect */
+        .matrix-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            overflow: hidden;
+            z-index: 1;
+            mask-image: linear-gradient(
+                to bottom,
+                transparent,
+                black 10%,
+                black 90%,
+                transparent
+            );
+            -webkit-mask-image: linear-gradient(
+                to bottom,
+                transparent,
+                black 10%,
+                black 90%,
+                transparent
+            );
+        }
+
+        .matrix-column {
+            position: absolute;
+            width: 30px; /* Increased width for fewer columns */
+            height: 100%;
+            color: var(--matrix-color);
+            font-family: 'Courier New', monospace;
+            font-size: 16px;
+            line-height: 24px; /* Fixed line height */
+            white-space: pre-wrap; /* Allow wrapping */
+            word-wrap: break-word;
+            background: linear-gradient(
+                0deg,
+                transparent,
+                rgba(255, 60, 0, 0.2) 50%,
+                transparent
+            );
+            background-size: 100% 200%;
+            animation: 
+                matrixRain 20s linear infinite,
+                fireFlow 8s linear infinite;
+            mix-blend-mode: screen;
+        }
+
+        .matrix-column::before {
+            content: '守\A ら\A れ\A た\A 0\A 1\A ア\A プ\A リ\A ケ\A ー\A シ\A ョ\A ン\A \}\A \{\A #\A $\A @\A 9\A 8\A 7';
+            position: absolute;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            animation: matrixRain 8s linear infinite;
+            text-shadow: 0 0 12px var(--matrix-glow);
+        }
+
+        /* Anime Effect */
+        .anime-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            overflow: hidden;
+            z-index: 0; /* Behind the content */
+            mask-image: linear-gradient(
+                to bottom,
+                transparent,
+                black 10%,
+                black 90%,
+                transparent
+            );
+            -webkit-mask-image: linear-gradient(
+                to bottom,
+                transparent,
+                black 10%,
+                black 90%,
+                transparent
+            );
+        }
+
+        .anime-column {
+            position: absolute;
+            width: 40px;
+            height: 100%;
+            color: var(--matrix-color);
+            font-family: 'Courier New', monospace;
+            font-size: 16px;
+            line-height: 24px; /* Fixed line height */
+            white-space: pre-wrap; /* Allow wrapping */
+            word-wrap: break-word;
+            animation: animeRain 20s linear infinite;
+            mix-blend-mode: screen;
+            text-shadow: 0 0 8px var(--matrix-glow);
+            opacity: 0.7;
+        }
+
+        .anime-column.glow {
+            color: var(--matrix-glow);
+            text-shadow: 
+                0 0 5px #fff,
+                0 0 10px var(--matrix-glow),
+                0 0 15px var(--matrix-glow);
+            opacity: 1;
+        }
+
+        @keyframes animeRain {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(100%); }
         }
 
         /* Hero Section */
@@ -196,14 +295,880 @@
             height: 40px;
             object-fit: contain;
         }
+
+        /* Lower Hero Section Enhancements */
+        .lower-hero {
+            position: relative;
+            height: 0vh; /* Set to 0 to remove extra space */
+            background: transparent; /* Remove background */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            color: var(--text-primary);
+        }
+
+        .lower-hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: url('https://www.svgrepo.com/show/331541/circuit.svg') repeat;
+            background-size: 50px 50px;
+            opacity: 0.05;
+            animation: subtleScroll 60s linear infinite;
+        }
+
+        /* Subtle Scrolling Code Effects */
+        .lower-hero .scrolling-code {
+            position: absolute;
+            top: 10%;
+            left: 5%;
+            width: 90%;
+            height: 80%;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .lower-hero .scrolling-code::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 200%;
+            height: 100%;
+            background: linear-gradient(
+                to bottom,
+                transparent,
+                rgba(255, 255, 255, 0.05),
+                transparent
+            );
+            background-size: 100% 20px;
+            animation: codeScroll 10s linear infinite;
+        }
+
+        @keyframes subtleScroll {
+            from { background-position: 0 0; }
+            to { background-position: 100px 100px; }
+        }
+
+        @keyframes codeScroll {
+            from { transform: translateY(0); }
+            to { transform: translateY(-100%); }
+        }
+
+        /* Dark Theme Section */
+        .dark-theme-section {
+            /* Updated background to a deep blue gradient to resemble a starship interface */
+            background: linear-gradient(135deg, #001f3f 0%, #003366 50%, #001f3f 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* About Card Styling */
+        .about-card {
+            position: relative;
+            max-width: 900px !important;
+            margin: 0 auto !important;
+            padding: 2rem !important;
+            background: linear-gradient(
+                135deg,
+                rgba(0, 29, 60, 0.95) 0%,
+                rgba(0, 40, 80, 0.97) 50%,
+                rgba(0, 29, 60, 0.95) 100%
+            ) !important;
+            border: 2px solid transparent !important; /* Changed from 1px to 2px and made transparent for gradient border */
+            box-shadow: 
+                0 0 40px rgba(0, 0, 0, 0.4),
+                inset 0 0 40px rgba(0, 123, 255, 0.08),
+                0 0 25px rgba(0, 212, 255, 0.6),
+                0 0 60px rgba(0, 212, 255, 0.6) !important; /* Enhanced blue shadows */
+            overflow: hidden;
+            backdrop-filter: blur(15px); /* Increased blur for better glass effect */
+            transform-style: preserve-3d;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            z-index: 2; /* Ensure it is above the anime-background */
+        }
+
+        /* Glowing Starship Border Around About Card */
+        .about-card::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            border: 2px solid transparent;
+            border-radius: 15px;
+            background: linear-gradient(45deg, #00aaff, #007BFF, #00d4ff, #007BFF); /* Refined blue gradient */
+            background-size: 400% 400%;
+            animation: gradientAnimation 15s ease infinite; /* Smoother animated gradient */
+            box-shadow: 0 0 30px rgba(0, 212, 255, 0.6), 0 0 60px rgba(0, 212, 255, 0.6); /* Enhanced glow */
+            z-index: -1;
+        }
+
+        /* Gradient Animation Keyframes */
+        @keyframes gradientAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Tech Grid Background */
+        .tech-grid {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                linear-gradient(rgba(0, 123, 255, 0.15) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 123, 255, 0.15) 1px, transparent 1px);
+            background-size: 30px 30px;
+            opacity: 0.2;
+            animation: gridMove 15s infinite ease-in-out;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Profile Section */
+        .about-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 3rem;
+            margin-bottom: 4rem;
+            padding: 0 1rem;
+            position: relative;
+            z-index: 3;
+        }
+
+        .profile-container {
+            position: relative;
+            display: inline-block;
+            flex: 2; /* Adjusted to allow space for infographic */
+            text-align: center; /* Center the "mouse hover" text */
+        }
+
+        /* Profile Image */
+        .about-profile-img {
+            width: 180px;
+            height: 180px;
+            border-radius: 10px;
+            object-fit: cover;
+            box-shadow: 
+                0 10px 25px rgba(0, 0, 0, 0.3),
+                0 0 0 1px rgba(0, 123, 255, 0.3);
+            transform: rotate(-3deg);
+            transition: all 0.5s ease;
+            position: relative;
+            isolation: isolate;
+            margin-top: 0; /* Remove extra space above */
+            z-index: 3;
+            cursor: pointer; /* Indicate interactivity */
+            left: -150px; /* Shift left by 150px (175px - 25px) */
+        }
+
+        /* Profile Image Hover Effects */
+        .about-profile-img:hover {
+            transform: rotate(0deg) scale(1.02);
+            box-shadow: 
+                0 15px 35px rgba(0, 0, 0, 0.4),
+                0 0 0 2px rgba(0, 123, 255, 0.5),
+                0 0 30px rgba(0, 123, 255, 0.3);
+        }
+
+        .about-profile-img::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            background: linear-gradient(
+                125deg,
+                transparent 0%,
+                rgba(0, 123, 255, 0.3) 40%,
+                rgba(0, 255, 255, 0.6) 60%,
+                transparent 100%
+            );
+            animation: holoGlow 8s linear infinite;
+            z-index: 1;
+            opacity: 0.5;
+        }
+
+        .about-profile-img::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: repeating-linear-gradient(
+                90deg,
+                transparent,
+                rgba(0, 123, 255, 0.1) 1px,
+                transparent 2px
+            );
+            animation: scanlines 8s linear infinite;
+            mix-blend-mode: overlay;
+        }
+
+        /* Hover Button on Profile Image */
+        .profile-hover-button {
+            position: absolute;
+            bottom: 10px;
+            left: calc(50% - 100px); /* Moved left by another 50px */
+            background: rgba(255, 255, 255, 0.2); /* Very transparent white */
+            border: none;
+            color: #000; /* Changed text color for visibility */
+            padding: 8px 16px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            opacity: 1;
+            transition: transform 0.3s ease;
+            z-index: 5; /* Increased z-index to ensure visibility */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Optional: Add slight hover effect */
+        .profile-hover-button:hover {
+            transform: translateY(-3px);
+        }
+
+        /* Profile Stats Overlay */
+        .profile-stats-overlay {
+            position: absolute;
+            top: 50%; /* Center vertically relative to the profile image */
+            left: calc(100% + 35px); /* Moved 35px to the right */
+            transform: translate(-300px, -50%);
+            width: 280px; /* Slightly narrower for better fit */
+            height: 200px; /* Fixed height for cycling */
+            background: rgba(0, 123, 255, 0.2); /* Reduced opacity to minimize shadow effect */
+            border: 1px solid rgba(0, 183, 255, 0.5); /* Updated Border Color */
+            border-radius: 8px;
+            padding: 1rem; /* Reduced padding for better text fit */
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 4;
+            backdrop-filter: blur(5px);
+            pointer-events: none; /* Prevents accidental clicks */
+            overflow: hidden; /* Hide overflowing stats */
+        }
+
+        .profile-stats-overlay:hover {
+            opacity: 1;
+            transform: translate(-300px, -50%); /* Maintain the left and down shift on hover */
+            pointer-events: auto;
+        }
+
+        /* Container for Cycling Stats */
+        .stats-cycler {
+            display: flex;
+            flex-direction: column;
+            position: relative; /* Changed from absolute to relative */
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        /* Profile Stat Paragraph */
+        .stat-paragraph {
+            width: 100%;
+            color: #ffffff;
+            text-shadow: 
+                0 0 3px rgba(0, 183, 255, 0.8),
+                0 0 6px rgba(0, 183, 255, 0.5);
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem; /* Reduced font size */
+            opacity: 0;
+            transform: translateY(0);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            white-space: normal; /* Allow text wrapping */
+            word-wrap: break-word;
+            overflow: hidden; /* Prevent overflow */
+            background: rgba(0, 0, 0, 0.1); /* Reduced background opacity */
+            border-radius: 4px;
+            padding: 8px; /* Reduced padding */
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Active Paragraph */
+        .stat-paragraph.active {
+            opacity: 1;
+        }
+
+        /* Content Area */
+        .about-content {
+            position: relative;
+            z-index: 3;
+            background: rgba(0, 29, 60, 0.4);
+            border: 1px solid rgba(0, 123, 255, 0.1);
+            padding: 1.5rem;
+            border-radius: 15px;
+            box-shadow: 
+                inset 0 0 40px rgba(0, 123, 255, 0.08),
+                0 0 30px rgba(0, 0, 0, 0.15);
+            margin-top: 1rem;
+        }
+
+        .about-content p {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.15rem;
+            line-height: 2;
+            text-align: justify;
+            margin-bottom: 2.5rem;
+            position: relative;
+            z-index: 3;
+            transition: all 0.3s ease;
+        }
+
+        .about-content p:hover {
+            text-shadow: 0 0 8px rgba(0, 212, 255, 0.8);
+            letter-spacing: 0.2px;
+            background: rgba(0, 123, 255, 0.05);
+            transform: scale(1.01);
+        }
+
+        .about-content p:first-of-type {
+            font-size: 1.25rem;
+            color: rgba(255, 255, 255, 0.95);
+            font-weight: 500;
+        }
+
+        /* Animations */
+        @keyframes ripple {
+            0% {
+                transform: scale(0);
+                opacity: 0.5;
+            }
+            100% {
+                transform: scale(3);
+                opacity: 0;
+            }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes matrixRain {
+            from { transform: translateY(-100%); }
+            to { transform: translateY(100%); }
+        }
+
+        @keyframes fireFlow {
+            0% { background-position: 0 0; }
+            100% { background-position: 0 200%; }
+        }
+
+        @keyframes holoGlow {
+            0% { 
+                opacity: 0.3;
+                transform: translateX(-100%) rotate(35deg);
+            }
+            100% { 
+                opacity: 0.7;
+                transform: translateX(200%) rotate(35deg);
+            }
+        }
+
+        @keyframes scanlines {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(100%); }
+        }
+
+        @keyframes gridMove {
+            0% { transform: translateY(0) translateX(0); }
+            50% { transform: translateY(10px) translateX(5px); }
+            100% { transform: translateY(0) translateX(0); }
+        }
+
+        @keyframes borderGlow {
+            0% { opacity: 0.3; filter: blur(3px); }
+            100% { opacity: 1; filter: blur(1px); }
+        }
+
+        @keyframes titlePulse {
+            0% {
+                text-shadow: 
+                    0 0 10px rgba(0, 183, 255, 0.3),
+                    0 0 20px rgba(0, 183, 255, 0.2);
+            }
+            100% {
+                text-shadow: 
+                    0 0 15px rgba(0, 183, 255, 0.5),
+                    0 0 30px rgba(0, 183, 255, 0.3);
+            }
+        }
+
+        @keyframes glowPulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        /* Infographics Cycling Animation */
+        .infographic {
+            position: relative;
+            width: 300px;
+            height: 200px;
+            overflow: hidden;
+            z-index: 1; /* Ensure it's behind the content */
+            background: var(--infographic-bg); /* Moved background here */
+            border-radius: 10px; /* Moved border radius here */
+            padding: 1rem; /* Added padding for inner spacing */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Animated Gradient Background for Infographic */
+        .infographic::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            border: 2px solid transparent;
+            border-radius: 15px;
+            background: linear-gradient(45deg, #007BFF, #00aaff, #005fcc, #00aaff); /* Blue gradient for contrast */
+            background-size: 400% 400%;
+            animation: gradientAnimationInfographic 15s ease infinite; /* Animated gradient */
+            box-shadow: 0 0 20px rgba(0, 123, 255, 0.5), 0 0 40px rgba(0, 123, 255, 0.5);
+            z-index: -1;
+        }
+
+        @keyframes gradientAnimationInfographic {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .infographic-item {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            box-sizing: border-box;
+            /* Removed background and border-radius */
+            display: flex; /* Always display flex */
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .infographic-item.active {
+            opacity: 1;
+        }
+
+        .infographic-item h4 {
+            margin-bottom: 0.5rem;
+            color: #fff;
+            text-shadow: 0 0 10px rgba(0, 183, 255, 0.5);
+            text-align: center;
+            width: 100%;
+            font-size: 1.5rem;
+            position: relative;
+            border: none; /* Ensure no border */
+        }
+
+        .infographic-item p {
+            color: rgba(255, 255, 255, 0.8);
+            text-align: center;
+            font-size: 1rem;
+            width: 100%;
+            position: relative;
+            max-height: 120px; /* Ensures text stays within box */
+            overflow: hidden;
+        }
+
+        /* Typing Effect */
+        .typing-text {
+            position: relative;
+            white-space: normal; /* Allow text wrapping */
+            word-wrap: break-word;
+            overflow: hidden;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            font-size: 0.9rem; /* Reduced font size */
+        }
+
+        /* Section Styling */
+        .section {
+            padding: 4rem 0;
+            opacity: 0;
+            transform: translateY(30px);
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Card Styling */
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 
+                0 10px 30px rgba(0, 0, 0, 0.3),
+                0 0 20px rgba(255, 0, 0, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 
+                0 15px 40px rgba(0, 0, 0, 0.4),
+                0 0 30px rgba(255, 0, 0, 0.3);
+        }
+
+        .card h3 {
+            color: var(--accent-blue);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+            position: relative;
+            display: inline-block;
+            text-shadow: 0 0 15px rgba(0, 123, 255, 0.5);
+            /* Removed the ::after pseudo-element to eliminate the line under "About Me" */
+        }
+
+        /* Projects Grid */
+        .projects {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .project-card {
+            background: rgba(20, 30, 50, 0.95);
+            border-radius: 15px;
+            padding: 1.5rem;
+            text-decoration: none;
+            color: #fff;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 60, 0, 0.2);
+            backdrop-filter: blur(5px);
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(0, 123, 255, 0.2),
+                transparent
+            );
+            transition: 0.5s;
+        }
+
+        .project-card:hover::before {
+            left: 100%;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 
+                0 10px 25px rgba(0, 0, 0, 0.3),
+                0 0 20px rgba(0, 123, 255, 0.2);
+        }
+
+        .project-card h4 {
+            color: #fff;
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 0 10px rgba(0, 123, 255, 0.3);
+            border: none; /* Ensure no border */
+        }
+
+        .project-card p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1rem;
+        }
+
+        /* Connect Section */
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+            padding: 1rem;
+            background: rgba(20, 30, 50, 0.9);
+            border-radius: 15px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 60, 0, 0.2);
+        }
+
+        .social-link {
+            position: relative;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-decoration: none;
+            padding: 10px 20px;
+            background: rgba(255, 60, 0, 0.1);
+            border-radius: 5px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .social-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 60, 0, 0.2),
+                transparent
+            );
+            transition: 0.5s;
+        }
+
+        .social-link:hover::before {
+            left: 100%;
+        }
+
+        .social-link:hover {
+            background: rgba(255, 60, 0, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 60, 0, 0.2);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .container {
+                padding: 2rem;
+            }
+
+            .project-card {
+                min-height: 150px;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .about-header {
+                flex-direction: column;
+                gap: 2rem;
+                text-align: center;
+            }
+
+            .profile-stats-overlay {
+                left: 50%;
+                top: 110%; /* Adjusted to align closer */
+                transform: translate(-50%, 0); /* Center horizontally */
+                width: 90%;
+                max-width: 300px;
+                height: 200px; /* Fixed height */
+            }
+
+            .about-content {
+                padding: 1rem;
+            }
+
+            /* Adjust infographic positioning */
+            .infographic {
+                width: 100%;
+                height: 150px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                height: auto;
+                min-height: 100vh;
+                padding: 4rem 1rem;
+            }
+
+            .title {
+                font-size: 2.5rem;
+            }
+
+            .subtitle {
+                font-size: 1.2rem;
+            }
+
+            .skills-container {
+                gap: 1rem;
+            }
+
+            .skill-icon {
+                padding: 0.6rem;
+            }
+
+            .skill-icon img {
+                width: 30px;
+                height: 30px;
+            }
+
+            .social-links {
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+            }
+
+            .social-link {
+                width: 100%;
+                text-align: center;
+            }
+
+            .card {
+                padding: 1.5rem;
+            }
+
+            /* About Section Adjustments */
+            .about-content p {
+                font-size: 1rem; /* Smaller text size for mobile */
+            }
+
+            .stat-paragraph {
+                font-size: 0.8rem; /* Smaller stats text */
+            }
+        }
+
+        @media (max-width: 480px) {
+            .about-profile-img {
+                width: 150px;
+                height: 150px;
+            }
+
+            .glow-text {
+                font-size: 2rem;
+            }
+
+            .projects {
+                grid-template-columns: 1fr;
+            }
+
+            .container {
+                padding: 1rem;
+            }
+        }
+
+        /* Dark Mode Enhancement */
+        @media (prefers-color-scheme: dark) {
+            .card,
+            .project-card {
+                background: rgba(15, 20, 30, 0.95);
+            }
+
+            .social-link {
+                background: rgba(255, 60, 0, 0.15);
+            }
+        }
+
+        /* Additional Enhancements */
+
+        /* Animated SVGs */
+        .animated-svg {
+            width: 100%;
+            height: auto;
+            margin-top: 2rem;
+            animation: svgMove 10s linear infinite;
+        }
+
+        @keyframes svgMove {
+            0% { transform: translateX(0); }
+            50% { transform: translateX(20px); }
+            100% { transform: translateX(0); }
+        }
+
+        /* Infographics Typing and Cycling */
+        /* Removed redundant keyframes */
+
+        /* Added Styles for Random Japanese Characters */
+        .random-char {
+            position: absolute;
+            font-size: 1.2rem;
+            opacity: 0;
+            pointer-events: none;
+            user-select: none;
+            animation: fadeInOut 2s forwards;
+        }
+
+        .random-char.white {
+            color: var(--code-white);
+        }
+
+        .random-char.red {
+            color: var(--code-red);
+        }
+
+        .random-char.blue {
+            color: var(--code-blue);
+        }
+
+        @keyframes fadeInOut {
+            0% { opacity: 0; transform: translateY(0); }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { opacity: 0; transform: translateY(-20px); }
+        }
+
+        /* Added Styles for Invisible Profile Trigger */
+        #profile-trigger {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 300px; /* Adjust height as needed */
+            /* Make it invisible */
+            background: transparent;
+            pointer-events: none;
+            z-index: 5; /* Ensure it's above other elements */
+        }
+
+        /* New Button Styling */
+        /* Removed hover opacity and transform to keep the button always visible */
+        .profile-hover-button {
+            position: absolute;
+            bottom: 10px;
+            left: calc(50% - 100px); /* Moved left by another 50px */
+            background: rgba(255, 255, 255, 0.2); /* Very transparent white */
+            border: none;
+            color: #000; /* Changed text color for visibility */
+            padding: 8px 16px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            opacity: 1;
+            transition: transform 0.3s ease;
+            z-index: 5; /* Increased z-index to ensure visibility */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Optional: Add slight hover effect */
+        .profile-hover-button:hover {
+            transform: translateY(-3px);
+        }
     </style>
 </head>
+
 <body>
     <!-- Hero Section -->
     <section class="hero">
         <div class="particles-container" id="particles-container"></div>
         <div class="matrix-background"></div>
         <div class="container">
+            <!-- Wrapped GitHub Icon with Link -->
             <a href="https://github.com/FotiosMpouris" target="_blank" rel="noopener noreferrer">
                 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/github/github-original-wordmark.svg" 
                      alt="GitHub" class="github-icon">
@@ -211,7 +1176,7 @@
             <h1 class="title">Fotios Mpouris</h1>
             <h2 class="subtitle">2D & 3D Artist / Animator / Developer</h2>
             
-            <!-- Skills Container with ALL Icons -->
+            <!-- Skills Container with Links -->
             <div class="skills-container">
                 <a href="https://developer.android.com" target="_blank" class="skill-icon">
                     <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/android/android-original-wordmark.svg" alt="android">
@@ -261,1037 +1226,139 @@
             </div>
         </div>
     </section>
-<!-- END OF PART 1 -->
-    <!-- START OF PART 2 - Copy from here -->
-    <style>
-        /* Matrix Effect Styles */
-        .matrix-background, .matrix-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            overflow: hidden;
-            z-index: 1;
-            mask-image: linear-gradient(
-                to bottom,
-                transparent,
-                black 10%,
-                black 90%,
-                transparent
-            );
-            -webkit-mask-image: linear-gradient(
-                to bottom,
-                transparent,
-                black 10%,
-                black 90%,
-                transparent
-            );
-        }
 
-        .matrix-column {
-            position: absolute;
-            width: 30px;
-            height: 100%;
-            color: var(--matrix-color);
-            font-family: 'Courier New', monospace;
-            font-size: 16px;
-            line-height: 24px;
-            white-space: pre-wrap;
-            word-wrap: break-word;
-            background: linear-gradient(
-                0deg,
-                transparent,
-                rgba(255, 60, 0, 0.2) 50%,
-                transparent
-            );
-            background-size: 100% 200%;
-            animation: 
-                matrixRain 20s linear infinite,
-                fireFlow 8s linear infinite;
-            mix-blend-mode: screen;
-        }
+    <!-- Lower Hero Section Enhancements -->
+    <section class="lower-hero">
+        <div class="particles-container"></div>
+        <div class="scrolling-code"></div>
+        <!-- Removed #profile-trigger div and "mouse hover" text -->
+    </section>
 
-        .matrix-column::before {
-            content: '守\A ら\A れ\A た\A 0\A 1\A ア\A プ\A リ\A ケ\A ー\A シ\A ョ\A ン\A \}\A \{\A #\A $\A @\A 9\A 8\A 7';
-            position: absolute;
-            white-space: pre-wrap;
-            word-wrap: break-word;
-            animation: matrixRain 8s linear infinite;
-            text-shadow: 0 0 12px var(--matrix-glow);
-        }
-
-        /* Anime Effect */
-        .anime-background {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            overflow: hidden;
-            z-index: 0;
-            mask-image: linear-gradient(
-                to bottom,
-                transparent,
-                black 10%,
-                black 90%,
-                transparent
-            );
-            -webkit-mask-image: linear-gradient(
-                to bottom,
-                transparent,
-                black 10%,
-                black 90%,
-                transparent
-            );
-        }
-
-        .anime-column {
-            position: absolute;
-            width: 40px;
-            height: 100%;
-            color: var(--matrix-color);
-            font-family: 'Courier New', monospace;
-            font-size: 16px;
-            line-height: 24px;
-            white-space: pre-wrap;
-            word-wrap: break-word;
-            animation: animeRain 20s linear infinite;
-            mix-blend-mode: screen;
-            text-shadow: 0 0 8px var(--matrix-glow);
-            opacity: 0.7;
-        }
-
-        .anime-column.glow {
-            color: var(--matrix-glow);
-            text-shadow: 
-                0 0 5px #fff,
-                0 0 10px var(--matrix-glow),
-                0 0 15px var(--matrix-glow);
-            opacity: 1;
-        }
-
-        /* Scanline Effect */
-        .scanline {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background: var(--scanner-line);
-            opacity: 0.3;
-            animation: scanning 3s linear infinite;
-            pointer-events: none;
-            z-index: 2;
-        }
-
-        /* Holographic Effect */
-        .hologram-effect {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(
-                45deg,
-                transparent 0%,
-                var(--hologram-glow) 45%,
-                var(--hologram-blue) 50%,
-                var(--hologram-glow) 55%,
-                transparent 100%
-            );
-            mix-blend-mode: screen;
-            opacity: 0;
-            animation: hologramPulse 3s ease-in-out infinite;
-        }
-
-        /* Interface Grid */
-        .interface-grid {
-            position: absolute;
-            inset: 0;
-            background-image: 
-                linear-gradient(var(--interface-grid) 1px, transparent 1px),
-                linear-gradient(90deg, var(--interface-grid) 1px, transparent 1px);
-            background-size: 50px 50px;
-            mask-image: radial-gradient(circle at center, black 60%, transparent 100%);
-            -webkit-mask-image: radial-gradient(circle at center, black 60%, transparent 100%);
-            animation: gridPulse 4s ease-in-out infinite;
-        }
-
-        /* Core Animations */
-        @keyframes matrixRain {
-            0% { transform: translateY(-100%); }
-            100% { transform: translateY(100%); }
-        }
-
-        @keyframes fireFlow {
-            0% { background-position: 0 0; }
-            100% { background-position: 0 200%; }
-        }
-
-        @keyframes animeRain {
-            0% { transform: translateY(-100%); }
-            100% { transform: translateY(100%); }
-        }
-
-        @keyframes scanning {
-            0% { transform: translateY(-100vh); }
-            100% { transform: translateY(100vh); }
-        }
-
-        @keyframes hologramPulse {
-            0%, 100% { opacity: 0; transform: translateX(-100%); }
-            50% { opacity: 0.5; transform: translateX(100%); }
-        }
-
-        @keyframes gridPulse {
-            0%, 100% { opacity: 0.3; }
-            50% { opacity: 0.5; }
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
-        }
-
-        @keyframes ripple {
-            0% {
-                transform: scale(0);
-                opacity: 0.5;
-            }
-            100% {
-                transform: scale(3);
-                opacity: 0;
-            }
-        }
-
-        @keyframes glowPulse {
-            0%, 100% { opacity: 0.5; }
-            50% { opacity: 1; }
-        }
-
-        @keyframes typing {
-            from { width: 0; }
-            to { width: 100%; }
-        }
-
-        @keyframes blink-caret {
-            from, to { border-color: transparent; }
-            50% { border-color: var(--accent-light-blue); }
-        }
-
-        @keyframes subtleScroll {
-            from { background-position: 0 0; }
-            to { background-position: 100px 100px; }
-        }
-
-        @keyframes codeScroll {
-            from { transform: translateY(0); }
-            to { transform: translateY(-100%); }
-        }
-
-        /* Particle System Animations */
-        @keyframes particleFloat {
-            0% {
-                transform: translateY(0) translateX(0);
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(-100px) translateX(var(--particle-x));
-                opacity: 0;
-            }
-        }
-
-        @keyframes energyPulse {
-            0% {
-                transform: scale(1);
-                opacity: 0.5;
-            }
-            50% {
-                transform: scale(1.5);
-                opacity: 0.2;
-            }
-            100% {
-                transform: scale(2);
-                opacity: 0;
-            }
-        }
-
-        /* Holographic Frame Animations */
-        @keyframes frameGlow {
-            0%, 100% {
-                box-shadow: 0 0 10px var(--hologram-blue);
-            }
-            50% {
-                box-shadow: 0 0 20px var(--hologram-glow);
-            }
-        }
-
-        @keyframes cornerPulse {
-            0%, 100% { opacity: 0.5; }
-            50% { opacity: 1; }
-        }
-
-        /* Interface Animations */
-        @keyframes interfaceScan {
-            0% {
-                background-position: 0 0;
-                opacity: 0.3;
-            }
-            50% {
-                opacity: 0.5;
-            }
-            100% {
-                background-position: 0 100%;
-                opacity: 0.3;
-            }
-        }
-
-        @keyframes dataFlow {
-            0% { transform: translateY(0); opacity: 0.3; }
-            50% { opacity: 0.6; }
-            100% { transform: translateY(100%); opacity: 0.3; }
-        }
-
-        /* Enhanced Text Effects */
-        @keyframes textGlow {
-            0%, 100% {
-                text-shadow: 0 0 5px var(--hologram-blue);
-            }
-            50% {
-                text-shadow: 0 0 15px var(--hologram-glow);
-            }
-        }
-
-        @keyframes statusBlink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
-
-        /* Random Character Animation */
-        @keyframes charFloat {
-            0% {
-                transform: translateY(0);
-                opacity: 0;
-            }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% {
-                transform: translateY(-20px);
-                opacity: 0;
-            }
-        }
-
-        /* Media Queries for Animations */
-        @media (prefers-reduced-motion: reduce) {
-            * {
-                animation-duration: 0.01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 0.01ms !important;
-                scroll-behavior: auto !important;
-            }
-        }
-    </style>
-    <!-- END OF PART 2 -->
-
-    <!-- START OF PART 3 - Copy from here -->
-    <!-- Enhanced Dark Theme Section with About Me Content -->
+    <!-- Dark Theme Section -->
     <div class="dark-theme-section">
         <div class="particles-container" id="particles-container-bottom"></div>
-        <div class="matrix-overlay"></div>
-        <div class="interface-grid"></div>
-        <div class="scan-line"></div>
         
         <div class="container">
+            <!-- About Section -->
             <section class="section">
                 <div class="card about-card">
-                    <div class="hologram-overlay"></div>
-                    <div class="grid-texture"></div>
-                    <div class="cyber-frame">
-                        <div class="frame-corner top-left"></div>
-                        <div class="frame-corner top-right"></div>
-                        <div class="frame-corner bottom-left"></div>
-                        <div class="frame-corner bottom-right"></div>
-                    </div>
-
+                    <div class="anime-background"></div> <!-- Added Anime Background -->
+                    <div class="tech-grid"></div>
                     <div class="about-header">
                         <div class="profile-container">
-                            <!-- Holographic Profile Frame -->
-                            <div class="hologram-frame">
-                                <div class="corner top-left"></div>
-                                <div class="corner top-right"></div>
-                                <div class="corner bottom-left"></div>
-                                <div class="corner bottom-right"></div>
-                                
-                                <!-- Enhanced Profile Image -->
-                                <div class="profile-wrapper">
-                                    <img src="assets/fotiosProfile.png" alt="Fotios Mpouris" class="about-profile-img">
-                                    <div class="profile-scanline"></div>
-                                    <div class="profile-glitch-effect"></div>
-                                </div>
+                            <img src="assets/fotiosProfile.png" alt="Fotios Mpouris" class="about-profile-img">
 
-                                <!-- Enhanced Stats Button -->
-                                <button class="stats-trigger">
-                                    <span class="trigger-icon"></span>
-                                    <span class="trigger-text">STATS</span>
-                                    <div class="trigger-glow"></div>
-                                </button>
-                            </div>
+                            <!-- Updated Hover Button -->
+                            <button class="profile-hover-button">Stats</button>
 
-                            <!-- Enhanced Stats Overlay -->
                             <div class="profile-stats-overlay">
-                                <div class="overlay-header">
-                                    <div class="header-line">
-                                        <span class="system-indicator">>_</span>
-                                        <span class="header-text">SYSTEM METRICS</span>
-                                    </div>
-                                    <div class="status-line">
-                                        <span class="status-dot"></span>
-                                        <span class="status-text">ONLINE</span>
-                                    </div>
-                                </div>
-
                                 <div class="stats-cycler">
                                     <div class="stat-paragraph">
-                                        <div class="stat-header">
-                                            <span class="header-icon">⚡</span>
-                                            PERFORMANCE METRICS
-                                        </div>
-                                        <p class="stat-content"></p>
+                                        <p></p>
                                     </div>
                                     <div class="stat-paragraph">
-                                        <div class="stat-header">
-                                            <span class="header-icon">💻</span>
-                                            DEVELOPMENT INDEX
-                                        </div>
-                                        <p class="stat-content"></p>
+                                        <p></p>
                                     </div>
                                     <div class="stat-paragraph">
-                                        <div class="stat-header">
-                                            <span class="header-icon">🎨</span>
-                                            CREATIVE OUTPUT
-                                        </div>
-                                        <p class="stat-content"></p>
+                                        <p></p>
                                     </div>
                                     <div class="stat-paragraph">
-                                        <div class="stat-header">
-                                            <span class="header-icon">📊</span>
-                                            SYSTEM EFFICIENCY
-                                        </div>
-                                        <p class="stat-content"></p>
+                                        <p></p>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
-                        <!-- Enhanced Infographic -->
+                        <!-- Removed the .about-header-text div as per user request -->
+                        <!-- Infographics Container -->
                         <div class="infographic">
-                            <div class="infographic-frame">
-                                <div class="frame-corner top-left"></div>
-                                <div class="frame-corner top-right"></div>
-                                <div class="frame-corner bottom-left"></div>
-                                <div class="frame-corner bottom-right"></div>
-                            </div>
-                            <div class="interface-overlay"></div>
-                            <!-- Infographic items will be dynamically generated -->
+                            <!-- Infographic items will be dynamically generated by JavaScript -->
                         </div>
                     </div>
-
-                    <!-- Enhanced Content Area -->
                     <div class="about-content">
-                        <div class="content-header">
-                            <div class="header-decoration">
-                                <span class="decorator left"></span>
-                                <span class="system-indicator">>_</span>
-                                <span class="typing-effect">SYSTEM OVERVIEW</span>
-                                <span class="decorator right"></span>
-                            </div>
-                        </div>
-                        
-                        <!-- Your original paragraphs with enhanced styling -->
-                        <div class="content-section">
-                            <p class="enhanced-paragraph">
-                                I'm a tech-savvy multimedia specialist with a unique blend of skills in digital design, software development, and AI-assisted platforms. Proficient in Python, C#, Unity, and Adobe Creative Suite, I have a strong background in creating immersive digital experiences, animation, and video production. My expertise spans developing interactive applications, managing creative projects, and utilizing AI and generative art platforms to enhance user experiences and push creative boundaries.
-                            </p>
-                            <p class="enhanced-paragraph">
-                                More recently, I've been exploring the intersection of AI and application development, working with tools like Streamlit Cloud, Google Cloud Console, Python, GitHub, and large language models (LLMs). These technologies allow me to design intelligent, automated solutions that streamline processes and enhance user engagement. By leveraging AI-assisted applications, I'm focused on creating innovative, agent-centric systems that reflect the future of technology.
-                            </p>
-                            <p class="enhanced-paragraph">
-                                Throughout my career, I've used cutting-edge tools to develop interactive features for mobile gaming and geo-positioning apps, collaborating with technical teams to prototype and bring functional products to life. My proficiency in Adobe tools like Photoshop, After Effects, Premiere Pro, and Audition has enabled me to produce high-quality multimedia content, from video editing to motion graphics and animation.
-                            </p>
-                            <p class="enhanced-paragraph">
-                                I've also managed digital platforms and multimedia content creation for various organizations, overseeing Google Workspace operations and creating social media assets to improve outreach. These hands-on experiences have given me a well-rounded understanding of how technology and creativity intersect to streamline workflows, enhance communication, and deliver captivating user experiences.
-                            </p>
-                            <p class="enhanced-paragraph">
-                                Always eager to explore new frontiers in creative development, I'm committed to using AI and emerging technologies to innovate and produce impactful digital media. Whether it's developing dynamic applications or crafting custom solutions, I'm dedicated to merging technology and design in today's rapidly evolving digital landscape.
-                            </p>
-                        </div>
+                        <p>
+                            I'm a tech-savvy multimedia specialist with a unique blend of skills in digital design, software development, and AI-assisted platforms. Proficient in Python, C#, Unity, and Adobe Creative Suite, I have a strong background in creating immersive digital experiences, animation, and video production. My expertise spans developing interactive applications, managing creative projects, and utilizing AI and generative art platforms to enhance user experiences and push creative boundaries.
+                        </p>
+                        <p>
+                            More recently, I've been exploring the intersection of AI and application development, working with tools like Streamlit Cloud, Google Cloud Console, Python, GitHub, and large language models (LLMs). These technologies allow me to design intelligent, automated solutions that streamline processes and enhance user engagement. By leveraging AI-assisted applications, I'm focused on creating innovative, agent-centric systems that reflect the future of technology.
+                        </p>
+                        <p>
+                            Throughout my career, I've used cutting-edge tools to develop interactive features for mobile gaming and geo-positioning apps, collaborating with technical teams to prototype and bring functional products to life. My proficiency in Adobe tools like Photoshop, After Effects, Premiere Pro, and Audition has enabled me to produce high-quality multimedia content, from video editing to motion graphics and animation.
+                        </p>
+                        <p>
+                            I've also managed digital platforms and multimedia content creation for various organizations, overseeing Google Workspace operations and creating social media assets to improve outreach. These hands-on experiences have given me a well-rounded understanding of how technology and creativity intersect to streamline workflows, enhance communication, and deliver captivating user experiences.
+                        </p>
+                        <p>
+                            Always eager to explore new frontiers in creative development, I'm committed to using AI and emerging technologies to innovate and produce impactful digital media. Whether it's developing dynamic applications or crafting custom solutions, I'm dedicated to merging technology and design in today's rapidly evolving digital landscape.
+                        </p>
                     </div>
                 </div>
             </section>
 
-            <style>
-                /* Enhanced Dark Theme Section */
-                .dark-theme-section {
-                    position: relative;
-                    background: linear-gradient(135deg, #001f3f 0%, #003366 50%, #001f3f 100%);
-                    overflow: hidden;
-                }
-
-                /* About Card Enhancements */
-                .about-card {
-                    position: relative;
-                    max-width: 900px !important;
-                    margin: 0 auto !important;
-                    padding: 2rem !important;
-                    background: var(--interface-bg) !important;
-                    border: none !important;
-                    box-shadow: 
-                        0 0 40px rgba(0, 0, 0, 0.4),
-                        inset 0 0 40px rgba(0, 123, 255, 0.08),
-                        0 0 25px var(--hologram-glow) !important;
-                    backdrop-filter: blur(10px);
-                    overflow: hidden;
-                }
-
-                /* Cyber Frame */
-                .cyber-frame {
-                    position: absolute;
-                    inset: 0;
-                    border: 1px solid var(--cyber-border);
-                    pointer-events: none;
-                }
-
-                .frame-corner {
-                    position: absolute;
-                    width: 20px;
-                    height: 20px;
-                    border: 2px solid var(--accent-light-blue);
-                    opacity: 0.8;
-                    animation: cornerPulse 2s infinite;
-                }
-
-                /* Profile Container Enhancements */
-                .hologram-frame {
-                    position: relative;
-                    width: 180px;
-                    height: 180px;
-                    margin: 0 auto;
-                }
-
-                .profile-wrapper {
-                    position: relative;
-                    width: 100%;
-                    height: 100%;
-                    overflow: hidden;
-                }
-
-                .about-profile-img {
-                    width: 100%;
-                    height: 100%;
-                    object-fit: cover;
-                    border-radius: 5px;
-                    filter: brightness(1.1) contrast(1.1);
-                    transform: rotate(-3deg);
-                    transition: all 0.5s ease;
-                }
-
-                .profile-scanline {
-                    position: absolute;
-                    top: 0;
-                    left: 0;
-                    width: 100%;
-                    height: 2px;
-                    background: var(--scanner-line);
-                    animation: scanning 2s linear infinite;
-                }
-
-                /* Enhanced Stats Button */
-                .stats-trigger {
-                    position: absolute;
-                    bottom: -30px;
-                    left: 50%;
-                    transform: translateX(-50%);
-                    background: rgba(0, 123, 255, 0.1);
-                    border: 1px solid var(--accent-light-blue);
-                    padding: 5px 15px;
-                    font-size: 0.8rem;
-                    color: var(--accent-light-blue);
-                    cursor: pointer;
-                    display: flex;
-                    align-items: center;
-                    gap: 5px;
-                    z-index: 10;
-                }
-
-                .trigger-icon {
-                    width: 8px;
-                    height: 8px;
-                    background: var(--accent-light-blue);
-                    border-radius: 50%;
-                    animation: pulse 2s infinite;
-                }
-
-                .trigger-glow {
-                    position: absolute;
-                    inset: 0;
-                    background: var(--hologram-glow);
-                    opacity: 0;
-                    transition: opacity 0.3s ease;
-                }
-
-                .stats-trigger:hover .trigger-glow {
-                    opacity: 0.2;
-                }
-
-                /* Enhanced Stats Overlay */
-                .profile-stats-overlay {
-                    position: absolute;
-                    top: 50%;
-                    left: calc(100% + 35px);
-                    transform: translate(-300px, -50%);
-                    width: 280px;
-                    background: var(--interface-bg);
-                    border: 1px solid var(--accent-light-blue);
-                    border-radius: 3px;
-                    padding: 1rem;
-                    opacity: 0;
-                    transition: all 0.3s ease;
-                    z-index: 4;
-                    backdrop-filter: blur(5px);
-                }
-
-                /* Content Area Enhancements */
-                .about-content {
-                    background: rgba(10, 25, 47, 0.7);
-                    border: 1px solid var(--cyber-border);
-                    border-radius: 3px;
-                    padding: 1.5rem;
-                    margin-top: 2rem;
-                }
-
-                .enhanced-paragraph {
-                    color: var(--text-primary);
-                    font-size: 1.15rem;
-                    line-height: 2;
-                    margin-bottom: 1.5rem;
-                    padding: 1rem;
-                    background: rgba(0, 123, 255, 0.05);
-                    border-left: 3px solid var(--accent-light-blue);
-                    transition: all 0.3s ease;
-                }
-
-                .enhanced-paragraph:hover {
-                    background: rgba(0, 123, 255, 0.1);
-                    transform: translateX(5px);
-                    box-shadow: 0 0 20px var(--hologram-glow);
-                }
-
-                /* Responsive Adjustments */
-                @media (max-width: 992px) {
-                    .about-header {
-                        flex-direction: column;
-                        align-items: center;
-                    }
-
-                    .profile-stats-overlay {
-                        left: 50%;
-                        transform: translateX(-50%);
-                        top: calc(100% + 20px);
-                    }
-                }
-
-                @media (max-width: 768px) {
-                    .enhanced-paragraph {
-                        font-size: 1rem;
-                        padding: 0.8rem;
-                    }
-                }
-            </style>
-        </div>
-    </div>
-    <!-- END OF PART 3 -->
-    <!-- START OF PART 4 - Copy from here -->
             <!-- Projects Section -->
             <section class="section">
-                <div class="card project-section-card">
-                    <div class="cyber-frame">
-                        <div class="frame-corner top-left"></div>
-                        <div class="frame-corner top-right"></div>
-                        <div class="frame-corner bottom-left"></div>
-                        <div class="frame-corner bottom-right"></div>
-                    </div>
-                    
-                    <div class="section-header">
-                        <div class="header-frame">
-                            <span class="system-indicator">>_</span>
-                            <h3 class="cyber-heading">Featured Projects</h3>
-                            <div class="header-line"></div>
-                        </div>
-                    </div>
-
+                <div class="card">
+                    <h3>Featured Projects</h3>
                     <div class="projects">
-                        <!-- Project Card 1 -->
+                        <!-- Wrapped Project Cards with Links -->
                         <a href="https://github.com/FotiosMpouris/ImpossibleShark2" class="project-card" target="_blank" rel="noopener noreferrer">
-                            <div class="project-inner">
-                                <div class="project-content">
-                                    <div class="project-header">
-                                        <span class="project-icon">🎮</span>
-                                        <h4>Impossible Shark</h4>
-                                    </div>
-                                    <p>Game Development</p>
-                                    <div class="project-footer">
-                                        <span class="tech-tag">Unity</span>
-                                        <span class="tech-tag">C#</span>
-                                    </div>
-                                </div>
-                                <div class="cyber-overlay"></div>
-                                <div class="scan-line"></div>
-                            </div>
+                            <h4>Impossible Shark</h4>
+                            <p>Game Development</p>
                         </a>
-
-                        <!-- Project Card 2 -->
                         <a href="https://github.com/FotiosMpouris/Hardie-Siding-Agent-Testing-Working_Copy/blob/main/README.md" class="project-card" target="_blank" rel="noopener noreferrer">
-                            <div class="project-inner">
-                                <div class="project-content">
-                                    <div class="project-header">
-                                        <span class="project-icon">🤖</span>
-                                        <h4>Siding Project Assistant</h4>
-                                    </div>
-                                    <p>AI Development</p>
-                                    <div class="project-footer">
-                                        <span class="tech-tag">Python</span>
-                                        <span class="tech-tag">AI</span>
-                                    </div>
-                                </div>
-                                <div class="cyber-overlay"></div>
-                                <div class="scan-line"></div>
-                            </div>
+                            <h4>Siding Project Assistant</h4>
+                            <p>AI Development</p>
                         </a>
-
-                        <!-- Project Card 3 -->
                         <a href="https://github.com/FotiosMpouris/Oriana/blob/main/README.md" class="project-card" target="_blank" rel="noopener noreferrer">
-                            <div class="project-inner">
-                                <div class="project-content">
-                                    <div class="project-header">
-                                        <span class="project-icon">💡</span>
-                                        <h4>Oriana</h4>
-                                    </div>
-                                    <p>AI Assistant</p>
-                                    <div class="project-footer">
-                                        <span class="tech-tag">ML</span>
-                                        <span class="tech-tag">NLP</span>
-                                    </div>
-                                </div>
-                                <div class="cyber-overlay"></div>
-                                <div class="scan-line"></div>
-                            </div>
+                            <h4>Oriana</h4>
+                            <p>AI Assistant</p>
                         </a>
-
-                        <!-- Project Card 4 -->
                         <a href="https://github.com/FotiosMpouris/ReggieResume2/blob/main/README.md" class="project-card" target="_blank" rel="noopener noreferrer">
-                            <div class="project-inner">
-                                <div class="project-content">
-                                    <div class="project-header">
-                                        <span class="project-icon">📝</span>
-                                        <h4>AI Resume Tailor</h4>
-                                    </div>
-                                    <p>AI Tool</p>
-                                    <div class="project-footer">
-                                        <span class="tech-tag">GPT</span>
-                                        <span class="tech-tag">API</span>
-                                    </div>
-                                </div>
-                                <div class="cyber-overlay"></div>
-                                <div class="scan-line"></div>
-                            </div>
+                            <h4>AI Resume Tailor</h4>
+                            <p>AI Tool</p>
                         </a>
+                        <!-- Removed Placeholder Projects -->
                     </div>
                 </div>
             </section>
 
             <!-- Connect Section -->
             <section class="section">
-                <div class="card connect-card">
-                    <div class="cyber-frame">
-                        <div class="frame-corner top-left"></div>
-                        <div class="frame-corner top-right"></div>
-                        <div class="frame-corner bottom-left"></div>
-                        <div class="frame-corner bottom-right"></div>
-                    </div>
-
-                    <div class="section-header">
-                        <div class="header-frame">
-                            <span class="system-indicator">>_</span>
-                            <h3 class="cyber-heading">Connect</h3>
-                            <div class="header-line"></div>
-                        </div>
-                    </div>
-
+                <div class="card">
+                    <h3>Connect</h3>
                     <div class="social-links">
-                        <a href="mailto:fotiosmpouris@gmail.com" class="social-link">
-                            <div class="link-content">
-                                <span class="link-icon">📧</span>
-                                <span class="link-text">Email</span>
-                            </div>
-                            <div class="link-overlay"></div>
-                        </a>
-                        <a href="https://www.linkedin.com/in/fotios-mpouris-57728b240/" class="social-link" target="_blank" rel="noopener noreferrer">
-                            <div class="link-content">
-                                <span class="link-icon">💼</span>
-                                <span class="link-text">LinkedIn</span>
-                            </div>
-                            <div class="link-overlay"></div>
-                        </a>
-                        <a href="https://www.behance.net/fotiosmpouris" class="social-link" target="_blank" rel="noopener noreferrer">
-                            <div class="link-content">
-                                <span class="link-icon">🎨</span>
-                                <span class="link-text">Behance</span>
-                            </div>
-                            <div class="link-overlay"></div>
-                        </a>
+                        <!-- Updated Social Links with Correct Hrefs -->
+                        <a href="mailto:fotiosmpouris@gmail.com" class="social-link">Email</a>
+                        <a href="https://www.linkedin.com/in/fotios-mpouris-57728b240/" class="social-link" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                        <a href="https://www.behance.net/fotiosmpouris" class="social-link" target="_blank" rel="noopener noreferrer">Behance</a>
                     </div>
                 </div>
             </section>
         </div>
     </div>
 
-    <style>
-        /* Projects Section Styles */
-        .project-section-card {
-            background: var(--interface-bg) !important;
-            border: none !important;
-            box-shadow: 
-                0 0 40px rgba(0, 0, 0, 0.4),
-                inset 0 0 40px rgba(0, 123, 255, 0.08),
-                0 0 25px var(--hologram-glow) !important;
-            backdrop-filter: blur(10px);
-        }
-
-        .cyber-heading {
-            color: var(--accent-light-blue);
-            margin: 0;
-            font-size: 1.8rem;
-            text-shadow: 0 0 10px rgba(0, 183, 255, 0.5);
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .header-line {
-            height: 2px;
-            background: linear-gradient(
-                90deg,
-                var(--accent-light-blue) 0%,
-                transparent 100%
-            );
-            margin-top: 0.5rem;
-        }
-
-        /* Enhanced Project Cards */
-        .projects {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        .project-card {
-            text-decoration: none;
-            color: var(--text-primary);
-            position: relative;
-            overflow: hidden;
-            transition: all 0.3s ease;
-        }
-
-        .project-inner {
-            background: rgba(10, 25, 47, 0.9);
-            border: 1px solid var(--cyber-border);
-            border-radius: 3px;
-            padding: 1.5rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .project-content {
-            position: relative;
-            z-index: 2;
-        }
-
-        .project-header {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .project-icon {
-            font-size: 1.5rem;
-        }
-
-        .project-card h4 {
-            color: var(--accent-light-blue);
-            margin: 0;
-            font-size: 1.2rem;
-            text-shadow: var(--cyber-text-glow);
-        }
-
-        .project-card p {
-            color: var(--text-secondary);
-            margin: 0.5rem 0;
-        }
-
-        .project-footer {
-            display: flex;
-            gap: 0.5rem;
-            margin-top: 1rem;
-        }
-
-        .tech-tag {
-            background: rgba(0, 123, 255, 0.1);
-            padding: 0.2rem 0.5rem;
-            border-radius: 3px;
-            font-size: 0.8rem;
-            border: 1px solid var(--cyber-border);
-        }
-
-        .cyber-overlay {
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(
-                90deg,
-                transparent,
-                var(--cyber-highlight),
-                transparent
-            );
-            transition: 0.5s;
-        }
-
-        .project-card:hover .cyber-overlay {
-            left: 100%;
-        }
-
-        .project-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .project-card:hover .project-inner {
-            box-shadow: 
-                0 10px 25px rgba(0, 0, 0, 0.3),
-                0 0 20px var(--hologram-glow);
-        }
-
-        /* Connect Section Styles */
-        .connect-card {
-            background: var(--interface-bg) !important;
-            border: none !important;
-            box-shadow: 
-                0 0 40px rgba(0, 0, 0, 0.4),
-                inset 0 0 40px rgba(0, 123, 255, 0.08),
-                0 0 25px var(--hologram-glow) !important;
-            backdrop-filter: blur(10px);
-        }
-
-        .social-links {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            margin-top: 2rem;
-            padding: 1.5rem;
-            background: rgba(10, 25, 47, 0.9);
-            border: 1px solid var(--cyber-border);
-            border-radius: 3px;
-        }
-
-        .social-link {
-            position: relative;
-            text-decoration: none;
-            color: var(--text-primary);
-            padding: 0.8rem 1.5rem;
-            background: rgba(0, 123, 255, 0.1);
-            border: 1px solid var(--cyber-border);
-            border-radius: 3px;
-            overflow: hidden;
-            transition: all 0.3s ease;
-        }
-
-        .link-content {
-            position: relative;
-            z-index: 2;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .link-icon {
-            font-size: 1.2rem;
-        }
-
-        .link-overlay {
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(
-                90deg,
-                transparent,
-                var(--cyber-highlight),
-                transparent
-            );
-            transition: 0.5s;
-        }
-
-        .social-link:hover .link-overlay {
-            left: 100%;
-        }
-
-        .social-link:hover {
-            background: rgba(0, 123, 255, 0.2);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px var(--hologram-glow);
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .social-links {
-                flex-direction: column;
-                align-items: stretch;
-                gap: 1rem;
-            }
-
-            .social-link {
-                text-align: center;
-            }
-
-            .link-content {
-                justify-content: center;
-            }
-        }
-    </style>
-    <!-- END OF PART 4 -->
-    <!-- START OF PART 5 - Copy from here -->
     <script>
         // Initialize GSAP ScrollTrigger
         gsap.registerPlugin(ScrollTrigger);
 
         // Matrix Effect Functions
         function createMatrixBackground() {
-            const containers = document.querySelectorAll('.matrix-background, .matrix-overlay');
+            const containers = document.querySelectorAll('.matrix-background');
             containers.forEach(container => {
                 const containerWidth = container.offsetWidth;
-                const columnWidth = 30;
+                const columnWidth = 30; // Increased width for fewer columns
                 const numberOfColumns = Math.ceil(containerWidth / columnWidth);
+
                 const chars = '守らリケーシタアプョン01{}#$@987';
 
-                container.innerHTML = '';
+                container.innerHTML = ''; // Clear existing columns
 
                 for(let i = 0; i < numberOfColumns; i++) {
                     const column = document.createElement('div');
                     column.className = 'matrix-column';
                     
+                    // Create random string of characters
                     let columnChars = '';
-                    for(let j = 0; j < 100; j++) {
+                    for(let j = 0; j < 100; j++) { // Increased from 50 to 100
                         columnChars += chars[Math.floor(Math.random() * chars.length)] + '\n';
                     }
 
@@ -1299,18 +1366,140 @@
                     column.style.left = `${i * columnWidth}px`;
                     column.style.animationDelay = `${-Math.random() * 20}s`;
 
-                    // Random glow effect
-                    if (Math.random() < 0.3) {
-                        column.style.textShadow = '0 0 8px var(--matrix-glow)';
-                        column.style.opacity = '1';
-                    }
-
                     container.appendChild(column);
                 }
             });
         }
 
-        // Particle System
+        // Anime Effect Functions
+        function createAnimeBackground() {
+            const container = document.querySelector('.anime-background');
+            const containerWidth = container.offsetWidth;
+            const columnWidth = 40;
+            const numberOfColumns = Math.ceil(containerWidth / columnWidth);
+            
+            // Anime characters pool
+            const chars = '守らリケーシタアプョン01{}#$@987';
+            
+            // Create columns
+            for(let i = 0; i < numberOfColumns; i++) {
+                const column = document.createElement('div');
+                column.className = 'anime-column';
+                
+                let columnChars = '';
+                for(let j = 0; j < 100; j++) {
+                    columnChars += chars[Math.floor(Math.random() * chars.length)] + '\n';
+                }
+                
+                column.textContent = columnChars;
+                column.style.left = `${i * columnWidth}px`;
+                column.style.animationDelay = `${-Math.random() * 20}s`;
+                
+                // Randomly add glow effect
+                if (Math.random() < 0.3) {
+                    column.classList.add('glow');
+                }
+                
+                container.appendChild(column);
+            }
+        }
+
+        // Profile Stats Functions
+        let isCyclingStats = false; // Flag to prevent multiple cycles
+
+        function initializeProfileStats() {
+            const statsData = [
+                "Proficient in creating visually stunning graphics with a 95% client satisfaction rate, ensuring projects are delivered on time and exceed expectations.",
+                "Expert in development operations, improving workflow efficiency by 80% through innovative solutions and automation.",
+                "Specialized in game development with a 90% success rate in asset creation, enhancing user engagement and experience.",
+                "Skilled in asset creation and multimedia production, contributing to a 100% increase in project scalability and flexibility."
+            ];
+            
+            const cycler = document.querySelector('.profile-stats-overlay .stats-cycler');
+            const paragraphs = cycler.querySelectorAll('.stat-paragraph');
+            let currentStatIndex = 0;
+            const totalStats = statsData.length;
+
+            // Function to type text into an element
+            function typeText(element, text, speed = 10) { // Reduced typing speed from 20ms to 10ms
+                return new Promise(resolve => {
+                    let index = 0;
+                    const typingInterval = setInterval(() => {
+                        if (index < text.length) {
+                            element.querySelector('p').textContent += text[index];
+                            index++;
+                        } else {
+                            clearInterval(typingInterval);
+                            resolve();
+                        }
+                    }, speed);
+                });
+            }
+
+            // Function to delay execution
+            function delay(ms) {
+                return new Promise(resolve => setTimeout(resolve, ms));
+            }
+
+            // Function to cycle through stats
+            async function cycleStats() {
+                if (isCyclingStats) return; // Prevent multiple cycles
+                isCyclingStats = true;
+
+                while(true) {
+                    const currentParagraph = paragraphs[currentStatIndex];
+                    const currentText = statsData[currentStatIndex];
+
+                    // Activate the current paragraph
+                    currentParagraph.classList.add('active');
+                    
+                    // Type the text
+                    await typeText(currentParagraph, currentText);
+
+                    // Wait for a brief moment before transitioning
+                    await delay(1500); // Display duration
+
+                    // Deactivate the current paragraph
+                    currentParagraph.classList.remove('active');
+
+                    // Clear the text
+                    currentParagraph.querySelector('p').textContent = '';
+
+                    // Move to the next stat
+                    currentStatIndex = (currentStatIndex + 1) % totalStats;
+                }
+            }
+
+            // Attach event listeners to start cycling on hover for both profile image and stats button
+            const profileImg = document.querySelector('.about-profile-img');
+            const statsButton = document.querySelector('.profile-hover-button');
+            const statsOverlay = document.querySelector('.profile-stats-overlay');
+
+            function showStats() {
+                gsap.to(statsOverlay, {
+                    opacity: 1,
+                    duration: 0.3,
+                    ease: "power1.out"
+                });
+                cycleStats(); // Start cycling on first hover
+            }
+
+            function hideStats() {
+                gsap.to(statsOverlay, {
+                    opacity: 0,
+                    duration: 0.3,
+                    ease: "power1.out"
+                });
+            }
+
+            profileImg.addEventListener('mouseenter', showStats);
+            profileImg.addEventListener('mouseleave', hideStats);
+
+            statsButton.addEventListener('mouseenter', showStats);
+            statsButton.addEventListener('mouseleave', hideStats);
+        }
+
+        // Particle Effects
         function createParticle(container) {
             const particle = document.createElement('div');
             particle.className = 'particle';
@@ -1319,18 +1508,17 @@
             particle.style.width = `${size}px`;
             particle.style.height = `${size}px`;
             
-            const startX = Math.random() * 100;
-            particle.style.left = `${startX}%`;
-            particle.style.top = '100%';
+            particle.style.left = `${Math.random() * 100}%`;
+            particle.style.top = `${Math.random() * 100}%`;
             
             container.appendChild(particle);
             
             gsap.to(particle, {
-                y: '-100vh',
-                x: `random(-50, 50)`,
+                y: -500,
+                x: Math.random() * 100 - 50,
                 opacity: 0,
-                duration: 'random(2, 4)',
-                ease: 'power1.out',
+                duration: Math.random() * 3 + 2,
+                ease: "power1.out",
                 onComplete: () => particle.remove()
             });
         }
@@ -1345,191 +1533,180 @@
             setTimeout(() => wave.remove(), 6000);
         }
 
-        // Profile Stats Functions
-        function initializeProfileStats() {
-            const statsData = [
-                "Proficient in creating visually stunning graphics with a 95% client satisfaction rate, ensuring projects are delivered on time and exceed expectations.",
-                "Expert in development operations, improving workflow efficiency by 80% through innovative solutions and automation.",
-                "Specialized in game development with a 90% success rate in asset creation, enhancing user engagement and experience.",
-                "Skilled in asset creation and multimedia production, contributing to a 100% increase in project scalability and flexibility."
-            ];
-            
-            const cycler = document.querySelector('.profile-stats-overlay .stats-cycler');
-            const paragraphs = cycler.querySelectorAll('.stat-paragraph');
-            let currentStatIndex = 0;
-            let isCycling = false;
+        // Typing and Cycling for Infographics
+        const infographicData = [
+            { title: "Unity 2D & 3D Development", text: "Crafting immersive 2D and 3D game environments with Unity to deliver engaging user experiences." },
+            { title: "C# Programming", text: "Developing robust and scalable applications using C# to meet diverse project requirements." },
+            { title: "Blender 3D Modeling", text: "Creating detailed 3D models and animations with Blender to bring creative visions to life." },
+            { title: "Web Design with HTML", text: "Designing responsive and visually appealing websites using HTML to enhance online presence." },
+            { title: "Alpha Test Development in Unity", text: "Leading alpha testing phases in Unity to ensure high-quality and bug-free game releases." },
+            { title: "Content Creation", text: "Generating compelling digital content that resonates with audiences and drives engagement." },
+            { title: "Autodesk 3DsMax Certification", text: "Certified Autodesk 3DsMax user proficient in advanced 3D modeling and rendering techniques." },
+            { title: "Adobe Creative Suite Expertise", text: "Mastering Photoshop, After Effects, InDesign, Premiere Pro, and Audition for versatile multimedia projects." },
+            { title: "Digital Design & Branding", text: "Designing logos, page layouts, and custom templates to establish strong brand identities." },
+            { title: "Python & C# Development", text: "Leveraging Python and C# languages to build versatile software solutions and automate workflows." },
+            { title: "JavaScript Programming", text: "Implementing dynamic and interactive web functionalities using JavaScript." },
+            { title: "Google Cloud Console Management", text: "Managing and deploying scalable applications on Google Cloud Console for optimal performance." },
+            { title: "Streamlit Cloud Development", text: "Building interactive data applications with Streamlit Cloud to visualize and share insights effectively." },
+            { title: "Video Editing with Premiere Pro", text: "Editing high-quality videos using Premiere Pro to produce professional-grade multimedia content." },
+            { title: "AI-Assisted Development", text: "Integrating AI technologies to enhance development processes and create intelligent applications." },
+            { title: "Generative Art with AI Platforms", text: "Utilizing AI-assisted generative art platforms to produce unique and creative visual content." },
+            { title: "2D & 3D Animation", text: "Animating characters and scenes in both 2D and 3D to tell captivating stories." },
+            { title: "Character Rigging & Animation", text: "Rigging and animating characters to ensure fluid and lifelike movements in digital media." },
+            { title: "Project Management", text: "Coordinating cross-functional teams to deliver projects on time and exceed client expectations." },
+            { title: "Data Analysis", text: "Analyzing complex datasets to derive actionable insights and inform strategic decisions." }
+        ];
 
-            async function typeText(element, text) {
-                const contentElement = element.querySelector('.stat-content');
-                contentElement.textContent = '';
-                
-                for (let i = 0; i < text.length; i++) {
-                    contentElement.textContent += text[i];
-                    await new Promise(resolve => setTimeout(resolve, 10));
-                }
-            }
+        let currentInfographic = 0;
+        let infographicItems = [];
 
-            async function cycleStats() {
-                if (isCycling) return;
-                isCycling = true;
-
-                while(true) {
-                    const currentParagraph = paragraphs[currentStatIndex];
-                    const currentText = statsData[currentStatIndex];
-
-                    // Add cyber-glitch effect before showing
-                    currentParagraph.classList.add('glitch-effect');
-                    await new Promise(resolve => setTimeout(resolve, 100));
-                    currentParagraph.classList.remove('glitch-effect');
-
-                    currentParagraph.classList.add('active');
-                    await typeText(currentParagraph, currentText);
-                    await new Promise(resolve => setTimeout(resolve, 2000));
-                    
-                    // Add fade-out effect
-                    currentParagraph.classList.add('fade-out');
-                    await new Promise(resolve => setTimeout(resolve, 300));
-                    currentParagraph.classList.remove('active', 'fade-out');
-
-                    currentStatIndex = (currentStatIndex + 1) % statsData.length;
-                }
-            }
-
-            // Setup hover triggers
-            const profileContainer = document.querySelector('.profile-container');
-            const statsOverlay = document.querySelector('.profile-stats-overlay');
-            const statsButton = document.querySelector('.stats-trigger');
-
-            function showStats() {
-                gsap.to(statsOverlay, {
-                    opacity: 1,
-                    duration: 0.3,
-                    ease: "power2.out"
-                });
-                cycleStats();
-            }
-
-            function hideStats() {
-                gsap.to(statsOverlay, {
-                    opacity: 0,
-                    duration: 0.3,
-                    ease: "power2.in"
-                });
-            }
-
-            profileContainer.addEventListener('mouseenter', showStats);
-            profileContainer.addEventListener('mouseleave', hideStats);
-            statsButton.addEventListener('mouseenter', showStats);
-            statsButton.addEventListener('mouseleave', hideStats);
+        // Helper function to delay execution
+        function delayInfographic(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
         }
 
-        // Infographics System
-        function createInfographicItems() {
-            const infographicData = [
-                { title: "Unity 2D & 3D Development", text: "Crafting immersive 2D and 3D game environments with Unity." },
-                { title: "C# Programming", text: "Developing robust and scalable applications using C#." },
-                { title: "Blender 3D Modeling", text: "Creating detailed 3D models and animations." },
-                { title: "Web Design & Development", text: "Building responsive and dynamic web applications." },
-                { title: "AI Integration", text: "Implementing cutting-edge AI solutions and automation." },
-                { title: "Creative Development", text: "Merging technology with creative design principles." },
-                { title: "Project Management", text: "Leading teams and delivering successful projects." },
-                { title: "Content Creation", text: "Producing engaging multimedia content." }
-            ];
+        // Function to type text into an element
+        function typeTextInfographic(element, text, speed = 10) { // Reduced typing speed from 20ms to 10ms
+            return new Promise((resolve) => {
+                let index = 0;
+                element.textContent = '';
+                element.style.opacity = '1';
+                
+                const typingInterval = setInterval(() => {
+                    if (index < text.length) {
+                        element.textContent += text[index];
+                        index++;
+                    } else {
+                        clearInterval(typingInterval);
+                        resolve();
+                    }
+                }, speed);
+            });
+        }
 
-            const container = document.querySelector('.infographic');
-            container.innerHTML = '<div class="infographic-frame"></div>';
+        // Function to cycle through infographics
+        async function cycleInfographics() {
+            while(true) {
+                const currentItem = infographicItems[currentInfographic];
+                currentItem.classList.add('active');
+
+                const titleElement = currentItem.querySelector('h4');
+                const textElement = currentItem.querySelector('.typing-text');
+
+                // Retrieve the data for current infographic
+                const { title, text } = infographicData[currentInfographic % infographicData.length];
+
+                // Start typing title and text simultaneously
+                await Promise.all([
+                    typeTextInfographic(titleElement, title),
+                    typeTextInfographic(textElement, text)
+                ]);
+
+                // Wait for a short duration before fading out
+                await delayInfographic(800); // Increased display duration
+
+                // Fade out the infographic
+                currentItem.classList.remove('active');
+
+                // Clear the texts
+                titleElement.textContent = '';
+                textElement.textContent = '';
+
+                // Move to next infographic
+                currentInfographic = (currentInfographic + 1) % infographicItems.length;
+
+                // Small delay before showing next infographic
+                await delayInfographic(300);
+            }
+        }
+
+        // Function to dynamically create infographic items
+        function createInfographicItems() {
+            const infographicContainer = document.querySelector('.infographic');
+            infographicContainer.innerHTML = ''; // Clear existing items
 
             infographicData.forEach((item, index) => {
-                const itemElement = document.createElement('div');
-                itemElement.className = 'infographic-item';
-                itemElement.innerHTML = `
-                    <div class="item-content">
-                        <h4>${item.title}</h4>
-                        <p class="typing-text"></p>
-                    </div>
+                const infographicItem = document.createElement('div');
+                infographicItem.className = 'infographic-item';
+                infographicItem.innerHTML = `
+                    <h4>${item.title}</h4>
+                    <p class="typing-text">${item.text}</p>
                 `;
-                container.appendChild(itemElement);
+                infographicContainer.appendChild(infographicItem);
+                infographicItems.push(infographicItem);
             });
-
-            return infographicData;
         }
 
-        async function cycleInfographics() {
-            const items = document.querySelectorAll('.infographic-item');
-            const data = createInfographicItems();
-            let currentIndex = 0;
-
-            async function typeText(element, text) {
-                const textElement = element.querySelector('.typing-text');
-                textElement.textContent = '';
-                
-                for (let i = 0; i < text.length; i++) {
-                    textElement.textContent += text[i];
-                    await new Promise(resolve => setTimeout(resolve, 20));
-                }
-            }
-
-            while(true) {
-                const currentItem = items[currentIndex];
-                const currentData = data[currentIndex];
-
-                // Add cyber-glitch effect
-                currentItem.classList.add('glitch-effect');
-                await new Promise(resolve => setTimeout(resolve, 100));
-                currentItem.classList.remove('glitch-effect');
-
-                currentItem.classList.add('active');
-                await typeText(currentItem, currentData.text);
-                await new Promise(resolve => setTimeout(resolve, 3000));
-
-                currentItem.classList.add('fade-out');
-                await new Promise(resolve => setTimeout(resolve, 300));
-                currentItem.classList.remove('active', 'fade-out');
-
-                currentIndex = (currentIndex + 1) % items.length;
-            }
-        }
-
-        // Random Character Effect
-        function createRandomCharacter() {
-            const container = document.querySelector('.dark-theme-section');
-            const char = document.createElement('div');
-            const chars = '守らリケーシタアプョン01{}#$@987';
-            
-            char.className = 'random-char';
-            char.textContent = chars[Math.floor(Math.random() * chars.length)];
-            
-            const x = Math.random() * 100;
-            const y = Math.random() * 100;
-            char.style.left = `${x}%`;
-            char.style.top = `${y}%`;
-
-            // Random color class
-            const colorClasses = ['white', 'red', 'blue'];
-            char.classList.add(colorClasses[Math.floor(Math.random() * colorClasses.length)]);
-            
-            container.appendChild(char);
-            
-            char.addEventListener('animationend', () => char.remove());
-        }
-
-        // Initialize Everything
-        document.addEventListener('DOMContentLoaded', () => {
-            // Initialize base effects
-            createMatrixBackground();
-            initializeProfileStats();
-
-            // Start particle systems
+        // Initialize Particles
+        function startParticles() {
             const particlesContainers = document.querySelectorAll('.particles-container');
             particlesContainers.forEach(container => {
                 setInterval(() => createParticle(container), 200);
             });
+        }
 
-            // Start random character generation
-            setInterval(createRandomCharacter, 300);
+        // Function to generate random Japanese characters with alternating colors
+        function generateRandomJapaneseChar() {
+            const chars = ['守', 'ら', 'れ', 'た', 'ア', 'プ', 'リ', 'ケ', 'ー', 'シ', 'ョ', 'ン', 'ア', 'ク', 'プ'];
+            return chars[Math.floor(Math.random() * chars.length)];
+        }
 
-            // Initialize infographics
-            cycleInfographics();
+        // Function to display multiple random Japanese characters with random color
+        function displayRandomJapaneseChars(count = 2) {
+            const darkSection = document.querySelector('.dark-theme-section');
+            const chars = ['守', 'ら', 'れ', 'た', 'ア', 'プ', 'リ', 'ケ', 'ー', 'シ', 'ョ', 'ン', 'ア', 'ク', 'プ'];
+
+            for(let i = 0; i < count; i++) {
+                const char = chars[Math.floor(Math.random() * chars.length)];
+                const randomCharElem = document.createElement('span');
+                randomCharElem.className = 'random-char';
+
+                // Randomly assign one of the three colors
+                const colors = ['white', 'red', 'blue'];
+                const randomColor = colors[Math.floor(Math.random() * colors.length)];
+                randomCharElem.classList.add(randomColor);
+
+                randomCharElem.textContent = char;
+
+                // Random position within the dark-theme-section
+                const x = Math.random() * 100;
+                const y = Math.random() * 100;
+
+                randomCharElem.style.left = `${x}%`;
+                randomCharElem.style.top = `${y}%`;
+
+                darkSection.appendChild(randomCharElem);
+
+                // Remove the character after animation completes
+                randomCharElem.addEventListener('animationend', () => {
+                    randomCharElem.remove();
+                });
+            }
+        }
+
+        // Initialize Everything
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initialize Matrix
+            createMatrixBackground();
+            setInterval(() => {
+                const columns = document.querySelectorAll('.matrix-column');
+                columns.forEach(column => {
+                    if (Math.random() < 0.01) { // 1% chance per column to glow a character
+                        const randomCharIndex = Math.floor(Math.random() * 100);
+                        const char = column.childNodes[randomCharIndex];
+                        if (char) {
+                            char.classList.add('glow');
+                            setTimeout(() => char.classList.remove('glow'), 1000);
+                        }
+                    }
+                });
+            }, 100);
+
+            // Initialize Anime Background
+            createAnimeBackground();
+
+            // Initialize Profile Stats
+            initializeProfileStats();
 
             // GSAP Animations
             gsap.to('.title', {
@@ -1546,19 +1723,19 @@
                 delay: 0.8
             });
 
-            // Skill icons animation
+            // Skill Icons Animation
             const skillIcons = document.querySelectorAll('.skill-icon');
             skillIcons.forEach((icon, index) => {
                 gsap.to(icon, {
                     opacity: 1,
                     scale: 1,
                     duration: 0.5,
-                    delay: 1.2 + (index * 0.05),
+                    delay: 1.2 + (index * 0.05), // Slightly faster stagger
                     ease: "back.out(1.7)"
                 });
             });
 
-            // Section animations
+            // Section Animations
             const sections = document.querySelectorAll('.section');
             sections.forEach((section, index) => {
                 gsap.to(section, {
@@ -1574,7 +1751,27 @@
                 });
             });
 
-            // Mouse movement effects
+            // Create infographic items
+            createInfographicItems();
+
+            // Start Infographics Cycling
+            cycleInfographics();
+
+            // Initialize Particles
+            startParticles();
+
+            // Start displaying random Japanese characters
+            setInterval(() => displayRandomJapaneseChars(2), 300); // Generate 2 characters every 300ms
+
+            // Window Resize Handler
+            window.addEventListener('resize', () => {
+                createMatrixBackground();
+                const animeContainer = document.querySelector('.anime-background');
+                animeContainer.innerHTML = '';
+                createAnimeBackground();
+            });
+
+            // Mouse Movement Handler
             document.addEventListener('mousemove', (e) => {
                 const particlesContainers = document.querySelectorAll('.particles-container');
                 particlesContainers.forEach(container => {
@@ -1589,12 +1786,19 @@
                 });
             });
 
-            // Window resize handler
-            window.addEventListener('resize', () => {
-                createMatrixBackground();
-            });
+            /* --- Removed Code for Profile Stats Trigger via Scroll --- */
+            /* 
+                Previously, there was a ScrollTrigger that activated the profile stats overlay
+                when scrolling into the lower section. Since you want to revert to only hover
+                triggering, this code has been removed.
+            */
+
+            /* --- Added Code for Random Japanese Characters in Dark Theme Section --- */
+            // Generate Japanese characters at random intervals
         });
     </script>
 </body>
 </html>
-    <!-- END OF PART 5 -->
+
+
+
