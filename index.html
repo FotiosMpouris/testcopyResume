@@ -8,31 +8,40 @@
     <!-- Essential Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tilt.js/1.2.1/tilt.jquery.min.js"></script>
     
     <style>
-        /* Core Variables */
+        /* Core Variables - Enhanced with new theme variables */
         :root {
+            /* Original Variables */
             --primary-dark: #0a192f;
             --primary-light: #20232a;
             --accent-blue: #00aaff;
             --accent-light-blue: #00d4ff;
             --accent-dark-blue: #007BFF;
-            --accent-purple: #6c63ff;
-            --accent-pink: #ff61d8;
             --accent-red: #FF0000;
             --accent-glow: rgba(0, 212, 255, 0.5);
             --text-primary: #ffffff;
             --text-secondary: rgba(255, 255, 255, 0.7);
             --matrix-color: rgba(0, 183, 255, 0.25);
             --matrix-glow: rgba(0, 183, 255, 0.6);
-            --transition-standard: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            --glassmorphism-bg: rgba(255, 255, 255, 0.05);
-            --glassmorphism-border: rgba(255, 255, 255, 0.1);
-            --neon-glow: 0 0 10px rgba(0, 212, 255, 0.5),
-                         0 0 20px rgba(0, 212, 255, 0.3),
-                         0 0 30px rgba(0, 212, 255, 0.1);
+            --transition-standard: all 0.3s ease;
+            --infographic-bg: rgba(0, 123, 255, 0.3);
+            --code-white: #ffffff;
+            --code-red: #ff0000;
+            --code-blue: #0000ff;
+            --faint-text: rgba(255, 255, 255, 0.4);
+
+            /* New Theme Variables */
+            --hologram-blue: rgba(0, 183, 255, 0.15);
+            --hologram-glow: rgba(0, 183, 255, 0.4);
+            --interface-grid: rgba(0, 123, 255, 0.1);
+            --scanner-line: rgba(0, 212, 255, 0.2);
+            --cyber-border: rgba(0, 183, 255, 0.3);
+            --cyber-shadow: 0 0 20px rgba(0, 183, 255, 0.2);
+            --interface-bg: rgba(10, 25, 47, 0.85);
+            --cyber-highlight: rgba(0, 183, 255, 0.1);
+            --cyber-text-glow: 0 0 10px rgba(0, 183, 255, 0.5);
+            --matrix-scanline: rgba(0, 212, 255, 0.1);
         }
 
         /* Reset and Base Styles */
@@ -48,46 +57,57 @@
             overflow-x: hidden;
             background: var(--primary-dark);
             color: var(--text-primary);
-            perspective: 1000px;
         }
 
-        /* Enhanced Particle System */
+        /* Particle System */
         .particles-container {
-            position: fixed;
+            position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             pointer-events: none;
+            overflow: hidden;
             z-index: 1;
         }
 
         .particle {
             position: absolute;
-            background: linear-gradient(
-                45deg,
-                var(--accent-light-blue),
-                var(--accent-purple)
-            );
+            background: rgba(255, 255, 255, 0.2);
             border-radius: 50%;
             pointer-events: none;
-            filter: blur(1px);
-            animation: particleFloat 8s infinite ease-in-out;
         }
 
-        /* Advanced Hero Section */
+        .energy-wave {
+            position: absolute;
+            border-radius: 50%;
+            pointer-events: none;
+            background: radial-gradient(
+                circle at center,
+                var(--accent-glow) 0%,
+                rgba(0, 123, 255, 0.15) 30%,
+                transparent 70%
+            );
+            animation: ripple 6s infinite;
+            width: 200px;
+            height: 200px;
+        }
+
+        /* Hero Section */
         .hero {
             position: relative;
             height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            overflow: hidden;
+            text-align: center;
             background: linear-gradient(
                 135deg,
                 var(--primary-dark) 0%,
                 var(--primary-light) 100%
             );
+            overflow: hidden;
+            color: var(--text-primary);
         }
 
         .hero::before {
@@ -95,73 +115,178 @@
             position: absolute;
             inset: 0;
             background: 
-                radial-gradient(circle at 20% 50%, rgba(108, 99, 255, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 80% 50%, rgba(255, 97, 216, 0.1) 0%, transparent 50%);
-            animation: gradientPulse 8s ease-in-out infinite;
+                radial-gradient(circle at 20% 50%, rgba(0,123,255,0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 50%, rgba(0,123,255,0.1) 0%, transparent 50%);
+            animation: glowPulse 8s ease-in-out infinite;
         }
 
-        /* Glassmorphism Container */
-        .glass-container {
-            background: var(--glassmorphism-bg);
-            backdrop-filter: blur(10px);
-            border: 1px solid var(--glassmorphism-border);
-            border-radius: 20px;
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
             padding: 2rem;
-            box-shadow: var(--neon-glow);
-            transform-style: preserve-3d;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* GitHub Icon */
+        .github-icon {
+            width: 120px;
+            height: 120px;
+            margin-bottom: 2rem;
+            animation: float 6s ease-in-out infinite;
+            cursor: pointer;
             transition: var(--transition-standard);
+            filter: brightness(0) invert(1);
         }
 
-        .glass-container:hover {
-            transform: translateY(-5px) rotateX(5deg) rotateY(5deg);
-            box-shadow: 
-                0 20px 40px rgba(0, 0, 0, 0.2),
-                var(--neon-glow);
+        .github-icon:hover {
+            transform: scale(1.1);
+            filter: brightness(0) invert(1) drop-shadow(0 0 10px var(--accent-glow));
         }
 
-        /* Continue with more styles... */
-        /* Advanced Animation Effects */
-        @keyframes particleFloat {
-            0%, 100% {
-                transform: translateY(0) translateX(0) scale(1);
-                opacity: 0.6;
-            }
-            25% {
-                transform: translateY(-20px) translateX(10px) scale(1.1);
-                opacity: 0.8;
-            }
-            50% {
-                transform: translateY(0) translateX(20px) scale(1);
-                opacity: 0.6;
-            }
-            75% {
-                transform: translateY(20px) translateX(10px) scale(1.1);
-                opacity: 0.8;
-            }
+        /* Title Elements */
+        .title {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            opacity: 0;
+            transform: translateY(30px);
         }
 
-        @keyframes gradientPulse {
-            0%, 100% {
-                opacity: 0.5;
-                transform: scale(1);
-            }
-            50% {
-                opacity: 1;
-                transform: scale(1.05);
-            }
+        .subtitle {
+            font-size: 1.5rem;
+            color: var(--accent-blue);
+            margin-bottom: 2rem;
+            opacity: 0;
+            transform: translateY(30px);
         }
 
-        /* Enhanced Matrix Effect */
-        .matrix-background {
-            position: fixed;
+        /* Skills Grid */
+        .skills-container {
+            margin-top: 2rem;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1.5rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .skill-icon {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 0.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transform: scale(0.5);
+            transition: var(--transition-standard);
+            cursor: pointer;
+        }
+
+        .skill-icon:hover {
+            transform: scale(1.1) !important;
+            background: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 20px var(--accent-glow);
+        }
+
+        .skill-icon img {
+            width: 40px;
+            height: 40px;
+            object-fit: contain;
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="particles-container" id="particles-container"></div>
+        <div class="matrix-background"></div>
+        <div class="container">
+            <a href="https://github.com/FotiosMpouris" target="_blank" rel="noopener noreferrer">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/github/github-original-wordmark.svg" 
+                     alt="GitHub" class="github-icon">
+            </a>
+            <h1 class="title">Fotios Mpouris</h1>
+            <h2 class="subtitle">2D & 3D Artist / Animator / Developer</h2>
+            
+            <!-- Skills Container with ALL Icons -->
+            <div class="skills-container">
+                <a href="https://developer.android.com" target="_blank" class="skill-icon">
+                    <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/android/android-original-wordmark.svg" alt="android">
+                </a>
+                <a href="https://www.blender.org/" target="_blank" class="skill-icon">
+                    <img src="https://download.blender.org/branding/community/blender_community_badge_white.svg" alt="blender">
+                </a>
+                <a href="https://www.w3schools.com/cs/" target="_blank" class="skill-icon">
+                    <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/csharp/csharp-original.svg" alt="csharp">
+                </a>
+                <a href="https://dotnet.microsoft.com/" target="_blank" class="skill-icon">
+                    <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/dot-net/dot-net-original-wordmark.svg" alt="dotnet">
+                </a>
+                <a href="https://cloud.google.com" target="_blank" class="skill-icon">
+                    <img src="https://www.vectorlogo.zone/logos/google_cloud/google_cloud-icon.svg" alt="gcp">
+                </a>
+                <a href="https://www.w3.org/html/" target="_blank" class="skill-icon">
+                    <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/html5/html5-original-wordmark.svg" alt="html5">
+                </a>
+                <a href="https://www.adobe.com/in/products/illustrator.html" target="_blank" class="skill-icon">
+                    <img src="https://www.vectorlogo.zone/logos/adobe_illustrator/adobe_illustrator-icon.svg" alt="illustrator">
+                </a>
+                <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank" class="skill-icon">
+                    <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/javascript/javascript-original.svg" alt="javascript">
+                </a>
+                <a href="https://nodejs.org" target="_blank" class="skill-icon">
+                    <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/nodejs/nodejs-original-wordmark.svg" alt="nodejs">
+                </a>
+                <a href="https://www.photoshop.com/en" target="_blank" class="skill-icon">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/photoshop/photoshop-original.svg" alt="photoshop">
+                </a>
+                <a href="https://www.python.org" target="_blank" class="skill-icon">
+                    <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg" alt="python">
+                </a>
+                <a href="https://unity.com/" target="_blank" class="skill-icon">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/unity/unity-original.svg" alt="unity">
+                </a>
+                <a href="https://zapier.com" target="_blank" class="skill-icon">
+                    <img src="https://www.vectorlogo.zone/logos/zapier/zapier-icon.svg" alt="zapier">
+                </a>
+                <a href="https://www.adobe.com/products/premiere.html" target="_blank" class="skill-icon">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/premierepro/premierepro-original.svg" alt="premiere pro">
+                </a>
+                <a href="https://www.adobe.com/products/aftereffects.html" target="_blank" class="skill-icon">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/aftereffects/aftereffects-original.svg" alt="after effects">
+                </a>
+            </div>
+        </div>
+    </section>
+<!-- END OF PART 1 -->
+    <!-- START OF PART 2 - Copy from here -->
+    <style>
+        /* Matrix Effect Styles */
+        .matrix-background, .matrix-overlay {
+            position: absolute;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            perspective: 1000px;
-            transform-style: preserve-3d;
-            pointer-events: none;
+            right: 0;
+            bottom: 0;
+            overflow: hidden;
+            z-index: 1;
+            mask-image: linear-gradient(
+                to bottom,
+                transparent,
+                black 10%,
+                black 90%,
+                transparent
+            );
+            -webkit-mask-image: linear-gradient(
+                to bottom,
+                transparent,
+                black 10%,
+                black 90%,
+                transparent
+            );
         }
 
         .matrix-column {
@@ -172,584 +297,1239 @@
             font-family: 'Courier New', monospace;
             font-size: 16px;
             line-height: 24px;
-            white-space: pre;
-            transform-origin: 50% 50% -500px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            background: linear-gradient(
+                0deg,
+                transparent,
+                rgba(255, 60, 0, 0.2) 50%,
+                transparent
+            );
+            background-size: 100% 200%;
             animation: 
                 matrixRain 20s linear infinite,
-                matrixRotate 30s ease-in-out infinite;
-            opacity: 0;
-            text-shadow: 0 0 8px var(--accent-glow);
+                fireFlow 8s linear infinite;
+            mix-blend-mode: screen;
         }
 
-        @keyframes matrixRotate {
-            0%, 100% { transform: rotateY(0deg); }
-            50% { transform: rotateY(180deg); }
+        .matrix-column::before {
+            content: '守\A ら\A れ\A た\A 0\A 1\A ア\A プ\A リ\A ケ\A ー\A シ\A ョ\A ン\A \}\A \{\A #\A $\A @\A 9\A 8\A 7';
+            position: absolute;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            animation: matrixRain 8s linear infinite;
+            text-shadow: 0 0 12px var(--matrix-glow);
         }
 
-        /* Interactive Cards */
-        .project-card {
-            position: relative;
-            background: rgba(20, 30, 50, 0.95);
-            border-radius: 20px;
-            padding: 2rem;
+        /* Anime Effect */
+        .anime-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
             overflow: hidden;
-            transition: var(--transition-standard);
-            transform-style: preserve-3d;
+            z-index: 0;
+            mask-image: linear-gradient(
+                to bottom,
+                transparent,
+                black 10%,
+                black 90%,
+                transparent
+            );
+            -webkit-mask-image: linear-gradient(
+                to bottom,
+                transparent,
+                black 10%,
+                black 90%,
+                transparent
+            );
         }
 
-        .project-card::before,
-        .project-card::after {
-            content: '';
+        .anime-column {
+            position: absolute;
+            width: 40px;
+            height: 100%;
+            color: var(--matrix-color);
+            font-family: 'Courier New', monospace;
+            font-size: 16px;
+            line-height: 24px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            animation: animeRain 20s linear infinite;
+            mix-blend-mode: screen;
+            text-shadow: 0 0 8px var(--matrix-glow);
+            opacity: 0.7;
+        }
+
+        .anime-column.glow {
+            color: var(--matrix-glow);
+            text-shadow: 
+                0 0 5px #fff,
+                0 0 10px var(--matrix-glow),
+                0 0 15px var(--matrix-glow);
+            opacity: 1;
+        }
+
+        /* Scanline Effect */
+        .scanline {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--scanner-line);
+            opacity: 0.3;
+            animation: scanning 3s linear infinite;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        /* Holographic Effect */
+        .hologram-effect {
             position: absolute;
             inset: 0;
             background: linear-gradient(
                 45deg,
-                transparent 30%,
-                rgba(255, 255, 255, 0.1),
-                transparent 70%
+                transparent 0%,
+                var(--hologram-glow) 45%,
+                var(--hologram-blue) 50%,
+                var(--hologram-glow) 55%,
+                transparent 100%
             );
-            transform: translateY(100%) rotate(45deg);
-            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            mix-blend-mode: screen;
+            opacity: 0;
+            animation: hologramPulse 3s ease-in-out infinite;
         }
 
-        .project-card:hover::before {
-            transform: translateY(-100%) rotate(45deg);
+        /* Interface Grid */
+        .interface-grid {
+            position: absolute;
+            inset: 0;
+            background-image: 
+                linear-gradient(var(--interface-grid) 1px, transparent 1px),
+                linear-gradient(90deg, var(--interface-grid) 1px, transparent 1px);
+            background-size: 50px 50px;
+            mask-image: radial-gradient(circle at center, black 60%, transparent 100%);
+            -webkit-mask-image: radial-gradient(circle at center, black 60%, transparent 100%);
+            animation: gridPulse 4s ease-in-out infinite;
         }
 
-        .project-card:hover::after {
-            transform: translateY(-200%) rotate(45deg);
+        /* Core Animations */
+        @keyframes matrixRain {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(100%); }
+        }
+
+        @keyframes fireFlow {
+            0% { background-position: 0 0; }
+            100% { background-position: 0 200%; }
+        }
+
+        @keyframes animeRain {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(100%); }
+        }
+
+        @keyframes scanning {
+            0% { transform: translateY(-100vh); }
+            100% { transform: translateY(100vh); }
+        }
+
+        @keyframes hologramPulse {
+            0%, 100% { opacity: 0; transform: translateX(-100%); }
+            50% { opacity: 0.5; transform: translateX(100%); }
+        }
+
+        @keyframes gridPulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.5; }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes ripple {
+            0% {
+                transform: scale(0);
+                opacity: 0.5;
+            }
+            100% {
+                transform: scale(3);
+                opacity: 0;
+            }
+        }
+
+        @keyframes glowPulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+        @keyframes blink-caret {
+            from, to { border-color: transparent; }
+            50% { border-color: var(--accent-light-blue); }
+        }
+
+        @keyframes subtleScroll {
+            from { background-position: 0 0; }
+            to { background-position: 100px 100px; }
+        }
+
+        @keyframes codeScroll {
+            from { transform: translateY(0); }
+            to { transform: translateY(-100%); }
+        }
+
+        /* Particle System Animations */
+        @keyframes particleFloat {
+            0% {
+                transform: translateY(0) translateX(0);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) translateX(var(--particle-x));
+                opacity: 0;
+            }
+        }
+
+        @keyframes energyPulse {
+            0% {
+                transform: scale(1);
+                opacity: 0.5;
+            }
+            50% {
+                transform: scale(1.5);
+                opacity: 0.2;
+            }
+            100% {
+                transform: scale(2);
+                opacity: 0;
+            }
+        }
+
+        /* Holographic Frame Animations */
+        @keyframes frameGlow {
+            0%, 100% {
+                box-shadow: 0 0 10px var(--hologram-blue);
+            }
+            50% {
+                box-shadow: 0 0 20px var(--hologram-glow);
+            }
+        }
+
+        @keyframes cornerPulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        /* Interface Animations */
+        @keyframes interfaceScan {
+            0% {
+                background-position: 0 0;
+                opacity: 0.3;
+            }
+            50% {
+                opacity: 0.5;
+            }
+            100% {
+                background-position: 0 100%;
+                opacity: 0.3;
+            }
+        }
+
+        @keyframes dataFlow {
+            0% { transform: translateY(0); opacity: 0.3; }
+            50% { opacity: 0.6; }
+            100% { transform: translateY(100%); opacity: 0.3; }
+        }
+
+        /* Enhanced Text Effects */
+        @keyframes textGlow {
+            0%, 100% {
+                text-shadow: 0 0 5px var(--hologram-blue);
+            }
+            50% {
+                text-shadow: 0 0 15px var(--hologram-glow);
+            }
+        }
+
+        @keyframes statusBlink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* Random Character Animation */
+        @keyframes charFloat {
+            0% {
+                transform: translateY(0);
+                opacity: 0;
+            }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% {
+                transform: translateY(-20px);
+                opacity: 0;
+            }
+        }
+
+        /* Media Queries for Animations */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
+    </style>
+    <!-- END OF PART 2 -->
+
+    <!-- START OF PART 3 - Copy from here -->
+    <!-- Enhanced Dark Theme Section with About Me Content -->
+    <div class="dark-theme-section">
+        <div class="particles-container" id="particles-container-bottom"></div>
+        <div class="matrix-overlay"></div>
+        <div class="interface-grid"></div>
+        <div class="scan-line"></div>
+        
+        <div class="container">
+            <section class="section">
+                <div class="card about-card">
+                    <div class="hologram-overlay"></div>
+                    <div class="grid-texture"></div>
+                    <div class="cyber-frame">
+                        <div class="frame-corner top-left"></div>
+                        <div class="frame-corner top-right"></div>
+                        <div class="frame-corner bottom-left"></div>
+                        <div class="frame-corner bottom-right"></div>
+                    </div>
+
+                    <div class="about-header">
+                        <div class="profile-container">
+                            <!-- Holographic Profile Frame -->
+                            <div class="hologram-frame">
+                                <div class="corner top-left"></div>
+                                <div class="corner top-right"></div>
+                                <div class="corner bottom-left"></div>
+                                <div class="corner bottom-right"></div>
+                                
+                                <!-- Enhanced Profile Image -->
+                                <div class="profile-wrapper">
+                                    <img src="assets/fotiosProfile.png" alt="Fotios Mpouris" class="about-profile-img">
+                                    <div class="profile-scanline"></div>
+                                    <div class="profile-glitch-effect"></div>
+                                </div>
+
+                                <!-- Enhanced Stats Button -->
+                                <button class="stats-trigger">
+                                    <span class="trigger-icon"></span>
+                                    <span class="trigger-text">STATS</span>
+                                    <div class="trigger-glow"></div>
+                                </button>
+                            </div>
+
+                            <!-- Enhanced Stats Overlay -->
+                            <div class="profile-stats-overlay">
+                                <div class="overlay-header">
+                                    <div class="header-line">
+                                        <span class="system-indicator">>_</span>
+                                        <span class="header-text">SYSTEM METRICS</span>
+                                    </div>
+                                    <div class="status-line">
+                                        <span class="status-dot"></span>
+                                        <span class="status-text">ONLINE</span>
+                                    </div>
+                                </div>
+
+                                <div class="stats-cycler">
+                                    <div class="stat-paragraph">
+                                        <div class="stat-header">
+                                            <span class="header-icon">⚡</span>
+                                            PERFORMANCE METRICS
+                                        </div>
+                                        <p class="stat-content"></p>
+                                    </div>
+                                    <div class="stat-paragraph">
+                                        <div class="stat-header">
+                                            <span class="header-icon">💻</span>
+                                            DEVELOPMENT INDEX
+                                        </div>
+                                        <p class="stat-content"></p>
+                                    </div>
+                                    <div class="stat-paragraph">
+                                        <div class="stat-header">
+                                            <span class="header-icon">🎨</span>
+                                            CREATIVE OUTPUT
+                                        </div>
+                                        <p class="stat-content"></p>
+                                    </div>
+                                    <div class="stat-paragraph">
+                                        <div class="stat-header">
+                                            <span class="header-icon">📊</span>
+                                            SYSTEM EFFICIENCY
+                                        </div>
+                                        <p class="stat-content"></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Enhanced Infographic -->
+                        <div class="infographic">
+                            <div class="infographic-frame">
+                                <div class="frame-corner top-left"></div>
+                                <div class="frame-corner top-right"></div>
+                                <div class="frame-corner bottom-left"></div>
+                                <div class="frame-corner bottom-right"></div>
+                            </div>
+                            <div class="interface-overlay"></div>
+                            <!-- Infographic items will be dynamically generated -->
+                        </div>
+                    </div>
+
+                    <!-- Enhanced Content Area -->
+                    <div class="about-content">
+                        <div class="content-header">
+                            <div class="header-decoration">
+                                <span class="decorator left"></span>
+                                <span class="system-indicator">>_</span>
+                                <span class="typing-effect">SYSTEM OVERVIEW</span>
+                                <span class="decorator right"></span>
+                            </div>
+                        </div>
+                        
+                        <!-- Your original paragraphs with enhanced styling -->
+                        <div class="content-section">
+                            <p class="enhanced-paragraph">
+                                I'm a tech-savvy multimedia specialist with a unique blend of skills in digital design, software development, and AI-assisted platforms. Proficient in Python, C#, Unity, and Adobe Creative Suite, I have a strong background in creating immersive digital experiences, animation, and video production. My expertise spans developing interactive applications, managing creative projects, and utilizing AI and generative art platforms to enhance user experiences and push creative boundaries.
+                            </p>
+                            <p class="enhanced-paragraph">
+                                More recently, I've been exploring the intersection of AI and application development, working with tools like Streamlit Cloud, Google Cloud Console, Python, GitHub, and large language models (LLMs). These technologies allow me to design intelligent, automated solutions that streamline processes and enhance user engagement. By leveraging AI-assisted applications, I'm focused on creating innovative, agent-centric systems that reflect the future of technology.
+                            </p>
+                            <p class="enhanced-paragraph">
+                                Throughout my career, I've used cutting-edge tools to develop interactive features for mobile gaming and geo-positioning apps, collaborating with technical teams to prototype and bring functional products to life. My proficiency in Adobe tools like Photoshop, After Effects, Premiere Pro, and Audition has enabled me to produce high-quality multimedia content, from video editing to motion graphics and animation.
+                            </p>
+                            <p class="enhanced-paragraph">
+                                I've also managed digital platforms and multimedia content creation for various organizations, overseeing Google Workspace operations and creating social media assets to improve outreach. These hands-on experiences have given me a well-rounded understanding of how technology and creativity intersect to streamline workflows, enhance communication, and deliver captivating user experiences.
+                            </p>
+                            <p class="enhanced-paragraph">
+                                Always eager to explore new frontiers in creative development, I'm committed to using AI and emerging technologies to innovate and produce impactful digital media. Whether it's developing dynamic applications or crafting custom solutions, I'm dedicated to merging technology and design in today's rapidly evolving digital landscape.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <style>
+                /* Enhanced Dark Theme Section */
+                .dark-theme-section {
+                    position: relative;
+                    background: linear-gradient(135deg, #001f3f 0%, #003366 50%, #001f3f 100%);
+                    overflow: hidden;
+                }
+
+                /* About Card Enhancements */
+                .about-card {
+                    position: relative;
+                    max-width: 900px !important;
+                    margin: 0 auto !important;
+                    padding: 2rem !important;
+                    background: var(--interface-bg) !important;
+                    border: none !important;
+                    box-shadow: 
+                        0 0 40px rgba(0, 0, 0, 0.4),
+                        inset 0 0 40px rgba(0, 123, 255, 0.08),
+                        0 0 25px var(--hologram-glow) !important;
+                    backdrop-filter: blur(10px);
+                    overflow: hidden;
+                }
+
+                /* Cyber Frame */
+                .cyber-frame {
+                    position: absolute;
+                    inset: 0;
+                    border: 1px solid var(--cyber-border);
+                    pointer-events: none;
+                }
+
+                .frame-corner {
+                    position: absolute;
+                    width: 20px;
+                    height: 20px;
+                    border: 2px solid var(--accent-light-blue);
+                    opacity: 0.8;
+                    animation: cornerPulse 2s infinite;
+                }
+
+                /* Profile Container Enhancements */
+                .hologram-frame {
+                    position: relative;
+                    width: 180px;
+                    height: 180px;
+                    margin: 0 auto;
+                }
+
+                .profile-wrapper {
+                    position: relative;
+                    width: 100%;
+                    height: 100%;
+                    overflow: hidden;
+                }
+
+                .about-profile-img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                    border-radius: 5px;
+                    filter: brightness(1.1) contrast(1.1);
+                    transform: rotate(-3deg);
+                    transition: all 0.5s ease;
+                }
+
+                .profile-scanline {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 2px;
+                    background: var(--scanner-line);
+                    animation: scanning 2s linear infinite;
+                }
+
+                /* Enhanced Stats Button */
+                .stats-trigger {
+                    position: absolute;
+                    bottom: -30px;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    background: rgba(0, 123, 255, 0.1);
+                    border: 1px solid var(--accent-light-blue);
+                    padding: 5px 15px;
+                    font-size: 0.8rem;
+                    color: var(--accent-light-blue);
+                    cursor: pointer;
+                    display: flex;
+                    align-items: center;
+                    gap: 5px;
+                    z-index: 10;
+                }
+
+                .trigger-icon {
+                    width: 8px;
+                    height: 8px;
+                    background: var(--accent-light-blue);
+                    border-radius: 50%;
+                    animation: pulse 2s infinite;
+                }
+
+                .trigger-glow {
+                    position: absolute;
+                    inset: 0;
+                    background: var(--hologram-glow);
+                    opacity: 0;
+                    transition: opacity 0.3s ease;
+                }
+
+                .stats-trigger:hover .trigger-glow {
+                    opacity: 0.2;
+                }
+
+                /* Enhanced Stats Overlay */
+                .profile-stats-overlay {
+                    position: absolute;
+                    top: 50%;
+                    left: calc(100% + 35px);
+                    transform: translate(-300px, -50%);
+                    width: 280px;
+                    background: var(--interface-bg);
+                    border: 1px solid var(--accent-light-blue);
+                    border-radius: 3px;
+                    padding: 1rem;
+                    opacity: 0;
+                    transition: all 0.3s ease;
+                    z-index: 4;
+                    backdrop-filter: blur(5px);
+                }
+
+                /* Content Area Enhancements */
+                .about-content {
+                    background: rgba(10, 25, 47, 0.7);
+                    border: 1px solid var(--cyber-border);
+                    border-radius: 3px;
+                    padding: 1.5rem;
+                    margin-top: 2rem;
+                }
+
+                .enhanced-paragraph {
+                    color: var(--text-primary);
+                    font-size: 1.15rem;
+                    line-height: 2;
+                    margin-bottom: 1.5rem;
+                    padding: 1rem;
+                    background: rgba(0, 123, 255, 0.05);
+                    border-left: 3px solid var(--accent-light-blue);
+                    transition: all 0.3s ease;
+                }
+
+                .enhanced-paragraph:hover {
+                    background: rgba(0, 123, 255, 0.1);
+                    transform: translateX(5px);
+                    box-shadow: 0 0 20px var(--hologram-glow);
+                }
+
+                /* Responsive Adjustments */
+                @media (max-width: 992px) {
+                    .about-header {
+                        flex-direction: column;
+                        align-items: center;
+                    }
+
+                    .profile-stats-overlay {
+                        left: 50%;
+                        transform: translateX(-50%);
+                        top: calc(100% + 20px);
+                    }
+                }
+
+                @media (max-width: 768px) {
+                    .enhanced-paragraph {
+                        font-size: 1rem;
+                        padding: 0.8rem;
+                    }
+                }
+            </style>
+        </div>
+    </div>
+    <!-- END OF PART 3 -->
+    <!-- START OF PART 4 - Copy from here -->
+            <!-- Projects Section -->
+            <section class="section">
+                <div class="card project-section-card">
+                    <div class="cyber-frame">
+                        <div class="frame-corner top-left"></div>
+                        <div class="frame-corner top-right"></div>
+                        <div class="frame-corner bottom-left"></div>
+                        <div class="frame-corner bottom-right"></div>
+                    </div>
+                    
+                    <div class="section-header">
+                        <div class="header-frame">
+                            <span class="system-indicator">>_</span>
+                            <h3 class="cyber-heading">Featured Projects</h3>
+                            <div class="header-line"></div>
+                        </div>
+                    </div>
+
+                    <div class="projects">
+                        <!-- Project Card 1 -->
+                        <a href="https://github.com/FotiosMpouris/ImpossibleShark2" class="project-card" target="_blank" rel="noopener noreferrer">
+                            <div class="project-inner">
+                                <div class="project-content">
+                                    <div class="project-header">
+                                        <span class="project-icon">🎮</span>
+                                        <h4>Impossible Shark</h4>
+                                    </div>
+                                    <p>Game Development</p>
+                                    <div class="project-footer">
+                                        <span class="tech-tag">Unity</span>
+                                        <span class="tech-tag">C#</span>
+                                    </div>
+                                </div>
+                                <div class="cyber-overlay"></div>
+                                <div class="scan-line"></div>
+                            </div>
+                        </a>
+
+                        <!-- Project Card 2 -->
+                        <a href="https://github.com/FotiosMpouris/Hardie-Siding-Agent-Testing-Working_Copy/blob/main/README.md" class="project-card" target="_blank" rel="noopener noreferrer">
+                            <div class="project-inner">
+                                <div class="project-content">
+                                    <div class="project-header">
+                                        <span class="project-icon">🤖</span>
+                                        <h4>Siding Project Assistant</h4>
+                                    </div>
+                                    <p>AI Development</p>
+                                    <div class="project-footer">
+                                        <span class="tech-tag">Python</span>
+                                        <span class="tech-tag">AI</span>
+                                    </div>
+                                </div>
+                                <div class="cyber-overlay"></div>
+                                <div class="scan-line"></div>
+                            </div>
+                        </a>
+
+                        <!-- Project Card 3 -->
+                        <a href="https://github.com/FotiosMpouris/Oriana/blob/main/README.md" class="project-card" target="_blank" rel="noopener noreferrer">
+                            <div class="project-inner">
+                                <div class="project-content">
+                                    <div class="project-header">
+                                        <span class="project-icon">💡</span>
+                                        <h4>Oriana</h4>
+                                    </div>
+                                    <p>AI Assistant</p>
+                                    <div class="project-footer">
+                                        <span class="tech-tag">ML</span>
+                                        <span class="tech-tag">NLP</span>
+                                    </div>
+                                </div>
+                                <div class="cyber-overlay"></div>
+                                <div class="scan-line"></div>
+                            </div>
+                        </a>
+
+                        <!-- Project Card 4 -->
+                        <a href="https://github.com/FotiosMpouris/ReggieResume2/blob/main/README.md" class="project-card" target="_blank" rel="noopener noreferrer">
+                            <div class="project-inner">
+                                <div class="project-content">
+                                    <div class="project-header">
+                                        <span class="project-icon">📝</span>
+                                        <h4>AI Resume Tailor</h4>
+                                    </div>
+                                    <p>AI Tool</p>
+                                    <div class="project-footer">
+                                        <span class="tech-tag">GPT</span>
+                                        <span class="tech-tag">API</span>
+                                    </div>
+                                </div>
+                                <div class="cyber-overlay"></div>
+                                <div class="scan-line"></div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Connect Section -->
+            <section class="section">
+                <div class="card connect-card">
+                    <div class="cyber-frame">
+                        <div class="frame-corner top-left"></div>
+                        <div class="frame-corner top-right"></div>
+                        <div class="frame-corner bottom-left"></div>
+                        <div class="frame-corner bottom-right"></div>
+                    </div>
+
+                    <div class="section-header">
+                        <div class="header-frame">
+                            <span class="system-indicator">>_</span>
+                            <h3 class="cyber-heading">Connect</h3>
+                            <div class="header-line"></div>
+                        </div>
+                    </div>
+
+                    <div class="social-links">
+                        <a href="mailto:fotiosmpouris@gmail.com" class="social-link">
+                            <div class="link-content">
+                                <span class="link-icon">📧</span>
+                                <span class="link-text">Email</span>
+                            </div>
+                            <div class="link-overlay"></div>
+                        </a>
+                        <a href="https://www.linkedin.com/in/fotios-mpouris-57728b240/" class="social-link" target="_blank" rel="noopener noreferrer">
+                            <div class="link-content">
+                                <span class="link-icon">💼</span>
+                                <span class="link-text">LinkedIn</span>
+                            </div>
+                            <div class="link-overlay"></div>
+                        </a>
+                        <a href="https://www.behance.net/fotiosmpouris" class="social-link" target="_blank" rel="noopener noreferrer">
+                            <div class="link-content">
+                                <span class="link-icon">🎨</span>
+                                <span class="link-text">Behance</span>
+                            </div>
+                            <div class="link-overlay"></div>
+                        </a>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <style>
+        /* Projects Section Styles */
+        .project-section-card {
+            background: var(--interface-bg) !important;
+            border: none !important;
+            box-shadow: 
+                0 0 40px rgba(0, 0, 0, 0.4),
+                inset 0 0 40px rgba(0, 123, 255, 0.08),
+                0 0 25px var(--hologram-glow) !important;
+            backdrop-filter: blur(10px);
+        }
+
+        .cyber-heading {
+            color: var(--accent-light-blue);
+            margin: 0;
+            font-size: 1.8rem;
+            text-shadow: 0 0 10px rgba(0, 183, 255, 0.5);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .header-line {
+            height: 2px;
+            background: linear-gradient(
+                90deg,
+                var(--accent-light-blue) 0%,
+                transparent 100%
+            );
+            margin-top: 0.5rem;
+        }
+
+        /* Enhanced Project Cards */
+        .projects {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .project-card {
+            text-decoration: none;
+            color: var(--text-primary);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .project-inner {
+            background: rgba(10, 25, 47, 0.9);
+            border: 1px solid var(--cyber-border);
+            border-radius: 3px;
+            padding: 1.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .project-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .project-icon {
+            font-size: 1.5rem;
+        }
+
+        .project-card h4 {
+            color: var(--accent-light-blue);
+            margin: 0;
+            font-size: 1.2rem;
+            text-shadow: var(--cyber-text-glow);
+        }
+
+        .project-card p {
+            color: var(--text-secondary);
+            margin: 0.5rem 0;
+        }
+
+        .project-footer {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .tech-tag {
+            background: rgba(0, 123, 255, 0.1);
+            padding: 0.2rem 0.5rem;
+            border-radius: 3px;
+            font-size: 0.8rem;
+            border: 1px solid var(--cyber-border);
+        }
+
+        .cyber-overlay {
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                var(--cyber-highlight),
+                transparent
+            );
+            transition: 0.5s;
+        }
+
+        .project-card:hover .cyber-overlay {
+            left: 100%;
         }
 
         .project-card:hover {
-            transform: 
-                translateY(-10px) 
-                rotateX(10deg) 
-                rotateY(10deg) 
-                scale(1.02);
+            transform: translateY(-5px);
+        }
+
+        .project-card:hover .project-inner {
             box-shadow: 
-                20px 20px 60px rgba(0, 0, 0, 0.5),
-                1px 1px 0px 1px rgba(255, 255, 255, 0.1);
+                0 10px 25px rgba(0, 0, 0, 0.3),
+                0 0 20px var(--hologram-glow);
         }
 
-        /* Enhanced Profile Section */
-        .profile-container {
-            position: relative;
-            transform-style: preserve-3d;
-            perspective: 1000px;
-        }
-
-        .about-profile-img {
-            transform: 
-                translateZ(50px) 
-                rotateX(10deg) 
-                rotateY(-10deg);
-            transition: 
-                transform 0.5s cubic-bezier(0.4, 0, 0.2, 1),
-                box-shadow 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        /* Connect Section Styles */
+        .connect-card {
+            background: var(--interface-bg) !important;
+            border: none !important;
             box-shadow: 
-                20px 20px 60px rgba(0, 0, 0, 0.4),
-                1px 1px 0px 1px rgba(255, 255, 255, 0.1);
-        }
-
-        .about-profile-img:hover {
-            transform: 
-                translateZ(100px) 
-                rotateX(20deg) 
-                rotateY(-20deg) 
-                scale(1.1);
-            box-shadow: 
-                30px 30px 80px rgba(0, 0, 0, 0.6),
-                2px 2px 0px 2px rgba(255, 255, 255, 0.2);
-        }
-
-        /* Advanced Infographics */
-        .infographic {
-            position: relative;
-            background: linear-gradient(
-                135deg,
-                rgba(108, 99, 255, 0.1),
-                rgba(255, 97, 216, 0.1)
-            );
-            border-radius: 20px;
-            overflow: hidden;
-            transform-style: preserve-3d;
-        }
-
-        .infographic::before {
-            content: '';
-            position: absolute;
-            inset: -1px;
-            background: linear-gradient(
-                45deg,
-                var(--accent-purple),
-                var(--accent-pink),
-                var(--accent-blue)
-            );
-            z-index: -1;
-            animation: borderGlow 3s linear infinite;
-        }
-
-        .infographic-item {
+                0 0 40px rgba(0, 0, 0, 0.4),
+                inset 0 0 40px rgba(0, 123, 255, 0.08),
+                0 0 25px var(--hologram-glow) !important;
             backdrop-filter: blur(10px);
-            transform-style: preserve-3d;
-            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .infographic-item.active {
-            transform: translateZ(30px);
-        }
-
-        /* Skill Icons Grid */
-        .skills-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
-            gap: 2rem;
-            padding: 2rem;
-            perspective: 1000px;
-        }
-
-        .skill-icon {
-            position: relative;
-            background: var(--glassmorphism-bg);
-            border-radius: 15px;
-            padding: 1rem;
-            transform-style: preserve-3d;
-            transition: var(--transition-standard);
-        }
-
-        .skill-icon:hover {
-            transform: 
-                translateZ(50px) 
-                rotateX(10deg) 
-                rotateY(10deg);
-            box-shadow: 
-                20px 20px 60px rgba(0, 0, 0, 0.3),
-                0 0 20px var(--accent-glow);
-        }
-
-        .skill-icon img {
-            transform: translateZ(20px);
-            filter: drop-shadow(0 0 10px var(--accent-glow));
-        }
-
-        /* Continue with more styles... */
-        /* Enhanced Social Links */
         .social-links {
             display: flex;
             justify-content: center;
             gap: 2rem;
-            perspective: 1000px;
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: rgba(10, 25, 47, 0.9);
+            border: 1px solid var(--cyber-border);
+            border-radius: 3px;
         }
 
         .social-link {
             position: relative;
-            padding: 1rem 2rem;
-            background: var(--glassmorphism-bg);
-            border: 1px solid var(--glassmorphism-border);
-            border-radius: 10px;
-            color: var(--text-primary);
             text-decoration: none;
-            transform-style: preserve-3d;
-            transition: var(--transition-standard);
+            color: var(--text-primary);
+            padding: 0.8rem 1.5rem;
+            background: rgba(0, 123, 255, 0.1);
+            border: 1px solid var(--cyber-border);
+            border-radius: 3px;
             overflow: hidden;
+            transition: all 0.3s ease;
         }
 
-        .social-link::before {
-            content: '';
+        .link-content {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .link-icon {
+            font-size: 1.2rem;
+        }
+
+        .link-overlay {
             position: absolute;
-            inset: -2px;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
             background: linear-gradient(
-                45deg,
-                var(--accent-purple),
-                var(--accent-pink),
-                var(--accent-blue),
-                var(--accent-purple)
+                90deg,
+                transparent,
+                var(--cyber-highlight),
+                transparent
             );
-            background-size: 400% 400%;
-            animation: gradientMove 8s linear infinite;
-            z-index: -1;
-            opacity: 0;
-            transition: opacity 0.3s ease;
+            transition: 0.5s;
         }
 
-        .social-link:hover::before {
-            opacity: 1;
+        .social-link:hover .link-overlay {
+            left: 100%;
         }
 
         .social-link:hover {
-            transform: translateZ(20px);
-            box-shadow: var(--neon-glow);
-            color: var(--text-primary);
+            background: rgba(0, 123, 255, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px var(--hologram-glow);
         }
 
-        /* Enhanced Profile Stats */
-        .profile-stats-overlay {
-            position: absolute;
-            background: rgba(10, 25, 47, 0.95);
-            backdrop-filter: blur(10px);
-            border: 1px solid var(--glassmorphism-border);
-            border-radius: 15px;
-            transform-style: preserve-3d;
-            transform: translateZ(30px);
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .stat-paragraph {
-            position: relative;
-            padding: 1.5rem;
-            transform-style: preserve-3d;
-        }
-
-        .stat-paragraph p {
-            position: relative;
-            transform: translateZ(20px);
-            text-shadow: 0 0 10px var(--accent-glow);
-        }
-
-        /* Responsive Design Enhancements */
-        @media (max-width: 1200px) {
-            .glass-container {
-                width: 90%;
-                margin: 0 auto;
-            }
-
-            .skills-container {
-                grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
-                gap: 1.5rem;
-            }
-        }
-
+        /* Responsive Design */
         @media (max-width: 768px) {
-            .hero {
-                padding: 2rem;
-            }
-
-            .title {
-                font-size: 2.5rem;
-            }
-
             .social-links {
                 flex-direction: column;
-                align-items: center;
+                align-items: stretch;
+                gap: 1rem;
             }
 
-            .about-header {
-                flex-direction: column;
-                align-items: center;
+            .social-link {
+                text-align: center;
             }
 
-            .profile-stats-overlay {
-                position: static;
-                width: 100%;
-                margin-top: 1rem;
+            .link-content {
+                justify-content: center;
             }
-        }
-
-        @media (max-width: 480px) {
-            .glass-container {
-                padding: 1rem;
-            }
-
-            .skill-icon {
-                padding: 0.5rem;
-            }
-
-            .project-card {
-                padding: 1rem;
-            }
-        }
-
-        /* Advanced Scroll Animations */
-        .scroll-reveal {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .scroll-reveal.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 10px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: var(--primary-dark);
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: linear-gradient(
-                var(--accent-purple),
-                var(--accent-blue)
-            );
-            border-radius: 5px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: linear-gradient(
-                var(--accent-pink),
-                var(--accent-purple)
-            );
         }
     </style>
-</head>
-
-<body>
-    <div class="particles-container"></div>
-    <div class="matrix-background"></div>
-
-    <main>
-        <!-- Hero Section -->
-        <section class="hero glass-container">
-            <div class="container">
-                <a href="https://github.com/FotiosMpouris" target="_blank" rel="noopener noreferrer" class="github-link">
-                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/github/github-original-wordmark.svg" 
-                         alt="GitHub" class="github-icon">
-                </a>
-                <h1 class="title scroll-reveal">Fotios Mpouris</h1>
-                <h2 class="subtitle scroll-reveal">2D & 3D Artist / Animator / Developer</h2>
-                
-                <!-- Skills Container -->
-                <div class="skills-container scroll-reveal">
-                    <!-- Your existing skill icons with enhanced styling -->
-                    <!-- Each skill icon now has 3D transform and glow effects -->
-                </div>
-            </div>
-        </section>
-
-        <!-- About Section -->
-        <section class="about-section glass-container scroll-reveal">
-            <!-- Your existing about content with enhanced styling -->
-        </section>
-
-        <!-- Projects Section -->
-        <section class="projects-section glass-container scroll-reveal">
-            <!-- Your existing projects content with enhanced styling -->
-        </section>
-
-        <!-- Connect Section -->
-        <section class="connect-section glass-container scroll-reveal">
-            <!-- Your existing connect content with enhanced styling -->
-        </section>
-    </main>
-
+    <!-- END OF PART 4 -->
+    <!-- START OF PART 5 - Copy from here -->
     <script>
-        // Initialize Three.js scene for advanced background effects
-        const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        const renderer = new THREE.WebGLRenderer({ alpha: true });
+        // Initialize GSAP ScrollTrigger
+        gsap.registerPlugin(ScrollTrigger);
 
-        // Continue with JavaScript implementation...
-        <script>
-        // Enhanced Particle System
-        class ParticleSystem {
-            constructor() {
-                this.particles = [];
-                this.container = document.querySelector('.particles-container');
-                this.maxParticles = 50;
-                this.init();
-            }
+        // Matrix Effect Functions
+        function createMatrixBackground() {
+            const containers = document.querySelectorAll('.matrix-background, .matrix-overlay');
+            containers.forEach(container => {
+                const containerWidth = container.offsetWidth;
+                const columnWidth = 30;
+                const numberOfColumns = Math.ceil(containerWidth / columnWidth);
+                const chars = '守らリケーシタアプョン01{}#$@987';
 
-            init() {
-                for (let i = 0; i < this.maxParticles; i++) {
-                    this.createParticle();
-                }
-                this.animate();
-            }
+                container.innerHTML = '';
 
-            createParticle() {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
-                
-                // Random size between 2 and 6 pixels
-                const size = Math.random() * 4 + 2;
-                particle.style.width = `${size}px`;
-                particle.style.height = `${size}px`;
-                
-                // Random position
-                particle.style.left = `${Math.random() * 100}%`;
-                particle.style.top = `${Math.random() * 100}%`;
-                
-                // Random delay for animation
-                particle.style.animationDelay = `${Math.random() * 5}s`;
-                
-                this.container.appendChild(particle);
-                this.particles.push(particle);
-            }
-
-            animate() {
-                this.particles.forEach(particle => {
-                    if (Math.random() < 0.001) { // Occasional particle reset
-                        particle.style.left = `${Math.random() * 100}%`;
-                        particle.style.top = `${Math.random() * 100}%`;
-                    }
-                });
-                requestAnimationFrame(() => this.animate());
-            }
-        }
-
-        // Matrix Background Effect
-        class MatrixEffect {
-            constructor() {
-                this.container = document.querySelector('.matrix-background');
-                this.columns = [];
-                this.chars = '守らリケーシタアプョン01{}#$@987';
-                this.init();
-            }
-
-            init() {
-                const columnCount = Math.floor(window.innerWidth / 30);
-                
-                for (let i = 0; i < columnCount; i++) {
+                for(let i = 0; i < numberOfColumns; i++) {
                     const column = document.createElement('div');
                     column.className = 'matrix-column';
-                    column.style.left = `${i * 30}px`;
-                    column.style.animationDelay = `${Math.random() * -20}s`;
                     
                     let columnChars = '';
-                    for (let j = 0; j < 100; j++) {
-                        columnChars += this.chars[Math.floor(Math.random() * this.chars.length)] + '\n';
+                    for(let j = 0; j < 100; j++) {
+                        columnChars += chars[Math.floor(Math.random() * chars.length)] + '\n';
                     }
+
                     column.textContent = columnChars;
-                    
-                    this.container.appendChild(column);
-                    this.columns.push(column);
+                    column.style.left = `${i * columnWidth}px`;
+                    column.style.animationDelay = `${-Math.random() * 20}s`;
+
+                    // Random glow effect
+                    if (Math.random() < 0.3) {
+                        column.style.textShadow = '0 0 8px var(--matrix-glow)';
+                        column.style.opacity = '1';
+                    }
+
+                    container.appendChild(column);
+                }
+            });
+        }
+
+        // Particle System
+        function createParticle(container) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            
+            const size = Math.random() * 4 + 2;
+            particle.style.width = `${size}px`;
+            particle.style.height = `${size}px`;
+            
+            const startX = Math.random() * 100;
+            particle.style.left = `${startX}%`;
+            particle.style.top = '100%';
+            
+            container.appendChild(particle);
+            
+            gsap.to(particle, {
+                y: '-100vh',
+                x: `random(-50, 50)`,
+                opacity: 0,
+                duration: 'random(2, 4)',
+                ease: 'power1.out',
+                onComplete: () => particle.remove()
+            });
+        }
+
+        function createEnergyWave(x, y, container) {
+            const wave = document.createElement('div');
+            wave.className = 'energy-wave';
+            wave.style.left = `${x - 100}px`;
+            wave.style.top = `${y - 100}px`;
+            container.appendChild(wave);
+            
+            setTimeout(() => wave.remove(), 6000);
+        }
+
+        // Profile Stats Functions
+        function initializeProfileStats() {
+            const statsData = [
+                "Proficient in creating visually stunning graphics with a 95% client satisfaction rate, ensuring projects are delivered on time and exceed expectations.",
+                "Expert in development operations, improving workflow efficiency by 80% through innovative solutions and automation.",
+                "Specialized in game development with a 90% success rate in asset creation, enhancing user engagement and experience.",
+                "Skilled in asset creation and multimedia production, contributing to a 100% increase in project scalability and flexibility."
+            ];
+            
+            const cycler = document.querySelector('.profile-stats-overlay .stats-cycler');
+            const paragraphs = cycler.querySelectorAll('.stat-paragraph');
+            let currentStatIndex = 0;
+            let isCycling = false;
+
+            async function typeText(element, text) {
+                const contentElement = element.querySelector('.stat-content');
+                contentElement.textContent = '';
+                
+                for (let i = 0; i < text.length; i++) {
+                    contentElement.textContent += text[i];
+                    await new Promise(resolve => setTimeout(resolve, 10));
                 }
             }
 
-            reset() {
-                this.container.innerHTML = '';
-                this.columns = [];
-                this.init();
+            async function cycleStats() {
+                if (isCycling) return;
+                isCycling = true;
+
+                while(true) {
+                    const currentParagraph = paragraphs[currentStatIndex];
+                    const currentText = statsData[currentStatIndex];
+
+                    // Add cyber-glitch effect before showing
+                    currentParagraph.classList.add('glitch-effect');
+                    await new Promise(resolve => setTimeout(resolve, 100));
+                    currentParagraph.classList.remove('glitch-effect');
+
+                    currentParagraph.classList.add('active');
+                    await typeText(currentParagraph, currentText);
+                    await new Promise(resolve => setTimeout(resolve, 2000));
+                    
+                    // Add fade-out effect
+                    currentParagraph.classList.add('fade-out');
+                    await new Promise(resolve => setTimeout(resolve, 300));
+                    currentParagraph.classList.remove('active', 'fade-out');
+
+                    currentStatIndex = (currentStatIndex + 1) % statsData.length;
+                }
             }
-        }
 
-        // Scroll Animation Handler
-        class ScrollAnimationHandler {
-            constructor() {
-                this.elements = document.querySelectorAll('.scroll-reveal');
-                this.init();
-            }
+            // Setup hover triggers
+            const profileContainer = document.querySelector('.profile-container');
+            const statsOverlay = document.querySelector('.profile-stats-overlay');
+            const statsButton = document.querySelector('.stats-trigger');
 
-            init() {
-                this.checkElements();
-                window.addEventListener('scroll', () => this.checkElements());
-            }
-
-            checkElements() {
-                const triggerBottom = window.innerHeight * 0.8;
-
-                this.elements.forEach(element => {
-                    const elementTop = element.getBoundingClientRect().top;
-                    if (elementTop < triggerBottom) {
-                        element.classList.add('active');
-                    }
+            function showStats() {
+                gsap.to(statsOverlay, {
+                    opacity: 1,
+                    duration: 0.3,
+                    ease: "power2.out"
                 });
-            }
-        }
-
-        // Profile Stats Manager
-        class ProfileStatsManager {
-            constructor() {
-                this.overlay = document.querySelector('.profile-stats-overlay');
-                this.statsData = [
-                    "Proficient in creating visually stunning graphics with a 95% client satisfaction rate.",
-                    "Expert in development operations, improving workflow efficiency by 80%.",
-                    "Specialized in game development with a 90% success rate in asset creation.",
-                    "Skilled in asset creation and multimedia production, 100% project scalability."
-                ];
-                this.currentIndex = 0;
-                this.init();
+                cycleStats();
             }
 
-            init() {
-                this.initializeStats();
-                this.startCycle();
-            }
-
-            async initializeStats() {
-                const paragraphs = this.overlay.querySelectorAll('.stat-paragraph');
-                paragraphs.forEach((para, index) => {
-                    para.innerHTML = `<p>${this.statsData[index]}</p>`;
+            function hideStats() {
+                gsap.to(statsOverlay, {
+                    opacity: 0,
+                    duration: 0.3,
+                    ease: "power2.in"
                 });
             }
 
-            async startCycle() {
-                const paragraphs = this.overlay.querySelectorAll('.stat-paragraph');
+            profileContainer.addEventListener('mouseenter', showStats);
+            profileContainer.addEventListener('mouseleave', hideStats);
+            statsButton.addEventListener('mouseenter', showStats);
+            statsButton.addEventListener('mouseleave', hideStats);
+        }
+
+        // Infographics System
+        function createInfographicItems() {
+            const infographicData = [
+                { title: "Unity 2D & 3D Development", text: "Crafting immersive 2D and 3D game environments with Unity." },
+                { title: "C# Programming", text: "Developing robust and scalable applications using C#." },
+                { title: "Blender 3D Modeling", text: "Creating detailed 3D models and animations." },
+                { title: "Web Design & Development", text: "Building responsive and dynamic web applications." },
+                { title: "AI Integration", text: "Implementing cutting-edge AI solutions and automation." },
+                { title: "Creative Development", text: "Merging technology with creative design principles." },
+                { title: "Project Management", text: "Leading teams and delivering successful projects." },
+                { title: "Content Creation", text: "Producing engaging multimedia content." }
+            ];
+
+            const container = document.querySelector('.infographic');
+            container.innerHTML = '<div class="infographic-frame"></div>';
+
+            infographicData.forEach((item, index) => {
+                const itemElement = document.createElement('div');
+                itemElement.className = 'infographic-item';
+                itemElement.innerHTML = `
+                    <div class="item-content">
+                        <h4>${item.title}</h4>
+                        <p class="typing-text"></p>
+                    </div>
+                `;
+                container.appendChild(itemElement);
+            });
+
+            return infographicData;
+        }
+
+        async function cycleInfographics() {
+            const items = document.querySelectorAll('.infographic-item');
+            const data = createInfographicItems();
+            let currentIndex = 0;
+
+            async function typeText(element, text) {
+                const textElement = element.querySelector('.typing-text');
+                textElement.textContent = '';
                 
-                setInterval(() => {
-                    paragraphs.forEach(para => para.classList.remove('active'));
-                    paragraphs[this.currentIndex].classList.add('active');
-                    this.currentIndex = (this.currentIndex + 1) % paragraphs.length;
-                }, 3000);
+                for (let i = 0; i < text.length; i++) {
+                    textElement.textContent += text[i];
+                    await new Promise(resolve => setTimeout(resolve, 20));
+                }
+            }
+
+            while(true) {
+                const currentItem = items[currentIndex];
+                const currentData = data[currentIndex];
+
+                // Add cyber-glitch effect
+                currentItem.classList.add('glitch-effect');
+                await new Promise(resolve => setTimeout(resolve, 100));
+                currentItem.classList.remove('glitch-effect');
+
+                currentItem.classList.add('active');
+                await typeText(currentItem, currentData.text);
+                await new Promise(resolve => setTimeout(resolve, 3000));
+
+                currentItem.classList.add('fade-out');
+                await new Promise(resolve => setTimeout(resolve, 300));
+                currentItem.classList.remove('active', 'fade-out');
+
+                currentIndex = (currentIndex + 1) % items.length;
             }
         }
 
-        // Infographics Manager
-        class InfographicsManager {
-            constructor() {
-                this.container = document.querySelector('.infographic');
-                this.items = document.querySelectorAll('.infographic-item');
-                this.currentIndex = 0;
-                this.init();
-            }
+        // Random Character Effect
+        function createRandomCharacter() {
+            const container = document.querySelector('.dark-theme-section');
+            const char = document.createElement('div');
+            const chars = '守らリケーシタアプョン01{}#$@987';
+            
+            char.className = 'random-char';
+            char.textContent = chars[Math.floor(Math.random() * chars.length)];
+            
+            const x = Math.random() * 100;
+            const y = Math.random() * 100;
+            char.style.left = `${x}%`;
+            char.style.top = `${y}%`;
 
-            init() {
-                this.startCycle();
-                this.addHoverPause();
-            }
-
-            startCycle() {
-                setInterval(() => {
-                    if (!this.container.matches(':hover')) {
-                        this.items.forEach(item => item.classList.remove('active'));
-                        this.items[this.currentIndex].classList.add('active');
-                        this.currentIndex = (this.currentIndex + 1) % this.items.length;
-                    }
-                }, 4000);
-            }
-
-            addHoverPause() {
-                this.container.addEventListener('mouseenter', () => {
-                    this.items.forEach(item => item.style.transition = 'none');
-                });
-
-                this.container.addEventListener('mouseleave', () => {
-                    this.items.forEach(item => item.style.transition = '');
-                });
-            }
+            // Random color class
+            const colorClasses = ['white', 'red', 'blue'];
+            char.classList.add(colorClasses[Math.floor(Math.random() * colorClasses.length)]);
+            
+            container.appendChild(char);
+            
+            char.addEventListener('animationend', () => char.remove());
         }
 
-        // Initialize everything when DOM is loaded
+        // Initialize Everything
         document.addEventListener('DOMContentLoaded', () => {
-            // Initialize GSAP
-            gsap.registerPlugin(ScrollTrigger);
+            // Initialize base effects
+            createMatrixBackground();
+            initializeProfileStats();
 
-            // Initialize all managers
-            const particleSystem = new ParticleSystem();
-            const matrixEffect = new MatrixEffect();
-            const scrollAnimator = new ScrollAnimationHandler();
-            const profileStats = new ProfileStatsManager();
-            const infographics = new InfographicsManager();
-
-            // Handle window resize
-            window.addEventListener('resize', () => {
-                matrixEffect.reset();
+            // Start particle systems
+            const particlesContainers = document.querySelectorAll('.particles-container');
+            particlesContainers.forEach(container => {
+                setInterval(() => createParticle(container), 200);
             });
 
-            // Initialize 3D tilt effect on cards
-            const cards = document.querySelectorAll('.project-card');
-            cards.forEach(card => {
-                new Tilt(card, {
-                    max: 15,
-                    scale: 1.05,
-                    glare: true,
-                    'max-glare': 0.5
-                });
-            });
+            // Start random character generation
+            setInterval(createRandomCharacter, 300);
+
+            // Initialize infographics
+            cycleInfographics();
 
             // GSAP Animations
             gsap.to('.title', {
@@ -766,7 +1546,7 @@
                 delay: 0.8
             });
 
-            // Skill Icons Animation
+            // Skill icons animation
             const skillIcons = document.querySelectorAll('.skill-icon');
             skillIcons.forEach((icon, index) => {
                 gsap.to(icon, {
@@ -778,16 +1558,43 @@
                 });
             });
 
-            // Smooth Scroll
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    document.querySelector(this.getAttribute('href')).scrollIntoView({
-                        behavior: 'smooth'
-                    });
+            // Section animations
+            const sections = document.querySelectorAll('.section');
+            sections.forEach((section, index) => {
+                gsap.to(section, {
+                    scrollTrigger: {
+                        trigger: section,
+                        start: "top 80%",
+                        toggleActions: "play none none none"
+                    },
+                    opacity: 1,
+                    y: 0,
+                    duration: 1,
+                    delay: 0.2 * index
                 });
+            });
+
+            // Mouse movement effects
+            document.addEventListener('mousemove', (e) => {
+                const particlesContainers = document.querySelectorAll('.particles-container');
+                particlesContainers.forEach(container => {
+                    const rect = container.getBoundingClientRect();
+                    if (e.clientY >= rect.top && e.clientY <= rect.bottom) {
+                        if (Math.random() < 0.2) {
+                            const x = e.clientX - rect.left;
+                            const y = e.clientY - rect.top;
+                            createEnergyWave(x, y, container);
+                        }
+                    }
+                });
+            });
+
+            // Window resize handler
+            window.addEventListener('resize', () => {
+                createMatrixBackground();
             });
         });
     </script>
 </body>
 </html>
+    <!-- END OF PART 5 -->
