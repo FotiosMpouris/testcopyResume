@@ -8,22 +8,22 @@
     <!-- Essential Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/TextPlugin.min.js"></script>
     
     <style>
         /* Core Variables */
         :root {
             --primary-dark: #0a192f;
             --primary-light: #20232a;
-            --accent-blue: #00aaff;
-            --accent-light-blue: #00d4ff;
-            --accent-dark-blue: #007BFF;
-            --martiniqe: #303655; /* Added Martiniqe color */
+            --accent-blue: #4169E1; /* Royal Blue */
+            --accent-light-blue: #1E90FF; /* Dodger Blue */
+            --accent-dark-blue: #0000CD; /* Medium Blue */
             --accent-red: #FF0000; /* Consistent red */
-            --accent-glow: rgba(0, 170, 255, 0.6); /* Changed to light blue */
+            --accent-glow: rgba(0, 170, 255, 0.6); /* Light blue glow */
             --text-primary: #ffffff;
             --text-secondary: rgba(255, 255, 255, 0.7);
             --matrix-color: rgba(0, 183, 255, 0.25);
-            --matrix-glow: rgba(0, 183, 255, 0.6); /* Added for anime effect */
+            --matrix-glow: rgba(0, 183, 255, 0.6); /* For anime effect */
             --transition-standard: all 0.3s ease;
             --infographic-bg: rgba(0, 123, 255, 0.3); /* Semi-transparent Blue */
             --code-white: #ffffff;
@@ -249,7 +249,6 @@
             font-size: 3.5rem;
             margin-bottom: 1rem;
             opacity: 0;
-            transform: translateY(30px);
         }
 
         .subtitle {
@@ -257,7 +256,6 @@
             color: var(--accent-blue);
             margin-bottom: 2rem;
             opacity: 0;
-            transform: translateY(30px);
         }
 
         /* Skills Grid */
@@ -301,7 +299,7 @@
         .lower-hero {
             position: relative;
             height: 0vh; /* Set to 0 to remove extra space */
-            background: linear-gradient(135deg, #20232a 0%, #303655 100%); /* Made darker with Martiniqe color */
+            background: linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-dark-blue) 100%); /* Gradient with Royal Blue */
             display: flex;
             align-items: center;
             justify-content: center;
@@ -359,36 +357,35 @@
 
         /* Dark Theme Section */
         .dark-theme-section {
-            /* Updated background to a deeper Martiniqe gradient */
-            background: linear-gradient(135deg, #20232a 0%, #303655 50%, #20232a 100%);
+            /* Updated background to a deeper Royal Blue gradient */
+            background: linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-dark-blue) 50%, var(--accent-blue) 100%);
             position: relative;
             overflow: hidden;
         }
 
         /* About Card Styling */
         .about-card {
-            --martiniqe: #0a192f; /* Changed Martiniqe color to match hero section */
             position: relative;
             max-width: 900px !important;
             margin: 0 auto !important;
             padding: 2rem !important;
             background: linear-gradient(
                 135deg,
-                rgba(10, 25, 47, 0.95) 0%, /* Updated Martiniqe color with opacity */
-                rgba(10, 25, 47, 0.85) 50%, /* Slightly darker shade */
-                rgba(10, 25, 47, 0.95) 100% /* Updated Martiniqe color with opacity */
+                rgba(65, 105, 225, 0.95) 0%, /* Royal Blue with opacity */
+                rgba(30, 144, 255, 0.85) 50%, /* Dodger Blue */
+                rgba(65, 105, 225, 0.95) 100% /* Royal Blue with opacity */
             ) !important;
-            border: 2px solid transparent !important; /* Changed from 1px to 2px and made transparent for gradient border */
+            border: 2px solid transparent !important; /* Transparent gradient border */
             box-shadow: 
                 0 0 40px rgba(0, 0, 0, 0.4),
                 inset 0 0 40px rgba(0, 123, 255, 0.08),
                 0 0 25px var(--accent-glow),
-                0 0 60px var(--accent-glow) !important; /* Updated to use --accent-glow */
+                0 0 60px var(--accent-glow) !important; /* Using --accent-glow */
             overflow: hidden;
-            backdrop-filter: blur(15px); /* Increased blur for better glass effect */
+            backdrop-filter: blur(15px); /* Enhanced glass effect */
             transform-style: preserve-3d;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
-            z-index: 2; /* Ensure it is above the anime-background */
+            z-index: 2; /* Above anime-background */
         }
 
         /* Glowing Starship Border Around About Card */
@@ -401,10 +398,10 @@
             bottom: -10px;
             border: 2px solid transparent;
             border-radius: 15px;
-            background: linear-gradient(45deg, #303655, #2a2f55, #303655, #2a2f55); /* Match infographics gradient */
+            background: linear-gradient(45deg, var(--accent-blue), var(--accent-dark-blue), var(--accent-blue), var(--accent-dark-blue)); /* Royal Blue Gradient */
             background-size: 400% 400%;
             animation: gradientAnimation 15s ease infinite; /* Animated gradient */
-            box-shadow: 0 0 20px rgba(0, 123, 255, 0.5), 0 0 40px rgba(0, 123, 255, 0.5); /* Match infographics box-shadow */
+            box-shadow: 0 0 20px rgba(0, 123, 255, 0.5), 0 0 40px rgba(0, 123, 255, 0.5); /* Matching box-shadow */
         }
 
         /* Gradient Animation Keyframes */
@@ -445,8 +442,8 @@
         .profile-container {
             position: relative;
             display: inline-block;
-            flex: 2; /* Adjusted to allow space for infographic */
-            text-align: center; /* Center the "mouse hover" text */
+            flex: 2; /* Allows space for infographic */
+            text-align: center; /* Centers the "mouse hover" text */
         }
 
         /* Profile Image */
@@ -465,7 +462,7 @@
             margin-top: 0; /* Remove extra space above */
             z-index: 3;
             cursor: pointer; /* Indicate interactivity */
-            left: -150px; /* Shift left by 150px (175px - 25px) */
+            left: -150px; /* Shift left by 150px */
         }
 
         /* Profile Image Hover Effects */
@@ -514,17 +511,17 @@
             left: calc(50% - 40px); /* Center horizontally relative to profile image */
             background: rgba(255, 255, 255, 0.2); /* Very transparent white */
             border: none;
-            color: rgba(255, 255, 255, 0.8); /* Changed text color to white with transparency */
+            color: rgba(255, 255, 255, 0.8); /* White with transparency */
             padding: 8px 16px;
             border-radius: 5px;
             font-size: 0.9rem;
             cursor: pointer;
             opacity: 1;
             transition: transform 0.3s ease;
-            z-index: 5; /* Increased z-index to ensure visibility */
+            z-index: 5; /* Ensure visibility */
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
             width: 80px; /* Adjusted width */
-            height: 40px; /* Adjusted height to match width for equal size */
+            height: 40px; /* Adjusted height */
             display: flex;
             align-items: center;
             justify-content: center;
@@ -543,10 +540,10 @@
             transform: translate(-300px, -50%);
             width: 280px; /* Slightly narrower for better fit */
             height: 200px; /* Fixed height for cycling */
-            background: rgba(48, 54, 85, 0.5); /* Updated to match Martiniqe color */
+            background: rgba(48, 54, 85, 0.5); /* Royal Blue theme */
             border: none; /* Removed the light blue border */
             border-radius: 8px;
-            padding: 1rem; /* Reduced padding for better text fit */
+            padding: 1rem; /* Reduced padding */
             opacity: 0;
             transition: all 0.3s ease;
             z-index: 4;
@@ -564,16 +561,16 @@
             bottom: -10px;
             border: 2px solid transparent;
             border-radius: 15px;
-            background: linear-gradient(45deg, #303655, #2a2f55, #303655, #2a2f55); /* Match infographics gradient */
+            background: linear-gradient(45deg, var(--accent-blue), var(--accent-dark-blue), var(--accent-blue), var(--accent-dark-blue)); /* Royal Blue Gradient */
             background-size: 400% 400%;
             animation: gradientAnimationInfographic 15s ease infinite; /* Animated gradient */
-            box-shadow: 0 0 20px rgba(0, 123, 255, 0.5), 0 0 40px rgba(0, 123, 255, 0.5); /* Match infographics box-shadow */
+            box-shadow: 0 0 20px rgba(0, 123, 255, 0.5), 0 0 40px rgba(0, 123, 255, 0.5); /* Matching box-shadow */
             z-index: -1;
         }
 
         .profile-stats-overlay:hover {
             opacity: 1;
-            transform: translate(-300px, -50%); /* Maintain the left and down shift on hover */
+            transform: translate(-300px, -50%); /* Maintain shift on hover */
             pointer-events: auto;
         }
 
@@ -581,7 +578,7 @@
         .stats-cycler {
             display: flex;
             flex-direction: column;
-            position: relative; /* Changed from absolute to relative */
+            position: relative; /* Relative positioning */
             width: 100%;
             height: 100%;
             overflow: hidden;
@@ -590,7 +587,7 @@
         /* Profile Stat Paragraph */
         .stat-paragraph {
             width: 100%;
-            color: rgba(255, 255, 255, 0.8); /* Made text white with transparency */
+            color: rgba(255, 255, 255, 0.8); /* White with transparency */
             text-shadow: 
                 0 0 3px rgba(0, 183, 255, 0.8),
                 0 0 6px rgba(0, 183, 255, 0.5);
@@ -599,7 +596,6 @@
             font-family: 'Courier New', monospace;
             font-size: 0.9rem; /* Reduced font size */
             opacity: 0;
-            transform: translateY(0);
             transition: opacity 0.3s ease, transform 0.3s ease;
             white-space: normal; /* Allow text wrapping */
             word-wrap: break-word;
@@ -642,6 +638,7 @@
             position: relative;
             z-index: 3;
             transition: all 0.3s ease;
+            opacity: 0; /* Hidden initially for typing effect */
         }
 
         .about-content p:hover {
@@ -735,10 +732,10 @@
             width: 300px;
             height: 200px;
             overflow: hidden;
-            z-index: 1; /* Ensure it's behind the content */
-            background: var(--infographic-bg); /* Moved background here */
-            border-radius: 10px; /* Moved border radius here */
-            padding: 1rem; /* Added padding for inner spacing */
+            z-index: 1; /* Behind the content */
+            background: var(--infographic-bg); /* Background */
+            border-radius: 10px; /* Border radius */
+            padding: 1rem; /* Inner spacing */
             display: flex;
             align-items: center;
             justify-content: center;
@@ -754,7 +751,7 @@
             bottom: -10px;
             border: 2px solid transparent;
             border-radius: 15px;
-            background: linear-gradient(45deg, #303655, #2a2f55, #303655, #2a2f55); /* Updated to include Martiniqe color */
+            background: linear-gradient(45deg, var(--accent-blue), var(--accent-dark-blue), var(--accent-blue), var(--accent-dark-blue)); /* Royal Blue Gradient */
             background-size: 400% 400%;
             animation: gradientAnimationInfographic 15s ease infinite; /* Animated gradient */
             box-shadow: 0 0 20px rgba(0, 123, 255, 0.5), 0 0 40px rgba(0, 123, 255, 0.5);
@@ -773,7 +770,6 @@
             top: 0;
             left: 0;
             box-sizing: border-box;
-            /* Removed background and border-radius */
             display: flex; /* Always display flex */
             flex-direction: column;
             justify-content: center;
@@ -794,7 +790,7 @@
             width: 100%;
             font-size: 1.5rem;
             position: relative;
-            border: none; /* Ensure no border */
+            border: none; /* No border */
         }
 
         .infographic-item p {
@@ -857,7 +853,7 @@
             position: relative;
             display: inline-block;
             text-shadow: 0 0 15px rgba(0, 123, 255, 0.5);
-            /* Removed the ::after pseudo-element to eliminate the line under "About Me" */
+            /* Removed the ::after pseudo-element */
         }
 
         /* Projects Grid */
@@ -913,7 +909,7 @@
             font-size: 1.4rem;
             margin-bottom: 0.5rem;
             text-shadow: 0 0 10px rgba(0, 123, 255, 0.3);
-            border: none; /* Ensure no border */
+            border: none; /* No border */
         }
 
         .project-card p {
@@ -1254,7 +1250,7 @@
             /* Make it invisible */
             background: transparent;
             pointer-events: none;
-            z-index: 5; /* Ensure it's above other elements */
+            z-index: 5; /* Above other elements */
         }
 
         /* Responsive Adjustments for Profile Hover Button */
@@ -1350,7 +1346,7 @@
             <!-- About Section -->
             <section class="section">
                 <div class="card about-card">
-                    <div class="anime-background"></div> <!-- Added Anime Background -->
+                    <div class="anime-background"></div> <!-- Anime Background -->
                     <div class="tech-grid"></div>
                     <div class="about-header">
                         <div class="profile-container">
@@ -1376,27 +1372,21 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- Removed the .about-header-text div as per user request -->
                         <!-- Infographics Container -->
                         <div class="infographic">
                             <!-- Infographic items will be dynamically generated by JavaScript -->
                         </div>
                     </div>
                     <div class="about-content">
-                        <p>
-                            I'm a tech-savvy multimedia specialist with a unique blend of skills in digital design, software development, and AI-assisted platforms. Proficient in Python, C#, Unity, and Adobe Creative Suite, I have a strong background in creating immersive digital experiences, animation, and video production. My expertise spans developing interactive applications, managing creative projects, and utilizing AI and generative art platforms to enhance user experiences and push creative boundaries.
+                        <p data-text="I'm a tech-savvy multimedia specialist with a unique blend of skills in digital design, software development, and AI-assisted platforms. Proficient in Python, C#, Unity, and Adobe Creative Suite, I have a strong background in creating immersive digital experiences, animation, and video production. My expertise spans developing interactive applications, managing creative projects, and utilizing AI and generative art platforms to enhance user experiences and push creative boundaries.">
                         </p>
-                        <p>
-                            More recently, I've been exploring the intersection of AI and application development, working with tools like Streamlit Cloud, Google Cloud Console, Python, GitHub, and large language models (LLMs). These technologies allow me to design intelligent, automated solutions that streamline processes and enhance user engagement. By leveraging AI-assisted applications, I'm focused on creating innovative, agent-centric systems that reflect the future of technology.
+                        <p data-text="More recently, I've been exploring the intersection of AI and application development, working with tools like Streamlit Cloud, Google Cloud Console, Python, GitHub, and large language models (LLMs). These technologies allow me to design intelligent, automated solutions that streamline processes and enhance user engagement. By leveraging AI-assisted applications, I'm focused on creating innovative, agent-centric systems that reflect the future of technology.">
                         </p>
-                        <p>
-                            Throughout my career, I've used cutting-edge tools to develop interactive features for mobile gaming and geo-positioning apps, collaborating with technical teams to prototype and bring functional products to life. My proficiency in Adobe tools like Photoshop, After Effects, Premiere Pro, and Audition has enabled me to produce high-quality multimedia content, from video editing to motion graphics and animation.
+                        <p data-text="Throughout my career, I've used cutting-edge tools to develop interactive features for mobile gaming and geo-positioning apps, collaborating with technical teams to prototype and bring functional products to life. My proficiency in Adobe tools like Photoshop, After Effects, Premiere Pro, and Audition has enabled me to produce high-quality multimedia content, from video editing to motion graphics and animation.">
                         </p>
-                        <p>
-                            I've also managed digital platforms and multimedia content creation for various organizations, overseeing Google Workspace operations and creating social media assets to improve outreach. These hands-on experiences have given me a well-rounded understanding of how technology and creativity intersect to streamline workflows, enhance communication, and deliver captivating user experiences.
+                        <p data-text="I've also managed digital platforms and multimedia content creation for various organizations, overseeing Google Workspace operations and creating social media assets to improve outreach. These hands-on experiences have given me a well-rounded understanding of how technology and creativity intersect to streamline workflows, enhance communication, and deliver captivating user experiences.">
                         </p>
-                        <p>
-                            Always eager to explore new frontiers in creative development, I'm committed to using AI and emerging technologies to innovate and produce impactful digital media. Whether it's developing dynamic applications or crafting custom solutions, I'm dedicated to merging technology and design in today's rapidly evolving digital landscape.
+                        <p data-text="Always eager to explore new frontiers in creative development, I'm committed to using AI and emerging technologies to innovate and produce impactful digital media. Whether it's developing dynamic applications or crafting custom solutions, I'm dedicated to merging technology and design in today's rapidly evolving digital landscape.">
                         </p>
                     </div>
                 </div>
@@ -1424,6 +1414,15 @@
                             <h4>AI Resume Tailor</h4>
                             <p>AI Tool</p>
                         </a>
+                        <!-- Added New Project Cards -->
+                        <a href="https://github.com/FotiosMpouris/TheAsteriProject001" class="project-card" target="_blank" rel="noopener noreferrer">
+                            <h4>The Asteri Project 001</h4>
+                            <p>AI Development</p>
+                        </a>
+                        <a href="https://github.com/FotiosMpouris/HelgaUnity" class="project-card" target="_blank" rel="noopener noreferrer">
+                            <h4>Helga Unity</h4>
+                            <p>Game Development</p>
+                        </a>
                         <!-- Removed Placeholder Projects -->
                     </div>
                 </div>
@@ -1445,8 +1444,8 @@
     </div>
 
     <script>
-        // Initialize GSAP ScrollTrigger
-        gsap.registerPlugin(ScrollTrigger);
+        // Initialize GSAP ScrollTrigger and TextPlugin
+        gsap.registerPlugin(ScrollTrigger, TextPlugin);
 
         // Matrix Effect Functions
         function createMatrixBackground() {
@@ -1528,54 +1527,39 @@
             let currentStatIndex = 0;
             const totalStats = statsData.length;
 
-            // Function to type text into an element
-            function typeText(element, text, speed = 10) { // Reduced typing speed from 20ms to 10ms
-                return new Promise(resolve => {
-                    let index = 0;
-                    const typingInterval = setInterval(() => {
-                        if (index < text.length) {
-                            element.querySelector('p').textContent += text[index];
-                            index++;
-                        } else {
-                            clearInterval(typingInterval);
-                            resolve();
-                        }
-                    }, speed);
+            // Function to type text into an element using GSAP TextPlugin
+            function typeText(element, text, speed = 0.05) { // Speed adjusted for fast typing
+                return gsap.to(element, {
+                    duration: text.length * speed,
+                    text: text,
+                    ease: "none",
+                    onStart: () => {
+                        element.parentElement.classList.add('active');
+                    }
                 });
             }
 
-            // Function to delay execution
-            function delay(ms) {
-                return new Promise(resolve => setTimeout(resolve, ms));
-            }
-
-            // Function to cycle through stats
-            async function cycleStats() {
+            // Function to cycle through stats sequentially
+            function cycleStats() {
                 if (isCyclingStats) return; // Prevent multiple cycles
                 isCyclingStats = true;
 
-                while(true) {
-                    const currentParagraph = paragraphs[currentStatIndex];
-                    const currentText = statsData[currentStatIndex];
+                const timeline = gsap.timeline();
 
-                    // Activate the current paragraph
-                    currentParagraph.classList.add('active');
-                    
-                    // Type the text
-                    await typeText(currentParagraph, currentText);
+                statsData.forEach((text, index) => {
+                    const currentParagraph = paragraphs[index % paragraphs.length];
+                    timeline.call(() => {
+                        typeText(currentParagraph.querySelector('p'), text, 0.05);
+                    }, null, `+=0.5`); // Delay before starting each paragraph
+                    timeline.to({}, { duration: text.length * 0.05 + 1.5 }); // Wait for typing and display duration
+                    timeline.call(() => {
+                        currentParagraph.classList.remove('active');
+                        currentParagraph.querySelector('p').textContent = '';
+                    }, null);
+                });
 
-                    // Wait for a brief moment before transitioning
-                    await delay(1500); // Display duration
-
-                    // Deactivate the current paragraph
-                    currentParagraph.classList.remove('active');
-
-                    // Clear the text
-                    currentParagraph.querySelector('p').textContent = '';
-
-                    // Move to the next stat
-                    currentStatIndex = (currentStatIndex + 1) % totalStats;
-                }
+                // Repeat the cycle infinitely
+                timeline.repeat(-1);
             }
 
             // Attach event listeners to start cycling on hover for desktop
@@ -1589,7 +1573,9 @@
                     duration: 0.3,
                     ease: "power1.out"
                 });
-                cycleStats(); // Start cycling on first hover
+                if (!isCyclingStats) {
+                    cycleStats(); // Start cycling on first hover
+                }
             }
 
             function hideStats() {
@@ -1608,7 +1594,7 @@
 
             // Automatically start cycling on mobile
             function startCyclingIfMobile() {
-                if (window.innerWidth <= 768) {
+                if (window.innerWidth <= 768 && !isCyclingStats) {
                     gsap.to(statsOverlay, {
                         opacity: 1,
                         duration: 0.3,
@@ -1686,77 +1672,52 @@
         let currentInfographic = 0;
         let infographicItems = [];
 
-        // Helper function to delay execution
-        function delayInfographic(ms) {
-            return new Promise(resolve => setTimeout(resolve, ms));
-        }
-
-        // Function to type text into an element
-        function typeTextInfographic(element, text, speed = 10) { // Reduced typing speed from 20ms to 10ms
-            return new Promise((resolve) => {
-                let index = 0;
-                element.textContent = '';
-                element.style.opacity = '1';
-                
-                const typingInterval = setInterval(() => {
-                    if (index < text.length) {
-                        element.textContent += text[index];
-                        index++;
-                    } else {
-                        clearInterval(typingInterval);
-                        resolve();
-                    }
-                }, speed);
+        // Function to type text into an element using GSAP TextPlugin
+        function typeTextInfographic(element, text, speed = 0.05) { // Speed adjusted for fast typing
+            return gsap.to(element, {
+                duration: text.length * speed,
+                text: text,
+                ease: "none",
+                onStart: () => {
+                    element.style.opacity = '1';
+                }
             });
         }
 
         // Function to cycle through infographics
-        async function cycleInfographics() {
-            while(true) {
-                const currentItem = infographicItems[currentInfographic];
-                currentItem.classList.add('active');
+        function cycleInfographics() {
+            if (infographicItems.length === 0) return;
 
-                const titleElement = currentItem.querySelector('h4');
-                const textElement = currentItem.querySelector('.typing-text');
+            const timeline = gsap.timeline({ repeat: -1, repeatDelay: 1.5 });
 
-                // Retrieve the data for current infographic
-                const { title, text } = infographicData[currentInfographic % infographicData.length];
-
-                // Start typing title and text simultaneously
-                await Promise.all([
-                    typeTextInfographic(titleElement, title),
-                    typeTextInfographic(textElement, text)
-                ]);
-
-                // Wait for a short duration before fading out
-                await delayInfographic(800); // Increased display duration
-
-                // Fade out the infographic
-                currentItem.classList.remove('active');
-
-                // Clear the texts
-                titleElement.textContent = '';
-                textElement.textContent = '';
-
-                // Move to next infographic
-                currentInfographic = (currentInfographic + 1) % infographicItems.length;
-
-                // Small delay before showing next infographic
-                await delayInfographic(300);
-            }
+            infographicData.forEach((item, index) => {
+                const currentItem = infographicItems[index % infographicItems.length];
+                timeline.call(() => {
+                    currentItem.classList.add('active');
+                    typeTextInfographic(currentItem.querySelector('h4'), item.title, 0.05);
+                    typeTextInfographic(currentItem.querySelector('.typing-text'), item.text, 0.05);
+                });
+                timeline.to({}, { duration: (item.title.length + item.text.length) * 0.05 + 1.5 }); // Wait for typing and display duration
+                timeline.call(() => {
+                    currentItem.classList.remove('active');
+                    currentItem.querySelector('h4').textContent = '';
+                    currentItem.querySelector('.typing-text').textContent = '';
+                });
+            });
         }
 
         // Function to dynamically create infographic items
         function createInfographicItems() {
             const infographicContainer = document.querySelector('.infographic');
             infographicContainer.innerHTML = ''; // Clear existing items
+            infographicItems = []; // Reset the array
 
             infographicData.forEach((item, index) => {
                 const infographicItem = document.createElement('div');
                 infographicItem.className = 'infographic-item';
                 infographicItem.innerHTML = `
-                    <h4>${item.title}</h4>
-                    <p class="typing-text">${item.text}</p>
+                    <h4></h4>
+                    <p class="typing-text"></p>
                 `;
                 infographicContainer.appendChild(infographicItem);
                 infographicItems.push(infographicItem);
@@ -1767,7 +1728,7 @@
         function startParticles() {
             const particlesContainers = document.querySelectorAll('.particles-container');
             particlesContainers.forEach(container => {
-                setInterval(() => createParticle(container), 200);
+                setInterval(() => createParticle(container), 100); // Increased frequency
             });
         }
 
@@ -1778,7 +1739,7 @@
         }
 
         // Function to display multiple random stars with random color
-        function displayRandomJapaneseChars(count = 2) { // Function name remains unchanged
+        function displayRandomJapaneseChars(count = 4) { // Increased count from 2 to 4
             const darkSection = document.querySelector('.dark-theme-section');
             const stars = ['★', '☆', '✩', '✪', '✫', '✬', '✭', '✮', '✯'];
 
@@ -1834,17 +1795,15 @@
             // Initialize Profile Stats
             initializeProfileStats();
 
-            // GSAP Animations
+            // GSAP Animations for Titles
             gsap.to('.title', {
                 opacity: 1,
-                y: 0,
                 duration: 1,
                 delay: 0.5
             });
 
             gsap.to('.subtitle', {
                 opacity: 1,
-                y: 0,
                 duration: 1,
                 delay: 0.8
             });
@@ -1861,7 +1820,7 @@
                 });
             });
 
-            // Section Animations
+            // Section Animations with ScrollTrigger
             const sections = document.querySelectorAll('.section');
             sections.forEach((section, index) => {
                 gsap.to(section, {
@@ -1871,7 +1830,6 @@
                         toggleActions: "play none none none"
                     },
                     opacity: 1,
-                    y: 0,
                     duration: 1,
                     delay: 0.2 * index
                 });
@@ -1887,7 +1845,7 @@
             startParticles();
 
             // Start displaying random stars
-            setInterval(() => displayRandomJapaneseChars(2), 300); // Generate 2 stars every 300ms
+            setInterval(() => displayRandomJapaneseChars(4), 150); // Increased stars and frequency
 
             // Window Resize Handler
             window.addEventListener('resize', () => {
@@ -1903,7 +1861,7 @@
                 particlesContainers.forEach(container => {
                     const rect = container.getBoundingClientRect();
                     if (e.clientY >= rect.top && e.clientY <= rect.bottom) {
-                        if (Math.random() < 0.2) {
+                        if (Math.random() < 0.3) { // Increased chance for more energy waves
                             const x = e.clientX - rect.left;
                             const y = e.clientY - rect.top;
                             createEnergyWave(x, y, container);
@@ -1911,11 +1869,44 @@
                     }
                 });
             });
-          
+
+            // Typed-in Effect for Summary Paragraphs
+            const aboutContent = document.querySelectorAll('.about-content p');
+            const paragraphs = Array.from(aboutContent);
+            let currentParagraphIndex = 0;
+
+            const paragraphTimeline = gsap.timeline({
+                scrollTrigger: {
+                    trigger: '.about-content',
+                    start: "top 80%",
+                    toggleActions: "play none none none"
+                }
+            });
+
+            paragraphs.forEach((para) => {
+                const fullText = para.getAttribute('data-text');
+                para.textContent = ''; // Clear existing text
+
+                paragraphTimeline.to({}, { duration: 0.5 }); // Initial delay before starting
+                paragraphTimeline.to(para, {
+                    duration: fullText.length * 0.02,
+                    text: fullText,
+                    ease: "none",
+                    onStart: () => {
+                        para.style.opacity = '1';
+                    }
+                });
+                paragraphTimeline.to({}, { duration: 1.5 }); // Wait after typing
+            });
+
+            // Create infographic items
+            createInfographicItems();
+
+            // Start Infographics Cycling
+            cycleInfographics();
         });
     </script>
 </body>
 </html>
-
 
 
