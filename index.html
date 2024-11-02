@@ -1528,7 +1528,7 @@
             const totalStats = statsData.length;
 
             // Function to type text into an element using GSAP TextPlugin
-            function typeText(element, text, speed = 0.05) { // Speed adjusted for fast typing
+            function typeText(element, text, speed = 0.01) { // Further increased typing speed
                 return gsap.to(element, {
                     duration: text.length * speed,
                     text: text,
@@ -1539,19 +1539,19 @@
                 });
             }
 
-            // Function to cycle through stats sequentially
+            // Function to cycle through stats sequentially without pauses
             function cycleStats() {
                 if (isCyclingStats) return; // Prevent multiple cycles
                 isCyclingStats = true;
 
-                const timeline = gsap.timeline();
+                const timeline = gsap.timeline({ repeat: -1, repeatDelay: 0 });
 
                 statsData.forEach((text, index) => {
                     const currentParagraph = paragraphs[index % paragraphs.length];
                     timeline.call(() => {
-                        typeText(currentParagraph.querySelector('p'), text, 0.05);
-                    }, null, `+=0.5`); // Delay before starting each paragraph
-                    timeline.to({}, { duration: text.length * 0.05 + 1.5 }); // Wait for typing and display duration
+                        typeText(currentParagraph.querySelector('p'), text, 0.01);
+                    });
+                    timeline.to({}, { duration: 0 }); // No pause between paragraphs
                     timeline.call(() => {
                         currentParagraph.classList.remove('active');
                         currentParagraph.querySelector('p').textContent = '';
@@ -1887,26 +1887,17 @@
                 const fullText = para.getAttribute('data-text');
                 para.textContent = ''; // Clear existing text
 
-                paragraphTimeline.to({}, { duration: 0.5 }); // Initial delay before starting
+                // Removed initial delay and wait after typing for seamless transition
                 paragraphTimeline.to(para, {
-                    duration: fullText.length * 0.02,
+                    duration: fullText.length * 0.01, // Further increased typing speed
                     text: fullText,
                     ease: "none",
                     onStart: () => {
                         para.style.opacity = '1';
                     }
                 });
-                paragraphTimeline.to({}, { duration: 1.5 }); // Wait after typing
             });
-
-            // Create infographic items
-            createInfographicItems();
-
-            // Start Infographics Cycling
-            cycleInfographics();
         });
     </script>
 </body>
 </html>
-
-
