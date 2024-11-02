@@ -1471,8 +1471,8 @@
                     }
 
                     column.textContent = columnChars;
-                    column.style.left = ${i * columnWidth}px;
-                    column.style.animationDelay = ${-Math.random() * 20}s;
+                    column.style.left = `${i * columnWidth}px`;
+                    column.style.animationDelay = `${-Math.random() * 20}s`;
 
                     container.appendChild(column);
                 }
@@ -1500,8 +1500,8 @@
                 }
                 
                 column.textContent = columnChars;
-                column.style.left = ${i * columnWidth}px;
-                column.style.animationDelay = ${-Math.random() * 20}s;
+                column.style.left = `${i * columnWidth}px`;
+                column.style.animationDelay = `${-Math.random() * 20}s`;
                 
                 // Randomly add glow effect
                 if (Math.random() < 0.3) {
@@ -1617,11 +1617,11 @@
             particle.className = 'particle';
             
             const size = Math.random() * 4 + 2;
-            particle.style.width = ${size}px;
-            particle.style.height = ${size}px;
+            particle.style.width = `${size}px`;
+            particle.style.height = `${size}px`;
             
-            particle.style.left = ${Math.random() * 100}%;
-            particle.style.top = ${Math.random() * 100}%;
+            particle.style.left = `${Math.random() * 100}%`;
+            particle.style.top = `${Math.random() * 100}%`;
             
             container.appendChild(particle);
             
@@ -1638,8 +1638,8 @@
         function createEnergyWave(x, y, container) {
             const wave = document.createElement('div');
             wave.className = 'energy-wave';
-            wave.style.left = ${x - 100}px;
-            wave.style.top = ${y - 100}px;
+            wave.style.left = `${x - 100}px`;
+            wave.style.top = `${y - 100}px`;
             container.appendChild(wave);
             
             setTimeout(() => wave.remove(), 6000);
@@ -1717,10 +1717,10 @@
             infographicData.forEach((item, index) => {
                 const infographicItem = document.createElement('div');
                 infographicItem.className = 'infographic-item';
-                infographicItem.innerHTML = 
+                infographicItem.innerHTML = `
                     <h4></h4>
                     <p class="typing-text"></p>
-                ;
+                `;
                 infographicContainer.appendChild(infographicItem);
                 infographicItems.push(infographicItem);
             });
@@ -1761,8 +1761,8 @@
                 const x = Math.random() * 100;
                 const y = Math.random() * 100;
 
-                randomStarElem.style.left = ${x}%;
-                randomStarElem.style.top = ${y}%;
+                randomStarElem.style.left = `${x}%`;
+                randomStarElem.style.top = `${y}%`;
 
                 darkSection.appendChild(randomStarElem);
 
