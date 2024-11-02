@@ -442,12 +442,11 @@
             z-index: 3;
         }
 
-        .profile-container {
-            position: relative;
-            display: inline-block;
-            flex: 2; /* Adjusted to allow space for infographic */
-            text-align: center; /* Center the "mouse hover" text */
-        }
+       .profile-container {
+        align-items: center;
+        width: 100%;
+        margin: 0 auto;
+    }
 
         /* Profile Image */
         .about-profile-img {
@@ -537,23 +536,17 @@
 
         /* Profile Stats Overlay */
         .profile-stats-overlay {
-    position: absolute;
-    top: 50%;
-    left: calc(100% + 35px);
-    transform: translate(-300px, -50%);
-    width: 280px;
-    height: 200px;
-    background: rgba(48, 54, 85, 0.5);
-    border-radius: 8px;
-    padding: 1rem;
-    opacity: 0;
-    transition: all 0.3s ease;
-    z-index: 4;
-    backdrop-filter: blur(5px);
-    pointer-events: none;
-    overflow: hidden;
-}
-
+        position: relative;
+        left: 0;
+        top: 0;
+        transform: none;
+        width: 90%;
+        max-width: 300px;
+        height: 250px;
+        margin: 10px auto;
+        opacity: 1;
+        pointer-events: auto;
+    }
         .profile-stats-overlay::before {
             content: '';
             position: absolute;
@@ -1002,43 +995,7 @@
 
             /* Updated Profile Stats Overlay for Mobile */
             .profile-stats-overlay {
-                /* Mimic Infographic Box Styles */
-                position: relative;
-                width: 100%;
-                max-width: 300px;
-                height: 250px;
-                background: var(--infographic-bg);
-                border-radius: 10px;
-                box-shadow: 0 0 20px rgba(0, 123, 255, 0.5), 0 0 40px rgba(0, 123, 255, 0.5);
-                padding: 1rem;
-                margin: 10px auto;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                opacity: 1; /* Make it always visible */
-                pointer-events: auto; /* Allow interaction if needed */
-
-                /* Remove previous positioning and transform */
-                top: auto;
-                left: auto;
-                transform: none;
-            }
-
-            .profile-stats-overlay::before {
-                /* Match Infographic Box Styles */
-                content: '';
-                position: absolute;
-                top: -10px;
-                left: -10px;
-                right: -10px;
-                bottom: -10px;
-                border: 2px solid transparent;
-                border-radius: 15px;
-                background: linear-gradient(45deg, #303655, #2a2f55, #303655, #2a2f55);
-                background-size: 400% 400%;
-                animation: gradientAnimationInfographic 15s ease infinite;
-                box-shadow: 0 0 20px rgba(0, 123, 255, 0.5), 0 0 40px rgba(0, 123, 255, 0.5);
-                z-index: -1;
+                display: none;
             }
 
             .about-content {
@@ -1061,72 +1018,26 @@
                 left: 50%; /* Center the button */
                 transform: translateX(-50%);
             }
-
-            .profile-stats-overlay {
-                top: 110%; /* Position below the profile image */
-                transform: translate(-50%, 0);
-            }
-
-            .infographic {
-                width: 100%;
-                height: 250px; /* Increased height */
-            }
-
-            /* Profile Image Adjustments */
-            .about-profile-img {
-                width: 130px; /* Further reduced size */
-                height: 130px;
-                transform: translate(0, -20px); /* Move up */
-                margin-left: 0;
-                position: relative;
-                display: block;
-                margin: 0 auto; /* Center the image */
-            }
-
-            /* Ensure the profile-container items are aligned correctly */
-            .profile-container {
-                align-items: flex-start;
-                width: 100%;
-            }
         }
 
         @media (max-width: 768px) and (orientation: portrait) {
-    .profile-stats-overlay {
-        position: relative;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 90%;
-        max-width: 300px;
-        height: 250px;
-        margin: 20px auto;
-    }
-}
+            .profile-stats-overlay {
+                display: none;
+            }
+        }
 
         @media (max-width: 768px) and (orientation: landscape) {
             .profile-stats-overlay {
-                width: 80%; /* Reduced from 60% to better fit */
-                max-width: 250px; /* Reduced from 500px */
-                height: 180px; /* Reduced from 200px */
-            }
-
-            .stat-paragraph {
-                font-size: 0.7rem; /* Further reduced font size for better fit */
+                display: none;
             }
         }
 
         @media (max-width: 768px) {
-    .profile-stats-overlay {
-        position: relative;
-        top: 0;
-        left: 50%; /* Position from center */
-        transform: translateX(-50%); /* Center horizontally */
-        width: 90%;
-        max-width: 300px;
-        height: 250px;
-        opacity: 1;
-        pointer-events: auto;
-        margin: 20px 0; /* Add vertical spacing */
-    }
+            .hero {
+                height: auto;
+                min-height: 100vh;
+                padding: 4rem 1rem;
+            }
 
             .title {
                 font-size: 2.5rem;
@@ -1185,52 +1096,16 @@
             }
 
             .profile-container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        width: 100%;
-    }
-}
+                display: flex;
+                flex-direction: column;
+                align-items: center; /* Center align for mobile */
+                justify-content: center;
+                gap: 1rem;
+                width: 100%;
+            }
 
             .profile-hover-button {
                 display: none; /* Hide the stats button on mobile */
-            }
-
-            .profile-stats-overlay {
-                position: relative;
-                left: 0;
-                top: 0;
-                transform: none;
-                width: 100%; /* Make it the same width as infographic */
-                max-width: 300px;
-                height: 250px; /* Match the height of infographic */
-                background: var(--infographic-bg); /* Match infographics background */
-                border-radius: 10px; /* Match infographics border-radius */
-                box-shadow: 0 0 20px rgba(0, 123, 255, 0.5), 0 0 40px rgba(0, 123, 255, 0.5); /* Match infographics box-shadow */
-                padding: 1rem; /* Consistent padding */
-                margin: 10px auto; /* Center the stats box */
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                opacity: 1; /* Make it always visible */
-                pointer-events: auto; /* Allow interaction if needed */
-            }
-
-            .profile-stats-overlay::before {
-                /* Match Infographic Box Styles */
-                content: '';
-                position: absolute;
-                top: -10px;
-                left: -10px;
-                right: -10px;
-                bottom: -10px;
-                border: 2px solid transparent;
-                border-radius: 15px;
-                background: linear-gradient(45deg, #303655, #2a2f55, #303655, #2a2f55); /* Match infographics gradient */
-                background-size: 400% 400%;
-                animation: gradientAnimationInfographic 15s ease infinite; /* Animated gradient */
-                box-shadow: 0 0 20px rgba(0, 123, 255, 0.5), 0 0 40px rgba(0, 123, 255, 0.5); /* Match infographics box-shadow */
-                z-index: -1;
             }
 
             .infographic {
@@ -1242,7 +1117,7 @@
             .about-profile-img {
                 width: 130px; /* Further reduced size */
                 height: 130px;
-                transform: translate(0, -20px); /* Adjusted movement */
+                transform: translate(0, -20px); /* Move up */
                 margin-left: 0;
                 position: relative;
                 display: block;
@@ -1250,17 +1125,18 @@
             }
         }
 
-       @media (max-width: 480px) {
-    .profile-stats-overlay {
-        position: relative;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 90%;
-        max-width: 300px;
-        height: 250px;
-        margin: 20px auto;
-    }
-}
+        @media (max-width: 480px) {
+            .about-profile-img {
+                width: 120px;
+                height: 120px;
+                transform: translate(0, -20px); /* Move up */
+                left: 0; /* Ensure no left offset */
+                margin: 0 auto; /* Center the image */
+                position: relative;
+                display: block;
+                margin: 0 auto; /* Center the image */
+            }
+
             .glow-text {
                 font-size: 2rem;
             }
@@ -1274,34 +1150,19 @@
             }
 
             /* Further fix profile image and stats positioning on small screens */
-            .about-profile-img {
-                left: 0; /* Ensure no left offset */
-                margin: 0 auto; /* Center the image */
-                transform: translate(0, -20px); /* Move up */
-                display: block;
-                margin: 0 auto; /* Center the image */
-            }
+           .about-profile-img {
+        width: 130px;
+        height: 130px;
+        transform: translate(0, -20px);
+        margin: 0 auto;
+    }
 
             .profile-hover-button {
                 display: none; /* Ensure the button is hidden */
             }
 
             .profile-stats-overlay {
-                top: 110%; /* Position below the profile image */
-                transform: translate(-50%, 0);
-                width: 90%;
-                max-width: 300px;
-                height: 250px; /* Match the infographic height */
-                background: var(--infographic-bg); /* Match infographics background */
-                border-radius: 10px; /* Match infographics border-radius */
-                box-shadow: 0 0 20px rgba(0, 123, 255, 0.5), 0 0 40px rgba(0, 123, 255, 0.5); /* Match infographics box-shadow */
-                padding: 1rem; /* Consistent padding */
-                margin: 10px auto; /* Center the stats box */
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                opacity: 1; /* Always visible */
-                pointer-events: auto;
+                display: none;
             }
         }
 
@@ -1383,8 +1244,11 @@
             .profile-hover-button {
                 display: none; /* Hide the stats button on mobile */
             }
-        }
 
+            .profile-stats-overlay {
+                display: none;
+            }
+        }
     </style>
 </head>
 
