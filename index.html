@@ -597,8 +597,9 @@
             font-size: 0.9rem; /* Reduced font size */
             opacity: 0;
             transition: opacity 0.3s ease, transform 0.3s ease;
-            white-space: nowrap; /* Prevent wrapping for typing effect */
-            overflow: hidden; /* Hide overflowing text */
+            white-space: normal; /* Allow text wrapping */
+            word-wrap: break-word;
+            overflow: hidden; /* Prevent overflow */
             background: rgba(0, 0, 0, 0.1); /* Reduced background opacity */
             border-radius: 4px;
             padding: 8px; /* Reduced padding */
@@ -805,18 +806,12 @@
         /* Typing Effect */
         .typing-text {
             position: relative;
-            white-space: nowrap; /* Prevent wrapping for typing effect */
-            overflow: hidden; /* Hide overflowing text */
+            white-space: normal; /* Allow text wrapping */
+            word-wrap: break-word;
+            overflow: hidden;
             opacity: 0;
             transition: opacity 0.3s ease;
             font-size: 0.9rem; /* Reduced font size */
-            border-right: 2px solid rgba(255, 255, 255, 0.8); /* Cursor simulation */
-            animation: blinkCursor 0.75s step-end infinite;
-        }
-
-        @keyframes blinkCursor {
-            from, to { border-color: transparent; }
-            50% { border-color: rgba(255, 255, 255, 0.8); }
         }
 
         /* Section Styling */
@@ -1534,42 +1529,37 @@
 
             // Function to type text into an element using GSAP TextPlugin
             function typeText(element, text, speed = 0.05) { // Speed adjusted for fast typing
-                gsap.to(element, {
+                return gsap.to(element, {
                     duration: text.length * speed,
                     text: text,
                     ease: "none",
                     onStart: () => {
                         element.parentElement.classList.add('active');
-                    },
-                    onComplete: () => {
-                        // Keep the text visible for a while before removing
-                        gsap.delayedCall(1.5, () => {
-                            element.parentElement.classList.remove('active');
-                            element.textContent = '';
-                        });
                     }
                 });
             }
 
-            // Function to cycle through stats
+            // Function to cycle through stats sequentially
             function cycleStats() {
                 if (isCyclingStats) return; // Prevent multiple cycles
                 isCyclingStats = true;
 
-                function showNextStat() {
-                    const currentParagraph = paragraphs[currentStatIndex];
-                    const currentText = statsData[currentStatIndex];
-    
-                    typeText(currentParagraph.querySelector('p'), currentText, 0.05);
-    
-                    // Increment the index after the typing and display duration
-                    currentStatIndex = (currentStatIndex + 1) % totalStats;
-    
-                    // Schedule the next stat
-                    gsap.delayedCall(currentText.length * 0.05 + 1.5, showNextStat);
-                }
+                const timeline = gsap.timeline();
 
-                showNextStat();
+                statsData.forEach((text, index) => {
+                    const currentParagraph = paragraphs[index % paragraphs.length];
+                    timeline.call(() => {
+                        typeText(currentParagraph.querySelector('p'), text, 0.05);
+                    }, null, `+=0.5`); // Delay before starting each paragraph
+                    timeline.to({}, { duration: text.length * 0.05 + 1.5 }); // Wait for typing and display duration
+                    timeline.call(() => {
+                        currentParagraph.classList.remove('active');
+                        currentParagraph.querySelector('p').textContent = '';
+                    }, null);
+                });
+
+                // Repeat the cycle infinitely
+                timeline.repeat(-1);
             }
 
             // Attach event listeners to start cycling on hover for desktop
@@ -1684,7 +1674,7 @@
 
         // Function to type text into an element using GSAP TextPlugin
         function typeTextInfographic(element, text, speed = 0.05) { // Speed adjusted for fast typing
-            gsap.to(element, {
+            return gsap.to(element, {
                 duration: text.length * speed,
                 text: text,
                 ease: "none",
@@ -1698,25 +1688,22 @@
         function cycleInfographics() {
             if (infographicItems.length === 0) return;
 
-            const cycle = () => {
-                const currentItem = infographicItems[currentInfographic];
-                const { title, text } = infographicData[currentInfographic % infographicData.length];
+            const timeline = gsap.timeline({ repeat: -1, repeatDelay: 1.5 });
 
-                typeTextInfographic(currentItem.querySelector('h4'), title, 0.05);
-                typeTextInfographic(currentItem.querySelector('.typing-text'), text, 0.05);
-
-                // Wait for the typing to finish plus display duration
-                const typingDuration = (title.length + text.length) * 0.05;
-                setTimeout(() => {
+            infographicData.forEach((item, index) => {
+                const currentItem = infographicItems[index % infographicItems.length];
+                timeline.call(() => {
+                    currentItem.classList.add('active');
+                    typeTextInfographic(currentItem.querySelector('h4'), item.title, 0.05);
+                    typeTextInfographic(currentItem.querySelector('.typing-text'), item.text, 0.05);
+                });
+                timeline.to({}, { duration: (item.title.length + item.text.length) * 0.05 + 1.5 }); // Wait for typing and display duration
+                timeline.call(() => {
                     currentItem.classList.remove('active');
                     currentItem.querySelector('h4').textContent = '';
                     currentItem.querySelector('.typing-text').textContent = '';
-                    currentInfographic = (currentInfographic + 1) % infographicData.length;
-                    cycle();
-                }, typingDuration * 1000 + 1500); // Adding 1.5s display duration
-            };
-
-            cycle();
+                });
+            });
         }
 
         // Function to dynamically create infographic items
@@ -1885,38 +1872,38 @@
 
             // Typed-in Effect for Summary Paragraphs
             const aboutContent = document.querySelectorAll('.about-content p');
+            const paragraphs = Array.from(aboutContent);
+            let currentParagraphIndex = 0;
 
-            aboutContent.forEach((para) => {
+            const paragraphTimeline = gsap.timeline({
+                scrollTrigger: {
+                    trigger: '.about-content',
+                    start: "top 80%",
+                    toggleActions: "play none none none"
+                }
+            });
+
+            paragraphs.forEach((para) => {
                 const fullText = para.getAttribute('data-text');
                 para.textContent = ''; // Clear existing text
 
-                // Split the text into lines based on periods for example
-                const lines = fullText.split('. ').map(line => line.trim()).filter(line => line.length > 0);
-
-                const timeline = gsap.timeline({
-                    scrollTrigger: {
-                        trigger: para,
-                        start: "top 80%",
-                        toggleActions: "play none none none"
+                paragraphTimeline.to({}, { duration: 0.5 }); // Initial delay before starting
+                paragraphTimeline.to(para, {
+                    duration: fullText.length * 0.02,
+                    text: fullText,
+                    ease: "none",
+                    onStart: () => {
+                        para.style.opacity = '1';
                     }
                 });
-
-                lines.forEach(line => {
-                    timeline.to(para, {
-                        duration: line.length * 0.02, // Faster typing speed
-                        text: line + '.',
-                        ease: "none",
-                        onStart: () => {
-                            para.style.opacity = '1';
-                        }
-                    });
-                    timeline.to({}, { duration: 0.3 }); // Small delay between lines
-                });
+                paragraphTimeline.to({}, { duration: 1.5 }); // Wait after typing
             });
 
-            // Start Infographics Typing
-            // Ensure the infographics start cycling after creation
-            // Already called above with cycleInfographics()
+            // Create infographic items
+            createInfographicItems();
+
+            // Start Infographics Cycling
+            cycleInfographics();
         });
     </script>
 </body>
