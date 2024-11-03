@@ -85,6 +85,7 @@
             list-style: none;
             display: flex;
             gap: 2rem;
+            align-items: center;
         }
 
         .nav-links li a {
@@ -96,6 +97,19 @@
 
         .nav-links li a:hover {
             color: var(--accent-blue);
+        }
+
+        /* GitHub Icon Styling */
+        .github-icon {
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            transition: transform 0.3s ease, filter 0.3s ease;
+        }
+
+        .github-icon:hover {
+            transform: scale(1.2);
+            filter: brightness(0) invert(1) drop-shadow(0 0 10px var(--accent-glow));
         }
 
         /* Dropdown Menu Styles for Mobile */
@@ -129,6 +143,12 @@
 
             .hamburger.active span:nth-child(3) {
                 transform: rotate(-45deg) translate(5px, -5px);
+            }
+
+            /* Hide GitHub icon on mobile if necessary */
+            .github-icon {
+                width: 30px;
+                height: 30px;
             }
         }
 
@@ -293,7 +313,7 @@
             );
             overflow: hidden;
             color: var(--text-primary);
-            padding-top: 80px; /* Added padding to prevent navbar overlap */
+            padding-top: 80px; /* Adjusted padding to prevent content from being hidden behind navbar */
         }
 
         .hero::before {
@@ -314,19 +334,16 @@
             z-index: 2;
         }
 
-        /* GitHub Icon */
-        .github-icon {
-            width: 120px;
-            height: 120px;
-            margin-bottom: 2rem;
-            animation: float 6s ease-in-out infinite;
+        /* GitHub Icon within Navbar */
+        .navbar .github-icon {
+            width: 40px;
+            height: 40px;
             cursor: pointer;
-            transition: var(--transition-standard), transform 0.3s ease, filter 0.3s ease;
-            filter: brightness(0) invert(1);
+            transition: transform 0.3s ease, filter 0.3s ease;
         }
 
-        .github-icon:hover {
-            transform: scale(1.1);
+        .navbar .github-icon:hover {
+            transform: scale(1.2);
             filter: brightness(0) invert(1) drop-shadow(0 0 10px var(--accent-glow));
         }
 
@@ -651,6 +668,7 @@
             background-size: 400% 400%;
             animation: gradientAnimationInfographic 15s ease infinite; /* Animated gradient */
             box-shadow: 0 0 20px rgba(0, 123, 255, 0.5), 0 0 40px rgba(0, 123, 255, 0.5); /* Matching box-shadow */
+            z-index: -1;
         }
 
         .profile-stats-overlay:hover {
@@ -833,6 +851,83 @@
         }
 
         /* Infographics Cycling Animation */
+        /* Removed redundant keyframes */
+
+        /* Added Styles for Random Japanese Characters */
+        .random-char {
+            position: absolute;
+            font-size: 1.2rem;
+            opacity: 0;
+            pointer-events: none;
+            user-select: none;
+            animation: fadeInOut 2s forwards;
+        }
+
+        .random-char.white {
+            color: var(--code-white);
+        }
+
+        .random-char.red {
+            color: var(--code-red);
+        }
+
+        .random-char.blue {
+            color: var(--code-blue);
+        }
+
+        @keyframes fadeInOut {
+            0% { opacity: 0; transform: translateY(0); }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { opacity: 0; transform: translateY(-20px); }
+        }
+
+        /* Added Styles for Invisible Profile Trigger */
+        #profile-trigger {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 300px; /* Adjust height as needed */
+            /* Make it invisible */
+            background: transparent;
+            pointer-events: none;
+            z-index: 5; /* Above other elements */
+        }
+
+        /* Responsive Adjustments for Profile Hover Button */
+        @media (max-width: 768px) {
+            .profile-hover-button {
+                display: none; /* Hide the stats button on mobile */
+            }
+
+            .profile-stats-overlay {
+                display: none;
+            }
+        }
+
+        /* Want to Know More Button Styles */
+        .want-know-more-btn {
+            display: none; /* Hidden initially */
+            margin-top: 1rem;
+            padding: 10px 20px;
+            background: rgba(65, 105, 225, 0.9); /* Royal Blue with opacity */
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.3s ease;
+            font-size: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        .want-know-more-btn:hover {
+            background: rgba(30, 144, 255, 0.95); /* Dodger Blue on hover */
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Infographics Cycling Animation */
         .infographic {
             position: relative;
             width: 300px;
@@ -958,7 +1053,7 @@
             font-size: 1.8rem;
             position: relative;
             display: inline-block;
-            text-shadow: 0 0 15px rgba(0, 123, 255, 0.5);
+            text-shadow: 0 0 15px rgba(0, 123, 255, 0.3);
             /* Removed the ::after pseudo-element */
         }
 
@@ -993,7 +1088,7 @@
             background: linear-gradient(
                 90deg,
                 transparent,
-                rgba(255, 60, 0, 0.2),
+                rgba(0, 123, 255, 0.2),
                 transparent
             );
             transition: 0.5s;
@@ -1245,7 +1340,7 @@
 
             /* Adjust infographic for portrait mode */
             .infographic {
-                height: 250px; /* Increased height for better fit */
+                height: 250px; /* Increased height */
             }
 
             /* Adjust profile-container to display stats next to image */
@@ -1274,12 +1369,9 @@
 
             /* Profile Image Adjustments */
             .about-profile-img {
-                width: 120px;
-                height: 120px;
-                transform: translate(0, -20px); /* Move up */
                 left: 0; /* Ensure no left offset */
                 margin: 0 auto; /* Center the image */
-                position: relative;
+                transform: translate(0, -20px); /* Move up */
                 display: block;
                 margin: 0 auto; /* Center the image */
             }
@@ -1358,92 +1450,18 @@
         /* Infographics Typing and Cycling */
         /* Removed redundant keyframes */
 
-        /* Added Styles for Random Japanese Characters */
-        .random-char {
-            position: absolute;
-            font-size: 1.2rem;
-            opacity: 0;
-            pointer-events: none;
-            user-select: none;
-            animation: fadeInOut 2s forwards;
-        }
-
-        .random-char.white {
-            color: var(--code-white);
-        }
-
-        .random-char.red {
-            color: var(--code-red);
-        }
-
-        .random-char.blue {
-            color: var(--code-blue);
-        }
-
-        @keyframes fadeInOut {
-            0% { opacity: 0; transform: translateY(0); }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { opacity: 0; transform: translateY(-20px); }
-        }
-
-        /* Added Styles for Invisible Profile Trigger */
-        #profile-trigger {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 300px; /* Adjust height as needed */
-            /* Make it invisible */
-            background: transparent;
-            pointer-events: none;
-            z-index: 5; /* Above other elements */
-        }
-
-        /* Responsive Adjustments for Profile Hover Button */
-        @media (max-width: 768px) {
-            .profile-hover-button {
-                display: none; /* Hide the stats button on mobile */
-            }
-
-            .profile-stats-overlay {
-                display: none;
-            }
-        }
-
-        /* Want to Know More Button Styles */
-        .want-know-more-btn {
-            display: none; /* Hidden initially */
-            margin-top: 1rem;
-            padding: 10px 20px;
-            background: rgba(65, 105, 225, 0.9); /* Royal Blue with opacity */
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background 0.3s ease, transform 0.3s ease;
-            font-size: 1rem;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-        }
-
-        .want-know-more-btn:hover {
-            background: rgba(30, 144, 255, 0.95); /* Dodger Blue on hover */
-            transform: translateY(-2px);
-            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.4);
-        }
-
-        /* Hover Effects for GitHub Icon */
-        /* Ensures GitHub icon has the same hover effect as other skill icons */
-        .github-icon:hover {
-            transform: scale(1.1);
-            filter: brightness(0) invert(1) drop-shadow(0 0 10px var(--accent-glow));
-        }
     </style>
 </head>
 
 <body>
     <!-- Navigation Bar -->
     <nav class="navbar">
+      <!-- GitHub Icon within Navbar -->
+      <a href="https://github.com/FotiosMpouris" target="_blank" rel="noopener noreferrer">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/github/github-original-wordmark.svg" 
+               alt="GitHub" class="github-icon">
+      </a>
+      <!-- Hamburger Menu -->
       <div class="hamburger" id="hamburger">
         <span></span>
         <span></span>
@@ -1462,11 +1480,6 @@
         <div class="particles-container" id="particles-container"></div>
         <div class="matrix-background"></div>
         <div class="container">
-            <!-- Wrapped GitHub Icon with Link -->
-            <a href="https://github.com/FotiosMpouris" target="_blank" rel="noopener noreferrer">
-                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/github/github-original-wordmark.svg" 
-                     alt="GitHub" class="github-icon">
-            </a>
             <h1 class="title">Fotios Mpouris</h1>
             <h2 class="subtitle">2D & 3D Artist / Animator / Developer</h2>
             
@@ -2100,9 +2113,6 @@
                     await typeParagraph(para, fullText, 0.01);
                 }
             });
-
-            // Animated American Flag Divider Animation
-            // (Already handled by CSS animations)
         });
     </script>
 
