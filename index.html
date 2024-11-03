@@ -60,6 +60,20 @@
             align-items: center;
         }
 
+        /* GitHub Icon Styling */
+        .github-icon {
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            transition: color 0.3s ease, transform 0.3s ease;
+            color: #ffffff; /* White */
+        }
+
+        .github-icon:hover {
+            color: #ff0000; /* Red */
+            transform: scale(1.2);
+        }
+
         /* Hamburger Styles */
         .hamburger {
             width: 30px;
@@ -83,9 +97,13 @@
         /* Navigation Links */
         .nav-links {
             list-style: none;
-            display: flex;
+            display: none; /* Hidden initially */
             gap: 2rem;
             align-items: center;
+        }
+
+        .nav-links.active {
+            display: flex; /* Shown when active */
         }
 
         .nav-links li a {
@@ -99,26 +117,13 @@
             color: var(--accent-blue);
         }
 
-        /* GitHub Icon Styling */
-        .github-icon {
-            width: 40px;
-            height: 40px;
-            cursor: pointer;
-            transition: transform 0.3s ease, filter 0.3s ease;
-        }
-
-        .github-icon:hover {
-            transform: scale(1.2);
-            filter: brightness(0) invert(1) drop-shadow(0 0 10px var(--accent-glow));
-        }
-
-        /* Dropdown Menu Styles for Mobile */
+        /* Dropdown Menu Styles for Mobile and Desktop */
         @media (max-width: 768px) {
             .nav-links {
                 position: fixed;
                 right: 0;
                 top: 60px; /* Height of navbar */
-                height: 100vh;
+                height: calc(100vh - 60px);
                 width: 200px;
                 background: var(--primary-dark);
                 flex-direction: column;
@@ -145,10 +150,30 @@
                 transform: rotate(-45deg) translate(5px, -5px);
             }
 
-            /* Hide GitHub icon on mobile if necessary */
+            /* Adjust GitHub icon size on mobile */
             .github-icon {
                 width: 30px;
                 height: 30px;
+            }
+        }
+
+        /* For Desktop: Display nav-links horizontally when active */
+        @media (min-width: 769px) {
+            .nav-links {
+                position: absolute;
+                top: 60px; /* Height of navbar */
+                right: 2rem;
+                background: transparent;
+                flex-direction: row;
+                transform: translateX(0);
+                height: auto;
+                width: auto;
+            }
+
+            .nav-links.active {
+                background: var(--primary-dark);
+                padding: 1rem 2rem;
+                border-radius: 8px;
             }
         }
 
@@ -334,19 +359,6 @@
             z-index: 2;
         }
 
-        /* GitHub Icon within Navbar */
-        .navbar .github-icon {
-            width: 40px;
-            height: 40px;
-            cursor: pointer;
-            transition: transform 0.3s ease, filter 0.3s ease;
-        }
-
-        .navbar .github-icon:hover {
-            transform: scale(1.2);
-            filter: brightness(0) invert(1) drop-shadow(0 0 10px var(--accent-glow));
-        }
-
         /* Title Elements */
         .title {
             font-size: 3.5rem;
@@ -398,66 +410,6 @@
             object-fit: contain;
         }
 
-        /* Lower Hero Section Enhancements */
-        .lower-hero {
-            position: relative;
-            height: 0vh; /* Set to 0 to remove extra space */
-            background: linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-dark-blue) 100%); /* Gradient with Royal Blue */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            color: var(--text-primary);
-        }
-
-        .lower-hero::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: url('https://www.svgrepo.com/show/331541/circuit.svg') repeat;
-            background-size: 50px 50px;
-            opacity: 0.05;
-            animation: subtleScroll 60s linear infinite;
-        }
-
-        /* Subtle Scrolling Code Effects */
-        .lower-hero .scrolling-code {
-            position: absolute;
-            top: 10%;
-            left: 5%;
-            width: 90%;
-            height: 80%;
-            overflow: hidden;
-            pointer-events: none;
-        }
-
-        .lower-hero .scrolling-code::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 200%;
-            height: 100%;
-            background: linear-gradient(
-                to bottom,
-                transparent,
-                rgba(255, 255, 255, 0.05),
-                transparent
-            );
-            background-size: 100% 20px;
-            animation: codeScroll 10s linear infinite;
-        }
-
-        @keyframes subtleScroll {
-            from { background-position: 0% 0%; }
-            to { background-position: 100px 100px; }
-        }
-
-        @keyframes codeScroll {
-            from { transform: translateY(0); }
-            to { transform: translateY(-100%); }
-        }
-
         /* Dark Theme Section */
         .dark-theme-section {
             /* Updated background to a deeper Royal Blue gradient */
@@ -482,8 +434,8 @@
             box-shadow: 
                 0 0 40px rgba(0, 0, 0, 0.4),
                 inset 0 0 40px rgba(0, 123, 255, 0.08),
-                0 0 25px var(--accent-glow),
-                0 0 60px var(--accent-glow) !important; /* Using --accent-glow */
+                0 0 30px rgba(0, 123, 255, 0.5),
+                0 0 60px rgba(0, 123, 255, 0.5) !important; /* Using --accent-glow */
             overflow: hidden;
             backdrop-filter: blur(15px); /* Enhanced glass effect */
             transform-style: preserve-3d;
@@ -850,81 +802,10 @@
             50% { opacity: 1; }
         }
 
-        /* Infographics Cycling Animation */
-        /* Removed redundant keyframes */
-
-        /* Added Styles for Random Japanese Characters */
-        .random-char {
-            position: absolute;
-            font-size: 1.2rem;
-            opacity: 0;
-            pointer-events: none;
-            user-select: none;
-            animation: fadeInOut 2s forwards;
-        }
-
-        .random-char.white {
-            color: var(--code-white);
-        }
-
-        .random-char.red {
-            color: var(--code-red);
-        }
-
-        .random-char.blue {
-            color: var(--code-blue);
-        }
-
-        @keyframes fadeInOut {
-            0% { opacity: 0; transform: translateY(0); }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { opacity: 0; transform: translateY(-20px); }
-        }
-
-        /* Added Styles for Invisible Profile Trigger */
-        #profile-trigger {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 300px; /* Adjust height as needed */
-            /* Make it invisible */
-            background: transparent;
-            pointer-events: none;
-            z-index: 5; /* Above other elements */
-        }
-
-        /* Responsive Adjustments for Profile Hover Button */
-        @media (max-width: 768px) {
-            .profile-hover-button {
-                display: none; /* Hide the stats button on mobile */
-            }
-
-            .profile-stats-overlay {
-                display: none;
-            }
-        }
-
-        /* Want to Know More Button Styles */
-        .want-know-more-btn {
-            display: none; /* Hidden initially */
-            margin-top: 1rem;
-            padding: 10px 20px;
-            background: rgba(65, 105, 225, 0.9); /* Royal Blue with opacity */
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background 0.3s ease, transform 0.3s ease;
-            font-size: 1rem;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-        }
-
-        .want-know-more-btn:hover {
-            background: rgba(30, 144, 255, 0.95); /* Dodger Blue on hover */
-            transform: translateY(-2px);
-            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.4);
+        @keyframes gradientAnimationInfographic {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         /* Infographics Cycling Animation */
@@ -956,12 +837,6 @@
             background-size: 400% 400%;
             animation: gradientAnimationInfographic 15s ease infinite; /* Animated gradient */
             box-shadow: 0 0 20px rgba(0, 123, 255, 0.5), 0 0 40px rgba(0, 123, 255, 0.5);
-        }
-
-        @keyframes gradientAnimationInfographic {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
         }
 
         .infographic-item {
@@ -1450,29 +1325,187 @@
         /* Infographics Typing and Cycling */
         /* Removed redundant keyframes */
 
+        /* Added Styles for Random Japanese Characters */
+        .random-char {
+            position: absolute;
+            font-size: 1.2rem;
+            opacity: 0;
+            pointer-events: none;
+            user-select: none;
+            animation: fadeInOut 2s forwards;
+        }
+
+        .random-char.white {
+            color: var(--code-white);
+        }
+
+        .random-char.red {
+            color: var(--code-red);
+        }
+
+        .random-char.blue {
+            color: var(--code-blue);
+        }
+
+        @keyframes fadeInOut {
+            0% { opacity: 0; transform: translateY(0); }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { opacity: 0; transform: translateY(-20px); }
+        }
+
+        /* Added Styles for Invisible Profile Trigger */
+        #profile-trigger {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 300px; /* Adjust height as needed */
+            /* Make it invisible */
+            background: transparent;
+            pointer-events: none;
+            z-index: 5; /* Above other elements */
+        }
+
+        /* Responsive Adjustments for Profile Hover Button */
+        @media (max-width: 768px) {
+            .profile-hover-button {
+                display: none; /* Hide the stats button on mobile */
+            }
+
+            .profile-stats-overlay {
+                display: none;
+            }
+        }
+
+        /* Want to Know More Button Styles */
+        .want-know-more-btn {
+            display: none; /* Hidden initially */
+            margin-top: 1rem;
+            padding: 10px 20px;
+            background: rgba(65, 105, 225, 0.9); /* Royal Blue with opacity */
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.3s ease;
+            font-size: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        .want-know-more-btn:hover {
+            background: rgba(30, 144, 255, 0.95); /* Dodger Blue on hover */
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Animations */
+        @keyframes ripple {
+            0% {
+                transform: scale(0);
+                opacity: 0.5;
+            }
+            100% {
+                transform: scale(3);
+                opacity: 0;
+            }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes matrixRain {
+            from { transform: translateY(-100%); }
+            to { transform: translateY(100%); }
+        }
+
+        @keyframes fireFlow {
+            0% { background-position: 0 0; }
+            100% { background-position: 0 200%; }
+        }
+
+        @keyframes holoGlow {
+            0% { 
+                opacity: 0.3;
+                transform: translateX(-100%) rotate(35deg);
+            }
+            100% { 
+                opacity: 0.7;
+                transform: translateX(200%) rotate(35deg);
+            }
+        }
+
+        @keyframes scanlines {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(100%); }
+        }
+
+        @keyframes gridMove {
+            0% { transform: translateY(0) translateX(0); }
+            50% { transform: translateY(10px) translateX(5px); }
+            100% { transform: translateY(0) translateX(0); }
+        }
+
+        @keyframes borderGlow {
+            0% { opacity: 0.3; filter: blur(3px); }
+            100% { opacity: 1; filter: blur(1px); }
+        }
+
+        @keyframes titlePulse {
+            0% {
+                text-shadow: 
+                    0 0 10px rgba(0, 183, 255, 0.3),
+                    0 0 20px rgba(0, 183, 255, 0.2);
+            }
+            100% {
+                text-shadow: 
+                    0 0 15px rgba(0, 183, 255, 0.5),
+                    0 0 30px rgba(0, 183, 255, 0.3);
+            }
+        }
+
+        @keyframes glowPulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        /* Infographics Typing and Cycling */
+        /* Removed redundant keyframes */
+
     </style>
 </head>
 
 <body>
     <!-- Navigation Bar -->
     <nav class="navbar">
-      <!-- GitHub Icon within Navbar -->
-      <a href="https://github.com/FotiosMpouris" target="_blank" rel="noopener noreferrer">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/github/github-original-wordmark.svg" 
-               alt="GitHub" class="github-icon">
-      </a>
-      <!-- Hamburger Menu -->
-      <div class="hamburger" id="hamburger">
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
-      <ul class="nav-links" id="nav-links">
-        <li><a href="#hero">Home</a></li>
-        <li><a href="#about">About</a></li>
-        <li><a href="#projects">Projects</a></li>
-        <li><a href="#connect">Connect</a></li>
-      </ul>
+        <!-- GitHub Icon within Navbar -->
+        <a href="https://github.com/FotiosMpouris" target="_blank" rel="noopener noreferrer" title="Visit my GitHub Homepage">
+            <svg class="github-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path d="M12,0.297C5.373,0.297,0,5.67,0,12.297c0,5.302,3.438,9.8,8.205,11.387c0.6,0.113,0.82-0.258,0.82-0.577
+                c0-0.285-0.01-1.04-0.015-2.04c-3.338,0.724-4.042-1.61-4.042-1.61c-0.546-1.385-1.333-1.754-1.333-1.754
+                c-1.089-0.744,0.084-0.729,0.084-0.729c1.205,0.084,1.84,1.236,1.84,1.236c1.07,1.835,2.807,1.305,3.495,0.997
+                c0.108-0.776,0.42-1.305,0.763-1.605c-2.665-0.303-5.466-1.333-5.466-5.931c0-1.31,0.47-2.381,1.236-3.221
+                C7.009,8.092,6.708,6.907,7.417,5.92c0,0,1.008-0.322,3.301,1.23c0.957-0.266,1.983-0.399,3.003-0.404
+                c1.02,0.005,2.047,0.138,3.006,0.404c2.291-1.552,3.297-1.23,3.297-1.23c0.71,0.987,0.408,2.172,0.2,3.221
+                c0.77,0.84,1.235,1.911,1.235,3.221c0,4.61-2.807,5.625-5.479,5.921c0.43,0.37,0.823,1.102,0.823,2.222
+                c0,1.606-0.015,2.896-0.015,3.286c0,0.319,0.216,0.694,0.825,0.576C20.565,22.093,24,17.595,24,12.297
+                C24,5.67,18.627,0.297,12,0.297z"/>
+            </svg>
+        </a>
+        <!-- Hamburger Menu -->
+        <div class="hamburger" id="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <ul class="nav-links" id="nav-links">
+            <li><a href="#hero">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#connect">Connect</a></li>
+        </ul>
     </nav>
 
     <!-- Hero Section -->
