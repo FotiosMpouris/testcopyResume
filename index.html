@@ -47,6 +47,91 @@
             color: var(--text-primary);
         }
 
+        /* Navbar Styles */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: var(--primary-dark);
+            padding: 1rem 2rem;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Hamburger Styles */
+        .hamburger {
+            width: 30px;
+            height: 22px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            cursor: pointer;
+            z-index: 1001; /* Above nav-links */
+        }
+
+        .hamburger span {
+            display: block;
+            height: 4px;
+            width: 100%;
+            background: var(--text-primary);
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        /* Navigation Links */
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links li a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: 1rem;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links li a:hover {
+            color: var(--accent-blue);
+        }
+
+        /* Dropdown Menu Styles for Mobile */
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                right: 0;
+                top: 60px; /* Height of navbar */
+                height: 100vh;
+                width: 200px;
+                background: var(--primary-dark);
+                flex-direction: column;
+                align-items: center;
+                justify-content: start;
+                padding-top: 2rem;
+                transform: translateX(100%);
+                transition: transform 0.3s ease-in-out;
+            }
+
+            .nav-links.active {
+                transform: translateX(0);
+            }
+
+            .hamburger.active span:nth-child(1) {
+                transform: rotate(45deg) translate(5px, 5px);
+            }
+
+            .hamburger.active span:nth-child(2) {
+                opacity: 0;
+            }
+
+            .hamburger.active span:nth-child(3) {
+                transform: rotate(-45deg) translate(5px, -5px);
+            }
+        }
+
         /* Particle System */
         .particles-container {
             position: absolute;
@@ -401,7 +486,7 @@
             background: linear-gradient(45deg, var(--accent-blue), var(--accent-dark-blue), var(--accent-blue), var(--accent-dark-blue)); /* Royal Blue Gradient */
             background-size: 400% 400%;
             animation: gradientAnimation 15s ease infinite; /* Animated gradient */
-            box-shadow: 0 0 20px rgba(0, 123, 255, 0.5), 0 0 40px rgba(0, 123, 255, 0.5); /* Matching box-shadow */
+            box-shadow: 0 0 20px rgba(0, 123, 255, 0.5), 0 0 40px rgba(0, 123, 255, 0.5);
         }
 
         /* Gradient Animation Keyframes */
@@ -652,6 +737,27 @@
             font-size: 1.25rem;
             color: rgba(255, 255, 255, 0.95);
             font-weight: 500;
+        }
+
+        /* Want to Know More Button */
+        .want-know-more-btn {
+            display: none; /* Hidden initially */
+            margin-top: 1rem;
+            padding: 10px 20px;
+            background: rgba(65, 105, 225, 0.9); /* Royal Blue with opacity */
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.3s ease;
+            font-size: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        .want-know-more-btn:hover {
+            background: rgba(30, 144, 255, 0.95); /* Dodger Blue on hover */
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.4);
         }
 
         /* Animations */
@@ -1263,12 +1369,87 @@
                 display: none;
             }
         }
+
+        /* Want to Know More Button Styles */
+        .want-know-more-btn {
+            display: none; /* Hidden initially */
+            margin-top: 1rem;
+            padding: 10px 20px;
+            background: rgba(65, 105, 225, 0.9); /* Royal Blue with opacity */
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.3s ease;
+            font-size: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        .want-know-more-btn:hover {
+            background: rgba(30, 144, 255, 0.95); /* Dodger Blue on hover */
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Animated American Flag Divider */
+        .flag-divider {
+            width: 100%;
+            height: 150px; /* Adjust height as needed */
+            overflow: hidden;
+            position: relative;
+            background: var(--primary-dark);
+        }
+
+        .flag-divider svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .flag {
+            animation: wave 5s infinite linear;
+        }
+
+        @keyframes wave {
+            0% { transform: translateX(0) rotate(0deg); }
+            25% { transform: translateX(-5px) rotate(1deg); }
+            50% { transform: translateX(0) rotate(0deg); }
+            75% { transform: translateX(5px) rotate(-1deg); }
+            100% { transform: translateX(0) rotate(0deg); }
+        }
+
+        /* Patriotic Quote Styles */
+        .flag-divider .quote {
+            position: absolute;
+            bottom: 10px;
+            width: 100%;
+            text-align: center;
+            color: #fff;
+            font-size: 1.5rem;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
     </style>
 </head>
 
 <body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+      <div class="hamburger" id="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="#hero">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#connect">Connect</a></li>
+      </ul>
+    </nav>
+
     <!-- Hero Section -->
-    <section class="hero">
+    <section class="hero" id="hero">
         <div class="particles-container" id="particles-container"></div>
         <div class="matrix-background"></div>
         <div class="container">
@@ -1331,15 +1512,81 @@
         </div>
     </section>
 
-    <!-- Lower Hero Section Enhancements -->
-    <section class="lower-hero">
-        <div class="particles-container"></div>
-        <div class="scrolling-code"></div>
-        <!-- Removed #profile-trigger div and "mouse hover" text -->
-    </section>
+    <!-- Animated American Flag Divider -->
+    <div class="flag-divider">
+        <svg viewBox="0 0 1200 150" preserveAspectRatio="none">
+            <g class="flag">
+                <!-- Stripes -->
+                <g class="stripes">
+                    <!-- 13 Stripes -->
+                    <rect x="0" y="0" width="1200" height="11.54" fill="#B22234"></rect>
+                    <rect x="0" y="11.54" width="1200" height="11.54" fill="#FFFFFF"></rect>
+                    <rect x="0" y="23.08" width="1200" height="11.54" fill="#B22234"></rect>
+                    <rect x="0" y="34.62" width="1200" height="11.54" fill="#FFFFFF"></rect>
+                    <rect x="0" y="46.16" width="1200" height="11.54" fill="#B22234"></rect>
+                    <rect x="0" y="57.7" width="1200" height="11.54" fill="#FFFFFF"></rect>
+                    <rect x="0" y="69.24" width="1200" height="11.54" fill="#B22234"></rect>
+                    <rect x="0" y="80.78" width="1200" height="11.54" fill="#FFFFFF"></rect>
+                    <rect x="0" y="92.32" width="1200" height="11.54" fill="#B22234"></rect>
+                    <rect x="0" y="103.86" width="1200" height="11.54" fill="#FFFFFF"></rect>
+                    <rect x="0" y="115.4" width="1200" height="11.54" fill="#B22234"></rect>
+                    <rect x="0" y="126.94" width="1200" height="11.54" fill="#FFFFFF"></rect>
+                    <rect x="0" y="138.48" width="1200" height="11.54" fill="#B22234"></rect>
+                </g>
+                <!-- Blue Union -->
+                <rect x="0" y="0" width="240" height="53.846" fill="#3C3B6E"></rect>
+                <!-- Stars -->
+                <g class="stars" fill="#FFFFFF" transform="translate(10,5)">
+                    <!-- 50 Stars arranged in 9 rows -->
+                    <!-- Row 1, 3, 5, 7, 9: 6 stars -->
+                    <!-- Row 2, 4, 6, 8: 5 stars -->
+                    <!-- Using a loop structure in actual implementation would be ideal, but manually adding here -->
+                    <!-- Row 1 -->
+                    <polygon points="0,0 1,3 4,3 2,5 3,8 0,6  -3,8 -2,5 -5,3 -4,3"></polygon>
+                    <polygon points="30,0 31,3 34,3 32,5 33,8 30,6 27,8 28,5 25,3 26,3"></polygon>
+                    <polygon points="60,0 61,3 64,3 62,5 63,8 60,6 57,8 58,5 55,3 56,3"></polygon>
+                    <polygon points="90,0 91,3 94,3 92,5 93,8 90,6 87,8 88,5 85,3 86,3"></polygon>
+                    <polygon points="120,0 121,3 124,3 122,5 123,8 120,6 117,8 118,5 115,3 116,3"></polygon>
+                    <polygon points="150,0 151,3 154,3 152,5 153,8 150,6 147,8 148,5 145,3 146,3"></polygon>
+                    
+                    <!-- Row 2 -->
+                    <polygon points="15,10 16,13 19,13 17,15 18,18 15,16 12,18 13,15 10,13 11,13"></polygon>
+                    <polygon points="45,10 46,13 49,13 47,15 48,18 45,16 42,18 43,15 40,13 41,13"></polygon>
+                    <polygon points="75,10 76,13 79,13 77,15 78,18 75,16 72,18 73,15 70,13 71,13"></polygon>
+                    <polygon points="105,10 106,13 109,13 107,15 108,18 105,16 102,18 103,15 100,13 101,13"></polygon>
+                    <polygon points="135,10 136,13 139,13 137,15 138,18 135,16 132,18 133,15 130,13 131,13"></polygon>
+
+                    <!-- Row 3 -->
+                    <polygon points="0,20 1,23 4,23 2,25 3,28 0,26  -3,28 -2,25 -5,23 -4,23"></polygon>
+                    <polygon points="30,20 31,23 34,23 32,25 33,28 30,26 27,28 28,25 25,23 26,23"></polygon>
+                    <polygon points="60,20 61,23 64,23 62,25 63,28 60,26 57,28 58,25 55,23 56,23"></polygon>
+                    <polygon points="90,20 91,23 94,23 92,25 93,28 90,26 87,28 88,25 85,23 86,23"></polygon>
+                    <polygon points="120,20 121,23 124,23 122,25 123,28 120,26 117,28 118,25 115,23 116,23"></polygon>
+                    <polygon points="150,20 151,23 154,23 152,25 153,28 150,26 147,28 148,25 145,23 146,23"></polygon>
+
+                    <!-- Row 4 -->
+                    <polygon points="15,30 16,33 19,33 17,35 18,38 15,36 12,38 13,35 10,33 11,33"></polygon>
+                    <polygon points="45,30 46,33 49,33 47,35 48,38 45,36 42,38 43,35 40,33 41,33"></polygon>
+                    <polygon points="75,30 76,33 79,33 77,35 78,38 75,36 72,38 73,35 70,33 71,33"></polygon>
+                    <polygon points="105,30 106,33 109,33 107,35 108,38 105,36 102,38 103,35 100,33 101,33"></polygon>
+                    <polygon points="135,30 136,33 139,33 137,35 138,38 135,36 132,38 133,35 130,33 131,33"></polygon>
+
+                    <!-- Row 5 -->
+                    <polygon points="0,40 1,43 4,43 2,45 3,48 0,46  -3,48 -2,45 -5,43 -4,43"></polygon>
+                    <polygon points="30,40 31,43 34,43 32,45 33,48 30,46 27,48 28,45 25,43 26,43"></polygon>
+                    <polygon points="60,40 61,43 64,43 62,45 63,48 60,46 57,48 58,45 55,43 56,43"></polygon>
+                    <polygon points="90,40 91,43 94,43 92,45 93,48 90,46 87,48 88,45 85,43 86,43"></polygon>
+                    <polygon points="120,40 121,43 124,43 122,45 123,48 120,46 117,48 118,45 115,43 116,43"></polygon>
+                    <polygon points="150,40 151,43 154,43 152,45 153,48 150,46 147,48 148,45 145,43 146,43"></polygon>
+                </g>
+                <!-- Quote -->
+                <text x="50%" y="75" text-anchor="middle" fill="#FFFFFF" font-size="24" font-family="'Segoe UI', Tahoma, Geneva, Verdana, sans-serif" dy=".3em">"Learn to Code" - Sun Tzu</text>
+            </g>
+        </svg>
+    </div>
 
     <!-- Dark Theme Section -->
-    <div class="dark-theme-section">
+    <div class="dark-theme-section" id="about">
         <div class="particles-container" id="particles-container-bottom"></div>
         
         <div class="container">
@@ -1380,6 +1627,7 @@
                     <div class="about-content">
                         <p data-text="I'm a tech-savvy multimedia specialist with a unique blend of skills in digital design, software development, and AI-assisted platforms. Proficient in Python, C#, Unity, and Adobe Creative Suite, I have a strong background in creating immersive digital experiences, animation, and video production. My expertise spans developing interactive applications, managing creative projects, and utilizing AI and generative art platforms to enhance user experiences and push creative boundaries.">
                         </p>
+                        <button class="want-know-more-btn" id="more-btn">Want to know more?</button>
                         <p data-text="More recently, I've been exploring the intersection of AI and application development, working with tools like Streamlit Cloud, Google Cloud Console, Python, GitHub, and large language models (LLMs). These technologies allow me to design intelligent, automated solutions that streamline processes and enhance user engagement. By leveraging AI-assisted applications, I'm focused on creating innovative, agent-centric systems that reflect the future of technology.">
                         </p>
                         <p data-text="Throughout my career, I've used cutting-edge tools to develop interactive features for mobile gaming and geo-positioning apps, collaborating with technical teams to prototype and bring functional products to life. My proficiency in Adobe tools like Photoshop, After Effects, Premiere Pro, and Audition has enabled me to produce high-quality multimedia content, from video editing to motion graphics and animation.">
@@ -1393,7 +1641,7 @@
             </section>
 
             <!-- Projects Section -->
-            <section class="section">
+            <section class="section" id="projects">
                 <div class="card">
                     <h3>Featured Projects</h3>
                     <div class="projects">
@@ -1429,7 +1677,7 @@
             </section>
 
             <!-- Connect Section -->
-            <section class="section">
+            <section class="section" id="connect">
                 <div class="card">
                     <h3>Connect</h3>
                     <div class="social-links">
@@ -1544,7 +1792,7 @@
                 if (isCyclingStats) return; // Prevent multiple cycles
                 isCyclingStats = true;
 
-                const timeline = gsap.timeline();
+                const timeline = gsap.timeline({ repeat: -1 });
 
                 statsData.forEach((text, index) => {
                     const currentParagraph = paragraphs[index % paragraphs.length];
@@ -1875,35 +2123,74 @@
             const paragraphs = Array.from(aboutContent);
             let currentParagraphIndex = 0;
 
-            const paragraphTimeline = gsap.timeline({
-                scrollTrigger: {
-                    trigger: '.about-content',
-                    start: "top 80%",
-                    toggleActions: "play none none none"
+            // Function to type text into a paragraph and return a Promise
+            function typeParagraph(para, fullText, speed = 0.01) {
+                return new Promise((resolve) => {
+                    para.textContent = ''; // Clear existing text
+                    gsap.to(para, {
+                        duration: fullText.length * speed,
+                        text: fullText,
+                        ease: "none",
+                        onStart: () => {
+                            para.style.opacity = '1';
+                        },
+                        onComplete: resolve
+                    });
+                });
+            }
+
+            // Type the first paragraph and then show the button
+            const firstParagraph = paragraphs[0];
+            const firstText = firstParagraph.getAttribute('data-text');
+            typeParagraph(firstParagraph, firstText, 0.01).then(() => {
+                const moreBtn = document.getElementById('more-btn');
+                moreBtn.style.display = 'inline-block'; // Show the button
+                gsap.fromTo(moreBtn, { opacity: 0 }, { opacity: 1, duration: 0.5, delay: 0.2 });
+            });
+
+            // Handle the "Want to know more?" button click
+            const moreButton = document.getElementById('more-btn');
+            moreButton.addEventListener('click', async () => {
+                // Hide the button with a fade-out effect
+                gsap.to(moreButton, { opacity: 0, duration: 0.3 });
+                setTimeout(() => {
+                    moreButton.style.display = 'none'; // Hide the button after fade-out
+                }, 300);
+
+                // Type the remaining paragraphs sequentially
+                for(let i = 1; i < paragraphs.length; i++) {
+                    const para = paragraphs[i];
+                    const fullText = para.getAttribute('data-text');
+                    await typeParagraph(para, fullText, 0.01);
                 }
             });
 
-            paragraphs.forEach((para) => {
-                const fullText = para.getAttribute('data-text');
-                para.textContent = ''; // Clear existing text
+            // Animated American Flag Divider Animation
+            // (Already handled by CSS animations)
+        });
+    </script>
 
-                paragraphTimeline.to({}, { duration: 0.5 }); // Initial delay before starting
-                paragraphTimeline.to(para, {
-                    duration: fullText.length * 0.02,
-                    text: fullText,
-                    ease: "none",
-                    onStart: () => {
-                        para.style.opacity = '1';
-                    }
-                });
-                paragraphTimeline.to({}, { duration: 1.5 }); // Wait after typing
+    <script>
+        // Hamburger Menu Toggle
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('nav-links');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navLinks.classList.toggle('active');
+        });
+
+        // Smooth Scrolling for Navigation Links
+        document.querySelectorAll('.nav-links a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                target.scrollIntoView({ behavior: 'smooth' });
+
+                // Close the menu after clicking a link
+                hamburger.classList.remove('active');
+                navLinks.classList.remove('active');
             });
-
-            // Create infographic items
-            createInfographicItems();
-
-            // Start Infographics Cycling
-            cycleInfographics();
         });
     </script>
 </body>
